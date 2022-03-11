@@ -58,6 +58,7 @@ partial class Hands : Weapon
 		ViewModelData = new()
 		{
 			SwingInfluence = 0.03f,
+			Offset = new Vector3( 1f, -1f, -2f ),
 		};
 
 		base.CreateViewModel();

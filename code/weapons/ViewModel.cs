@@ -58,7 +58,8 @@ public class ViewModel : BaseViewModel
 		verticalDelta *= 1.0f - System.MathF.Abs( viewDown.Cross( Vector3.Down ).y );
 		pitchDelta -= verticalDelta * 1;
 
-		var offset = CalcSwingOffset( pitchDelta, yawDelta );
+		var offset = ViewModelData.Offset;
+		offset += CalcSwingOffset( pitchDelta, yawDelta );
 		offset += CalcBobbingOffset( playerVelocity );
 
 		Position += Rotation * offset;
