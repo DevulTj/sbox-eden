@@ -16,6 +16,6 @@ public partial class ItemAsset : Asset
 	[Property]
 	public string ItemDescription { get; set; }
 
-	[Property, ResourceType("png")]
+	[Property, ResourceType( "png" )]
 	public string IconPath { get; set; }
 }

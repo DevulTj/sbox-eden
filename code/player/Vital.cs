@@ -16,8 +16,10 @@ public partial class Vital : BaseNetworkable
 
 	// Server only variables for vitals
 	public float DrainSpeed { get; set; } = 10f;
+
 	// Tick interval (seconds)
 	public int TickSpeed = 1;
+	
 	public TimeSince LastTick = 0;
 
 	public void Reset()
