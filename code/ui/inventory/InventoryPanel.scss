@@ -124,5 +124,11 @@ inventorypanel {
         background-image: url( /ui/inventory/line_tile.png );
         background-repeat: repeat;
         border-top: 2px solid rgba( white, 0.5 );
+
+        flex-direction: row-reverse;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        align-content: stretch;
     }
 }
