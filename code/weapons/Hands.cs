@@ -19,6 +19,11 @@ partial class Hands : Weapon
 		return false;
 	}
 
+	public override void CreateHudElements()
+	{
+		Crosshair.SetCrosshair( new HandsCrosshair() );
+	}
+
 	private void Attack( bool leftHand )
 	{
 		if ( MeleeAttack() )

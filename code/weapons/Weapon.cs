@@ -152,6 +152,12 @@ public partial class Weapon : BaseWeapon, IUse
 		CrosshairPanel?.CreateEvent( "fire" );
 	}
 
+	public override void CreateHudElements()
+	{
+		CrosshairPanel = CreateCrosshair();
+		Crosshair.SetCrosshair( CrosshairPanel );
+	}
+
 	/// <summary>
 	/// Shoot a single bullet
 	/// </summary>
