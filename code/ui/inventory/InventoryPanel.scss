@@ -20,13 +20,21 @@ inventorypanel {
         pointer-events: all;
     }
 
-    .header {
+    .header-bg {
+        position: absolute;
         opacity: 0.9;
         width: 100%;
         height: 10%;
         background-image: url( /ui/inventory/line_tile.png );
         background-repeat: repeat;
         border-bottom: 2px solid rgba( white, 0.5 );
+    }
+
+    .header {
+        opacity: 0.9;
+        width: 100%;
+        height: 10%;
+        background-image: linear-gradient(rgba(#808080, 0), rgba( black, 0.5 ) );
 
         .active {
             position: absolute;
@@ -68,10 +76,10 @@ inventorypanel {
             .section {
                 margin: 4px;
                 border-radius: 100px;
-                width: 10px;
-                height: 10px;
+                width: 8px;
+                height: 8px;
                 backdrop-filter: blur(10px);
-                background-color: rgba( white, 0.5 );
+                background-color: rgba( white, 0.3 );
             }
 
             .activesection {
