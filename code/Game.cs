@@ -28,12 +28,12 @@ public partial class Game : Sandbox.Game
 	/// <summary>
 	/// A client has joined the server. Make them a pawn to play with
 	/// </summary>
-	public override void ClientJoined( Client client )
+	public override void ClientJoined( Client cl )
 	{
-		base.ClientJoined( client );
+		base.ClientJoined( cl );
 
-		var player = new Player();
-		client.Pawn = player;
+		var player = new Player( cl );
+		cl.Pawn = player;
 		player.Respawn();
 
 		var spawnPoints = Entity.All.OfType<SpawnPoint>();

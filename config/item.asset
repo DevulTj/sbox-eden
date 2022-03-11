@@ -1,0 +1,10 @@
+//
+// Eden.ItemAsset
+//
+@BaseClass = item : ""
+[
+	itemname(string) : "Item Name" :  : ""
+	itemdescription(string) : "Item Description" :  : ""
+	iconpath(string) { editor = "AssetBrowse(png)" } : "Icon Path" :  : ""
+]
+

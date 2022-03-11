@@ -7,11 +7,20 @@ using System.Linq;
 
 namespace Eden;
 
-public partial class Player : Sandbox.Player
+public partial class Player : Sandbox.Player, IContainerEntity
 {
-	/// <summary>
-	/// Called when the entity is first created 
-	/// </summary>
+	public Clothing.Container Clothing = new();
+
+	public Player()
+	{
+		//
+	}
+
+	public Player( Client cl ) : base()
+	{
+		Clothing.LoadFromClient( cl );
+	}
+
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -33,6 +42,8 @@ public partial class Player : Sandbox.Player
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
 
+		Clothing.DressEntity( this );
+
 		Inventory.Add( new Hands(), true );
 
 		ResetVitals();
@@ -40,9 +51,6 @@ public partial class Player : Sandbox.Player
 		base.Respawn();
 	}
 
-	/// <summary>
-	/// Called every tick, clientside and serverside.
-	/// </summary>
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );
@@ -56,9 +64,6 @@ public partial class Player : Sandbox.Player
 		TickVitals();
 	}
 
-	/// <summary>
-	/// Called every frame on the client
-	/// </summary>
 	public override void FrameSimulate( Client cl )
 	{
 		base.FrameSimulate( cl );
