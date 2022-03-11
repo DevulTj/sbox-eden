@@ -55,6 +55,11 @@ partial class Hands : Weapon
 
 	public override void CreateViewModel()
 	{
+		ViewModelData = new()
+		{
+			SwingInfluence = 0.03f,
+		};
+
 		base.CreateViewModel();
 
 		ViewModelEntity.SetAnimGraph( "models/first_person/first_person_arms_punching.vanmgrph" );

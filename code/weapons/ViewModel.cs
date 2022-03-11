@@ -7,11 +7,7 @@ namespace Eden;
 
 public class ViewModel : BaseViewModel
 {
-	protected float SwingInfluence => 0.05f;
-	protected float ReturnSpeed => 5.0f;
-	protected float MaxOffsetLength => 10.0f;
-	protected float BobCycleTime => 7;
-	protected Vector3 BobDirection => new Vector3( 0.0f, 1.0f, 0.5f );
+	public ViewModelData ViewModelData { get; set; }
 
 	private Vector3 swingOffset;
 	private float lastPitch;
@@ -59,7 +55,7 @@ public class ViewModel : BaseViewModel
 
 		var verticalDelta = playerVelocity.z * Time.Delta;
 		var viewDown = Rotation.FromPitch( newPitch ).Up * -1.0f;
-		verticalDelta *= ( 1.0f - System.MathF.Abs( viewDown.Cross( Vector3.Down ).y ) );
+		verticalDelta *= 1.0f - System.MathF.Abs( viewDown.Cross( Vector3.Down ).y );
 		pitchDelta -= verticalDelta * 1;
 
 		var offset = CalcSwingOffset( pitchDelta, yawDelta );
@@ -75,12 +71,12 @@ public class ViewModel : BaseViewModel
 	{
 		Vector3 swingVelocity = new Vector3( 0, yawDelta, pitchDelta );
 
-		swingOffset -= swingOffset * ReturnSpeed * Time.Delta;
-		swingOffset += swingVelocity * SwingInfluence;
+		swingOffset -= swingOffset * ViewModelData.ReturnSpeed * Time.Delta;
+		swingOffset += swingVelocity * ViewModelData.SwingInfluence;
 
-		if ( swingOffset.Length > MaxOffsetLength )
+		if ( swingOffset.Length > ViewModelData.MaxOffsetLength )
 		{
-			swingOffset = swingOffset.Normal * MaxOffsetLength;
+			swingOffset = swingOffset.Normal * ViewModelData.MaxOffsetLength;
 		}
 
 		return swingOffset;
@@ -88,7 +84,7 @@ public class ViewModel : BaseViewModel
 
 	protected Vector3 CalcBobbingOffset( Vector3 velocity )
 	{
-		bobAnim += Time.Delta * BobCycleTime;
+		bobAnim += Time.Delta * ViewModelData.BobCycleTime;
 
 		var twoPI = System.MathF.PI * 2.0f;
 
@@ -97,7 +93,7 @@ public class ViewModel : BaseViewModel
 
 		var speed = new Vector2( velocity.x, velocity.y ).Length;
 		speed = speed > 10.0 ? speed : 0.0f;
-		var offset = BobDirection * ( speed * 0.005f ) * System.MathF.Cos( bobAnim );
+		var offset = ViewModelData.BobDirection * ( speed * 0.005f ) * System.MathF.Cos( bobAnim );
 		offset = offset.WithZ( -System.MathF.Abs( offset.z ) );
 
 		return offset;

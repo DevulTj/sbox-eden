@@ -22,6 +22,9 @@ public partial class Weapon : BaseWeapon, IUse
 	[Net, Predicted]
 	public TimeSince TimeSinceDeployed { get; set; }
 
+	//
+	protected ViewModelData ViewModelData { get; set; } = new();
+
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -97,7 +100,8 @@ public partial class Weapon : BaseWeapon, IUse
 		{
 			Position = Position,
 			Owner = Owner,
-			EnableViewmodelRendering = true
+			EnableViewmodelRendering = true,
+			ViewModelData = ViewModelData
 		};
 
 		ViewModelEntity.SetModel( ViewModelPath );
