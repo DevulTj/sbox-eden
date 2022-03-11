@@ -31,6 +31,8 @@ public partial class Player : Sandbox.Player
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
 
+		Inventory.Add( new Hands(), true );
+
 		base.Respawn();
 	}
 
@@ -40,6 +42,12 @@ public partial class Player : Sandbox.Player
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );
+
+		if ( LifeState != LifeState.Alive )
+			return;
+
+		TickPlayerUse();
+		SimulateActiveChild( cl, ActiveChild );
 	}
 
 	/// <summary>
