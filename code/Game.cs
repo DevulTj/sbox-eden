@@ -18,6 +18,11 @@ public partial class Game : Sandbox.Game
 {
 	public Game()
 	{
+		if ( IsServer )
+		{
+			var hud = new GameHud();
+			hud.Parent = this;
+		}
 	}
 
 	/// <summary>

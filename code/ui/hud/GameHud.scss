@@ -1,0 +1,12 @@
+﻿@import "/ui/Theme.scss";
+
+gamehud {
+
+}
+
+text, label {
+    font-family: $font-primary;
+    font-weight: 700;
+    color: white;
+    font-size: 20px;
+}
