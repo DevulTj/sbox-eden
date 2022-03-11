@@ -20,6 +20,10 @@ public partial class ThirstVital : VitalEntry
 	{
 		base.Tick();
 
-		BoundValue = 30f;
+		var player = Local.Pawn as Player;
+		var vital = player.GetVital( "Thirst" );
+
+		BoundValue = vital.Value.CeilToInt();
+		BoundMaxValue = vital.MaxValue.CeilToInt();
 	}
 }

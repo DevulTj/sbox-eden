@@ -15,6 +15,8 @@ public partial class Player : Sandbox.Player
 	public override void Spawn()
 	{
 		base.Spawn();
+
+		SetupVitals();
 	}
 
 	public override void Respawn()
@@ -33,6 +35,8 @@ public partial class Player : Sandbox.Player
 
 		Inventory.Add( new Hands(), true );
 
+		ResetVitals();
+
 		base.Respawn();
 	}
 
@@ -48,6 +52,8 @@ public partial class Player : Sandbox.Player
 
 		TickPlayerUse();
 		SimulateActiveChild( cl, ActiveChild );
+
+		TickVitals();
 	}
 
 	/// <summary>

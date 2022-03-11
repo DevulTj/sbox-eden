@@ -17,6 +17,7 @@ public partial class VitalEntry : Panel
 	public Label Label { get; set; }
 
 	public float BoundValue { get; set; }
+	public float BoundMaxValue { get; set; } = 100f;
 
 	public VitalEntry()
 	{
@@ -40,6 +41,6 @@ public partial class VitalEntry : Panel
 		Label.Text = GetLabelText();
 
 
-		Bar.Style.Width = Length.Percent( ( BoundValue / 100 ) * 100f );
+		Bar.Style.Width = Length.Percent( BoundValue / BoundMaxValue * 100f );
 	}
 }

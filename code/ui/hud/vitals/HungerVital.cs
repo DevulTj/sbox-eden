@@ -20,6 +20,10 @@ public partial class HungerVital : VitalEntry
 	{
 		base.Tick();
 
-		BoundValue = 10f;
+		var player = Local.Pawn as Player;
+		var vital = player.GetVital( "Hunger" );
+
+		BoundValue = vital.Value.CeilToInt();
+		BoundMaxValue = vital.MaxValue.CeilToInt();
 	}
 }
