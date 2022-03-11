@@ -3,8 +3,15 @@
 //
 @BaseClass = item : ""
 [
-	itemname(string) : "Item Name" :  : ""
-	itemdescription(string) : "Item Description" :  : ""
-	iconpath(string) { editor = "AssetBrowse(png)" } : "Icon Path" :  : ""
+	itemtype(choices) { group = "Meta" } : "Item Type" : 0 : "" =
+	[
+		0 : "Item"
+		1 : "Food"
+		2 : "Deployable"
+		3 : "Tool"
+	]
+	itemname(string) { group = "Meta" } : "Item Name" :  : ""
+	itemdescription(string) { group = "Meta" } : "Item Description" :  : ""
+	iconpath(string) { group = "Meta" editor = "AssetBrowse(png)" } : "Icon Path" :  : ""
 ]
 

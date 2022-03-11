@@ -3,6 +3,7 @@
 
 using Sandbox;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Eden;
@@ -10,12 +11,15 @@ namespace Eden;
 [Library( "item" ), AutoGenerate]
 public partial class ItemAsset : Asset
 {
-	[Property]
+	[Property, Category( "Meta" )]
+	public ItemType ItemType { get; set; } = ItemType.Item;
+
+	[Property, Category( "Meta" )]
 	public string ItemName { get; set; }
 
-	[Property]
+	[Property, Category( "Meta" )]
 	public string ItemDescription { get; set; }
 
-	[Property, ResourceType( "png" )]
+	[Property, Category( "Meta" ), ResourceType( "png" )]
 	public string IconPath { get; set; }
 }
