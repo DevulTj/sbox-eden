@@ -46,19 +46,39 @@ inventorypanel {
 
         .prev {
             transform: translateX(-50%);
-            left: 60%;
+            left: 40%;
             position: absolute;
-            top: 46px;
+            top: 64px;
+            text-align: center;
+            font-size: 24px;
+            opacity: 0.8;
+        }
+
+        .prevhint {
+            transform: translateX(-50%);
+            left: 40%;
+            position: absolute;
+            top: 24px;
             text-align: center;
             font-size: 24px;
             opacity: 0.8;
         }
 
         .next {
-            transform: translateX(-50%);
-            left: 40%;
+            transform: translateX( -50% );
+            left: 60%;
             position: absolute;
-            top: 46px;
+            top: 64px;
+            text-align: center;
+            font-size: 24px;
+            opacity: 0.8;
+        }
+
+        .nexthint {
+            transform: translateX(-50%);
+            left: 60%;
+            position: absolute;
+            top: 24px;
             text-align: center;
             font-size: 24px;
             opacity: 0.8;
