@@ -19,7 +19,7 @@ public partial class Vital : BaseNetworkable
 
 	// Tick interval (seconds)
 	public int TickSpeed = 1;
-	
+
 	public TimeSince LastTick = 0;
 
 	public void Reset()

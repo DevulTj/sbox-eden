@@ -41,7 +41,7 @@ public partial class Game : Sandbox.Game
 
 		if ( randomSpawnPoint is null )
 			return;
-			
+
 		var tx = randomSpawnPoint.Transform;
 		tx.Position = tx.Position + Vector3.Up * 50.0f;
 		player.Transform = tx;
