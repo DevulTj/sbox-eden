@@ -27,7 +27,6 @@ public partial class GameHud : HudEntity<RootPanel>
 		RootPanel.AddChild<VoiceList>();
 		RootPanel.AddChild<ChatBox>();
 		RootPanel.AddChild<KillFeed>();
-		RootPanel.AddChild<Scoreboard<ScoreboardEntry>>();
 		RootPanel.AddChild<Crosshair>();
 		RootPanel.AddChild<NameTags>();
 	}

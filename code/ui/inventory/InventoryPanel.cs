@@ -25,7 +25,7 @@ public partial class InventoryPanel : Panel
 	{
 		base.Tick();
 
-		if ( Input.Pressed( InputButton.Menu ) )
+		if ( Input.Pressed( InputButton.Score ) )
 		{
 			IsOpen = !IsOpen;
 		}
