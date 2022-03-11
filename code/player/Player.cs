@@ -24,6 +24,7 @@ public partial class Player : Sandbox.Player
 		Controller = new WalkController();
 		Animator = new StandardPlayerAnimator();
 		CameraMode = new FirstPersonCamera();
+		Inventory = new PlayerInventory( this );
 
 		EnableAllCollisions = true;
 		EnableDrawing = true;
