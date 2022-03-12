@@ -9,7 +9,7 @@ namespace Eden;
 public partial class Player
 {
 	[Net, Local]
-	protected Container Backpack { get; set; }
+	public Container Backpack { get; protected set; }
 	// @IContainerEntity
 	public Container Container { get => Backpack; set => Backpack = value; }
 

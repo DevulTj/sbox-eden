@@ -49,4 +49,30 @@ public partial class ContainerNetwork
 
 		container.Move( slotA, slotB );
 	}
+
+	[ServerCmd( "eden_container_drop" )]
+	public static void ContainerDrop( string guidString, int slotA )
+	{
+		var guid = Guid.Parse( guidString );
+		var container = Get( guid );
+
+		var player = ConsoleSystem.Caller.Pawn as Player;
+		// @TODO: validate this so it's not abused by players
+		// We will need a verification method on containers
+		// like container.CanInteract( player )
+
+		if ( container is null )
+			return;
+
+		var slot = container.GetSlot( slotA );
+		if ( slot is null || slot.Item is null )
+			return;
+
+		// @TODO: unfuck this later
+		container.Remove( slotA );
+
+		var entity = WorldItemEntity.InstantiateFromPlayer( player, slot.Item );
+
+		Log.Info( $"{entity} was spawned as a result of dropping an item" );
+	}
 }

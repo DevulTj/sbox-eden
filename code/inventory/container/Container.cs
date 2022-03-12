@@ -85,4 +85,12 @@ public partial class Container : BaseNetworkable
 	{
 		//
 	}
+
+	public Slot GetSlot( int slotA )
+	{
+		if ( slotA >= Items.Count )
+			return null;
+
+		return Items[slotA];
+	}
 }
