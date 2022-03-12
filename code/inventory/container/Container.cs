@@ -10,13 +10,13 @@ namespace Eden;
 
 public partial class Container : BaseNetworkable
 {
-	[Net] public int Size { get; protected set; } = 12;
+	public override string ToString() => $"[{Size}]( {string.Join( ", ", Items )} )";
 
+	[Net]
+	public int Size { get; protected set; } = 12;
+
+	[Net]
 	public IList<Slot> Items { get; set; }
-
-	public Container()
-	{
-	}
 
 	public void SetSize( int size )
 	{

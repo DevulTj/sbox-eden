@@ -9,6 +9,8 @@ namespace Eden;
 [Library( "e_deploy" ), AutoGenerate]
 public partial class DeployableItemAsset : ItemAsset
 {
+	public override ItemType Type => ItemType.Deployable;
+
 	[Property, Range( 0, 500 )]
 	public int Hunger { get; set; } = 0;
 

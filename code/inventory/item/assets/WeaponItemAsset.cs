@@ -9,6 +9,8 @@ namespace Eden;
 [Library( "e_weapon" ), AutoGenerate]
 public partial class WeaponItemAsset : ItemAsset
 {
+	public override ItemType Type => ItemType.Weapon;
+
 	[Property, Range( 0, 500 )]
 	public int Hunger { get; set; } = 0;
 

@@ -15,6 +15,16 @@ public partial class ItemAsset : Asset
 	public static HashSet<ItemAsset> All { get; protected set; } = new();
 	public static Dictionary<string, ItemAsset> Classes { get; protected set; } = new();
 
+	public static ItemAsset Random
+	{
+		get
+		{
+			var random = new Random();
+			var index = random.Next( All.Count );
+			return All.ElementAt( index );
+		}
+	}
+
 	public virtual ItemType Type => ItemType.Item;
 
 	[Property, Category( "Meta" )]

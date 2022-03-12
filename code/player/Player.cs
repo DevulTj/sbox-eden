@@ -48,6 +48,9 @@ public partial class Player : Sandbox.Player, IContainerEntity
 
 		ResetVitals();
 
+		Backpack = new();
+		Backpack.SetSize( 12 );
+
 		base.Respawn();
 	}
 
@@ -62,6 +65,12 @@ public partial class Player : Sandbox.Player, IContainerEntity
 		SimulateActiveChild( cl, ActiveChild );
 
 		TickVitals();
+	}
+
+	[Event.Tick]
+	protected void InventoryTick()
+	{
+		PrintBackpack();
 	}
 
 	public override void FrameSimulate( Client cl )

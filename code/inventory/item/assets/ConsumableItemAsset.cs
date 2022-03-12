@@ -9,6 +9,8 @@ namespace Eden;
 [Library( "e_food" ), AutoGenerate]
 public partial class ConsumableItemAsset : ItemAsset
 {
+	public override ItemType Type => ItemType.Consumable;
+
 	[Property, Range( 0, 500 )]
 	public int Hunger { get; set; } = 0;
 

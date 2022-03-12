@@ -7,7 +7,15 @@ namespace Eden;
 
 public partial class Slot : BaseNetworkable, INetworkSerializer
 {
+	public override string ToString() => Item is null ? "Empty" : Item.ToString();
+
 	public Item Item { get; set; } = null;
+
+	public void SetItem( ItemAsset asset )
+	{
+		Item = asset.Type.Instantiate();
+		Item.Asset = asset;
+	}
 
 	void INetworkSerializer.Read( ref NetRead read )
 	{
