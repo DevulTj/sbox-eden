@@ -89,6 +89,16 @@ public partial class Weapon : BaseWeapon, IUse
 		// TODO - player third person model reload
 	}
 
+	[ClientRpc]
+	public void OnUse()
+	{
+		OnPlayerUse();
+	}
+
+	protected virtual void OnPlayerUse()
+	{
+	}
+
 	public override void CreateViewModel()
 	{
 		Host.AssertClient();
