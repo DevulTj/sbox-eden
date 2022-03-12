@@ -25,20 +25,14 @@ partial class RadialWheel
 			GenerateTexture();
 		}
 
-		public override void OnHotloaded()
-		{
-			base.OnHotloaded();
-			GenerateTexture();
-		}
-
 		/// <summary>
 		/// Generate our cool selection texture based on number of items in parent wheel
 		/// </summary>
 		private void GenerateTexture()
 		{
-			int width = 512;
-			int height = 512;
-			int stride = 4;
+			const int width = 512;
+			const int height = 512;
+			const int channels = 4;
 
 			Vector2 circleSize = new Vector2( width, height );
 			Vector2 circleCenter = circleSize / 2.0f;
@@ -48,10 +42,10 @@ partial class RadialWheel
 			byte[] textureData = new byte[width * height * 4];
 			void SetPixel( int x, int y, Color col )
 			{
-				textureData[( ( x + ( y * width ) ) * stride ) + 0] = col.r.ColorComponentToByte();
-				textureData[( ( x + ( y * width ) ) * stride ) + 1] = col.g.ColorComponentToByte();
-				textureData[( ( x + ( y * width ) ) * stride ) + 2] = col.b.ColorComponentToByte();
-				textureData[( ( x + ( y * width ) ) * stride ) + 3] = col.a.ColorComponentToByte();
+				textureData[( ( x + ( y * width ) ) * channels ) + 0] = col.r.ColorComponentToByte();
+				textureData[( ( x + ( y * width ) ) * channels ) + 1] = col.g.ColorComponentToByte();
+				textureData[( ( x + ( y * width ) ) * channels ) + 2] = col.b.ColorComponentToByte();
+				textureData[( ( x + ( y * width ) ) * channels ) + 3] = col.a.ColorComponentToByte();
 			}
 
 			//
