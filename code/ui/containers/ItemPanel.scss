@@ -3,21 +3,12 @@
 itempanel {
     aspect-ratio: 1;
     width: 128px;
-    border: 1px solid white;
-    background-color: rgba( black, 0.1 );
-    backdrop-filter: blur(50px);
-    border-radius: 8px;
+    background-image: url( /ui/inventory/line_tile.png );
+    background-repeat: repeat;
+    border-radius: 2px;
     pointer-events: all;
     transition: transform 0.1s ease;
-
-
-    &:hover {
-        transform: scale( 1.05 );
-    }
-
-    &:active {
-        transform: scale( 0.95 );
-    }
+    margin: 4px;
 
     .icon {
         position: absolute;
@@ -27,5 +18,34 @@ itempanel {
         background-repeat: no-repeat;
         background-position: center;
         pointer-events: none;
+    }
+
+    .overlay {
+        border: 1px solid black;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .quantity {
+        left: 8px;
+        top: 4px;
+        text-stroke: 2px black;
+    }
+
+    &:hover {
+        transform: scale( 1.05 );
+
+        .overlay {
+            background-color: rgba( white, 0.05 );
+        }
+    }
+
+    &:active {
+        transform: scale( 0.95 );
+
+        .overlay {
+            background-color: rgba( white, 0.2 );
+        }
     }
 }

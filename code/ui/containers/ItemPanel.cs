@@ -11,7 +11,7 @@ public partial class ItemPanel : Panel
 	// @ref
 	public Panel IconPanel { get; set; }
 	// @text
-	public int Quantity { get; set; } = 0;
+	public int Quantity { get; set; } = 1;
 
 	protected Item Item { get; set; }
 
