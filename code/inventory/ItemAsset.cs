@@ -3,6 +3,7 @@
 
 using Sandbox;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
@@ -11,6 +12,8 @@ namespace Eden;
 [Library( "item" ), AutoGenerate]
 public partial class ItemAsset : Asset
 {
+	public static HashSet<ItemAsset> All { get; set; } = new();
+
 	[Property, Category( "Meta" )]
 	public ItemType ItemType { get; set; } = ItemType.Item;
 
@@ -22,4 +25,15 @@ public partial class ItemAsset : Asset
 
 	[Property, Category( "Meta" ), ResourceType( "png" )]
 	public string IconPath { get; set; }
+
+	protected override void PostLoad()
+	{
+		base.PostLoad();
+
+		if ( !All.Contains( this ) )
+		{
+			All.Add( this );
+			Log.Info( $"Eden: Loading item asset: {ItemName}" );
+		}
+	}
 }
