@@ -43,6 +43,11 @@ partial class Hands : Weapon
 		Attack( true );
 	}
 
+	protected override void OnPlayerUse()
+	{
+		ViewModelEntity?.SetAnimParameter( "grab", true );
+	}
+
 	public override void AttackSecondary()
 	{
 		Attack( false );
@@ -113,7 +118,6 @@ partial class Hands : Weapon
 		}
 
 		ViewModelEntity?.SetAnimParameter( "attack_has_hit", false );
-		ViewModelEntity?.SetAnimParameter( "grab", true );
 		ViewModelEntity?.SetAnimParameter( "holdtype_attack", leftHand ? 2 : 1 );
 	}
 
@@ -128,7 +132,6 @@ partial class Hands : Weapon
 		}
 
 		ViewModelEntity?.SetAnimParameter( "attack_has_hit", true );
-		ViewModelEntity?.SetAnimParameter( "grab", true );
 		ViewModelEntity?.SetAnimParameter( "holdtype_attack", leftHand ? 2 : 1 );
 	}
 }
