@@ -60,8 +60,6 @@ public partial class RadialWheel : Panel
 
 		var activeItem = GetCurrentItem();
 		activeItem?.OnSelected?.Invoke();
-
-		Delete();
 	}
 
 	protected override void PostTemplateApplied()
