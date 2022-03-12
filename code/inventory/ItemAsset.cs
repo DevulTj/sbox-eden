@@ -12,7 +12,8 @@ namespace Eden;
 [Library( "e_item" ), AutoGenerate]
 public partial class ItemAsset : Asset
 {
-	public static HashSet<ItemAsset> All { get; set; } = new();
+	public static HashSet<ItemAsset> All { get; protected set; } = new();
+	public static Dictionary<string, ItemAsset> Classes { get; protected set; } = new();
 
 	[Property, Category( "Meta" )]
 	public ItemType ItemType { get; set; } = ItemType.Item;
@@ -33,6 +34,8 @@ public partial class ItemAsset : Asset
 		if ( !All.Contains( this ) )
 		{
 			All.Add( this );
+			Classes[Name] = this;
+
 			Log.Info( $"Eden: Loading item asset: {ItemName}" );
 		}
 	}
