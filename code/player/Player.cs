@@ -49,7 +49,7 @@ public partial class Player : Sandbox.Player, IContainerEntity
 		ResetVitals();
 
 		Backpack = new();
-		Backpack.SetSize( 12 );
+		Backpack.SetSize( 28 );
 
 		base.Respawn();
 	}
