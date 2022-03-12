@@ -1,6 +1,6 @@
 ﻿$background: #121212;
 
-.pie-menu {
+.wheel {
     position: absolute;
     top: 0;
     left: 0;
@@ -13,7 +13,7 @@
     backdrop-filter: blur( 10px );
     pointer-events: all;
 
-    .wrapper {
+    .wheel-inner {
         opacity: 1;
         border-radius: 100%;
         width: 650px;
@@ -25,97 +25,80 @@
         &.shrink {
             transform: scale( 0.95 );
         }
-
-        pieselector {
-            border-radius: 100%;
-            left: -128px;
-            right: -128px;
-            bottom: -128px;
-            top: -128px;
-            position: absolute;
-            background-size: contain;
-            background-repeat: no-repeat;
-            z-index: -1;
-        }
-
-        .center {
-            position: absolute;
-            left: 16px;
-            right: 16px;
-            bottom: 16px;
-            top: 16px;
-            border-radius: 100%;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            background-color: rgba( $background, 0.5 );
-            box-shadow: 0 0 25px rgba( black, 0.1 );
-
-            label, icon.image {
-                color: white;
-
-                &.description {
-                    font-size: 16px;
-                    text-align: center;
-                }
-            }
-
-            richlabel label {
-                font-size: 16px;
-            }
-
-            .image {
-                font-size: 64px;
-                color: $background;
-                filter: saturate( 0 );
-            }
-
-            .controls {
-                inputhint {
-                    margin: 0 10px;
-                }
-
-                padding-top: 8px;
-            }
-        }
-
-        .inner {
-            position: absolute;
-            top: -64px;
-            left: -64px;
-            right: -64px;
-            bottom: -64px;
-        }
-
-        .item-icon {
-            position: absolute;
-            width: 96px;
-            aspect-ratio: 1;
-            font-size: 64px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            color: white;
-            text-align: center;
-            transform: translate(-50% -50%);
-            transition: all 150ms ease;
-            filter: saturate( 0 );
-
-            &.active {
-                color: $background;
-                background-image-tint: red;
-                transform-origin: center;
-                filter: saturate( 100% );
-            }
-        }
-
-        .image {
-            width: 96px;
-            aspect-ratio: 1;
-            font-size: 64px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
     }
+}
+
+pieselector {
+    border-radius: 100%;
+    left: -128px;
+    right: -128px;
+    bottom: -128px;
+    top: -128px;
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+
+.active {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    top: 16px;
+    border-radius: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgba( $background, 0.5 );
+    box-shadow: 0 0 25px rgba( black, 0.1 );
+
+    label {
+        color: white;
+    }
+
+    .icon {
+        width: 128px;
+        height: 128px;
+        filter: saturate( 0 );
+    }
+}
+
+.item-container {
+    position: absolute;
+    top: -64px;
+    left: -64px;
+    right: -64px;
+    bottom: -64px;
+}
+
+.item-icon {
+    position: absolute;
+    width: 96px;
+    aspect-ratio: 1;
+    font-size: 64px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    text-align: center;
+    transform: translate(-50% -50%);
+    transition: all 150ms ease;
+    filter: saturate( 0 );
+
+    &.active {
+        color: $background;
+        background-image-tint: red;
+        transform-origin: center;
+        filter: saturate( 100% );
+    }
+}
+
+.image {
+    width: 96px;
+    aspect-ratio: 1;
+    font-size: 64px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
