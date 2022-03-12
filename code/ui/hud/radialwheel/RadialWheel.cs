@@ -15,15 +15,14 @@ public partial class RadialWheel : Panel
 	//
 	// @text
 	//
-	public string CurrentName { get; set; }
-	public string CurrentDescription { get; set; }
+	public string ActiveName { get; set; }
 
 	//
 	// @ref
 	//
-	public Panel Wrapper { get; set; }
-	public Image CurrentImage { get; set; }
-	public Panel Inner { get; set; }
+	public Panel WheelInner { get; set; }
+	public Image ActiveIcon { get; set; }
+	public Panel ItemContainer { get; set; }
 
 	//
 	// Runtime
@@ -36,7 +35,7 @@ public partial class RadialWheel : Panel
 	private RadialWheel()
 	{
 		SetTemplate( "ui/hud/radialwheel/RadialWheel.html" );
-		AddClass( "pie-menu" );
+		AddClass( "wheel" );
 	}
 
 	public static RadialWheel Create()
@@ -66,7 +65,7 @@ public partial class RadialWheel : Panel
 		//
 		selector?.Delete();
 		selector = new PieSelector( this );
-		selector.Parent = Wrapper;
+		selector.Parent = WheelInner;
 	}
 
 	public float AngleIncrement => 360f / Items.Count;
@@ -77,7 +76,7 @@ public partial class RadialWheel : Panel
 	/// </summary>
 	public void BuildIcons()
 	{
-		Inner.DeleteChildren();
+		ItemContainer.DeleteChildren();
 
 		int index = 0;
 		foreach ( var item in Items )
@@ -86,7 +85,7 @@ public partial class RadialWheel : Panel
 
 			frac = ( 1.0f + frac ) / 2.0f; // Normalize from -1,1 to 0,1
 
-			var panel = Inner.Add.Image( item.Icon, "item-icon" );
+			var panel = ItemContainer.Add.Image( item.Icon, "item-icon" );
 
 			panel.Style.Left = Length.Fraction( frac.x );
 			panel.Style.Top = Length.Fraction( frac.y );
@@ -103,7 +102,7 @@ public partial class RadialWheel : Panel
 	/// </summary>
 	private float GetCurrentAngle()
 	{
-		Vector2 relativeMousePos = Mouse.Position - Wrapper.Box.Rect.Center;
+		Vector2 relativeMousePos = Mouse.Position - WheelInner.Box.Rect.Center;
 
 		float ang = MathF.Atan2( relativeMousePos.y, relativeMousePos.x )
 			.RadianToDegree();
@@ -153,8 +152,8 @@ public partial class RadialWheel : Panel
 		{
 			SelectedIndex = newSelectedIndex;
 
-			CurrentImage.SetTexture( newSelectedItem?.Icon ?? "" );
-			CurrentName = newSelectedItem?.Text ?? "None";
+			ActiveIcon.SetTexture( newSelectedItem?.Icon ?? "" );
+			ActiveName = newSelectedItem?.Text ?? "None";
 
 			OnChange();
 		}

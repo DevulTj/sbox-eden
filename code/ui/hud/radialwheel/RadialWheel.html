@@ -1,13 +1,13 @@
 ﻿<link rel="stylesheet" href="RadialWheel.scss" />
 
 <div>
-    <div class="wrapper" @ref="Wrapper">
-        <div class="center">
-            <image class="image" @ref="CurrentImage"></image>
-            <label @text="CurrentName" class="subtitle"></label>
+    <div class="wheel-inner" @ref="WheelInner">
+        <div class="active">
+            <image class="icon" @ref="ActiveIcon"></image>
+            <label class="name" @text="ActiveName"></label>
         </div>
 
-        <div class="inner" @ref="Inner">
+        <div class="item-container" @ref="ItemContainer">
         </div>
     </div>
 </div>
