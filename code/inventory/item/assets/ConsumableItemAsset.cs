@@ -3,6 +3,7 @@
 
 using Sandbox;
 using System;
+using System.ComponentModel;
 
 namespace Eden;
 
@@ -10,10 +11,11 @@ namespace Eden;
 public partial class ConsumableItemAsset : ItemAsset
 {
 	public override ItemType Type => ItemType.Consumable;
+	public override Color DefaultColor => Color.Green;
 
-	[Property, Range( 0, 500 )]
+	[Property, Category( "Consumable" ), Range( 0, 500 )]
 	public int Hunger { get; set; } = 0;
 
-	[Property, Range( 0, 300 )]
+	[Property, Category( "Consumable" ), Range( 0, 300 )]
 	public int Thirst { get; set; } = 0;
 }

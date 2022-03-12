@@ -11,6 +11,7 @@ public partial class Item
 {
 	public override string ToString() => Asset?.ItemName ?? "Item";
 	public virtual ItemType Type => ItemType.Item;
+	public virtual Color DefaultColor => Asset?.DefaultColor ?? Color.White;
 
 	public ItemAsset Asset { get; set; }
 

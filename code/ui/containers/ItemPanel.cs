@@ -29,8 +29,8 @@ public partial class ItemPanel : Panel
 		Item = item;
 
 		IconPanel.Style.SetBackgroundImage( item.Asset.IconPath );
+		Style.BorderColor = Item.DefaultColor.WithAlpha( 0.5f );
 	}
-
 
 	public override void SetProperty( string name, string value )
 	{
