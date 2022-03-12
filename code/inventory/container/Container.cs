@@ -15,8 +15,13 @@ public partial class Container : BaseNetworkable
 	[Net]
 	public int Size { get; protected set; } = 12;
 
-	[Net]
+	[Net, Change( nameof( OnItemsChanged ) )]
 	public IList<Slot> Items { get; set; }
+
+	protected void OnItemsChanged( IList<Slot> before, IList<Slot> after )
+	{
+		Log.Info( "Items changed" );
+	}
 
 	public void SetSize( int size )
 	{

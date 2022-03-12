@@ -1,0 +1,27 @@
+@import "/ui/Theme.scss";
+
+containerpanel, .containerpanel {
+    aspect-ratio: 1;
+    height: 100%;
+    border-radius: 2px;
+    pointer-events: all;
+    flex-direction: column;
+
+    .layout {
+        padding: 8px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        align-content: flex-start;
+    }
+
+    .title {
+        width: 100%;
+        text-align: center;
+        left: 8px;
+        top: 4px;
+        text-stroke: 2px black;
+        font-size: 32px;
+    }
+}
