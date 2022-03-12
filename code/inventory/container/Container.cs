@@ -26,7 +26,10 @@ public partial class Container : BaseNetworkable
 
 		for ( int i = 0; i < size; i++ )
 		{
-			Items.Add( new Slot() );
+			var slot = new Slot();
+			Items.Add( slot );
+
+			slot.SetItem( ItemAsset.Random );
 		}
 	}
 

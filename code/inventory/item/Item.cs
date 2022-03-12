@@ -9,22 +9,18 @@ namespace Eden;
 
 public partial class Item
 {
+	public override string ToString() => Asset?.ItemName ?? "Item";
 	public virtual ItemType Type => ItemType.Item;
 
 	public ItemAsset Asset { get; set; }
 
 	public virtual void Write( NetWrite write )
 	{
-		//
-	}
-
-	public override string ToString()
-	{
-		return Asset?.ItemName ?? "Item";
+		write.Write( Asset );
 	}
 
 	public virtual void Read( NetRead read )
 	{
-		//
+		Asset = read.ReadClass<ItemAsset>();
 	}
 }
