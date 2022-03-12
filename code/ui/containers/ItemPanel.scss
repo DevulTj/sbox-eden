@@ -48,5 +48,13 @@ itempanel {
         .quantity {
             opacity: 0;
         }
+
+        &:active {
+            transform: scale( 1.02 );
+        }
+
+        &:hover {
+            transform: scale( 1.02 );
+        }
     }
 }

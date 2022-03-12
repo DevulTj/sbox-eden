@@ -34,7 +34,8 @@ public partial class Container : BaseNetworkable
 			var slot = new Slot();
 			Items.Add( slot );
 
-			slot.SetItem( ItemAsset.Random );
+			if ( Rand.Int( 2 ) < 2 )
+				slot.SetItem( ItemAsset.Random );
 		}
 	}
 
