@@ -18,6 +18,28 @@ public partial class Container : BaseNetworkable
 	[Net, Change( nameof( OnItemsChanged ) )]
 	public IList<Slot> Items { get; set; }
 
+	/// <summary>
+	/// Used to interact with the Container over the network
+	/// </summary>
+	[Net]
+	public Guid ID { get; set; }
+
+	public Container()
+	{
+		if ( Host.IsServer )
+		{
+			ContainerNetwork.Register( this );
+		}
+	}
+
+	~Container()
+	{
+		if ( Host.IsServer )
+		{
+			ContainerNetwork.Dispose( this );
+		}
+	}
+
 	protected void OnItemsChanged( IList<Slot> before, IList<Slot> after )
 	{
 		Log.Info( "Items changed" );

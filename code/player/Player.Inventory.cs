@@ -2,13 +2,14 @@
 // without permission of its author (insert_email_here)
 
 using Sandbox;
+using System;
 
 namespace Eden;
 
 public partial class Player
 {
 	[Net, Local]
-	public Container Backpack { get; set; }
+	protected Container Backpack { get; set; }
 	// @IContainerEntity
 	public Container Container { get => Backpack; set => Backpack = value; }
 
