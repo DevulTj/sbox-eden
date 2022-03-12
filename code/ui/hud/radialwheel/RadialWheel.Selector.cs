@@ -6,11 +6,13 @@ using Sandbox.UI;
 using System;
 
 namespace Eden;
-public partial class RadialWheel
+
+partial class RadialWheel
 {
-	public class PieSelector : Panel
+	private class PieSelector : Panel
 	{
-		RadialWheel parentWheel;
+		private RadialWheel parentWheel;
+		private float lerpedSelectionAngle = 0f;
 
 		public PieSelector( RadialWheel parentWheel )
 		{
@@ -96,7 +98,6 @@ public partial class RadialWheel
 
 			Style.BackgroundImage = newTexture;
 		}
-		private float lerpedSelectionAngle = 0f;
 
 		public override void Tick()
 		{

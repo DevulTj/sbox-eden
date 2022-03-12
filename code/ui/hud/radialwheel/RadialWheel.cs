@@ -32,6 +32,9 @@ public partial class RadialWheel : Panel
 
 	private List<Item> Items { get; } = new();
 
+	public float AngleIncrement => 360f / Items.Count;
+	private List<Panel> IconPanels { get; set; } = new();
+
 	private RadialWheel()
 	{
 		SetTemplate( "ui/hud/radialwheel/RadialWheel.html" );
@@ -66,23 +69,20 @@ public partial class RadialWheel : Panel
 	{
 		base.PostTemplateApplied();
 		BuildIcons();
+		BuildPieSelector();
+	}
 
-		//
-		// Create pie selector here so that it regenerates
-		// when there's changes etc.
-		//
+	private void BuildPieSelector()
+	{
 		selector?.Delete();
 		selector = new PieSelector( this );
 		selector.Parent = WheelInner;
 	}
 
-	public float AngleIncrement => 360f / Items.Count;
-	private List<Panel> icons = new();
-
 	/// <summary>
 	/// Puts icons on the wheel so the player knows what they're selecting
 	/// </summary>
-	public void BuildIcons()
+	private void BuildIcons()
 	{
 		ItemContainer.DeleteChildren();
 
@@ -98,7 +98,7 @@ public partial class RadialWheel : Panel
 			panel.Style.Left = Length.Fraction( frac.x );
 			panel.Style.Top = Length.Fraction( frac.y );
 
-			icons.Add( panel );
+			IconPanels.Add( panel );
 
 			index++;
 		}
@@ -129,7 +129,7 @@ public partial class RadialWheel : Panel
 	/// <summary>
 	/// Get the current <see cref="Item"/> based on the value returned from <see cref="GetCurrentAngle"/>
 	/// </summary>
-	protected Item? GetCurrentItem()
+	private Item? GetCurrentItem()
 	{
 		int selectedIndex = GetCurrentIndex();
 
@@ -151,9 +151,9 @@ public partial class RadialWheel : Panel
 		var newSelectedItem = GetCurrentItem();
 		int newSelectedIndex = GetCurrentIndex();
 
-		for ( int i = 0; i < icons.Count; i++ )
+		for ( int i = 0; i < IconPanels.Count; i++ )
 		{
-			icons[i].SetClass( "active", i == newSelectedIndex );
+			IconPanels[i].SetClass( "active", i == newSelectedIndex );
 		}
 
 		if ( newSelectedIndex != SelectedIndex )
