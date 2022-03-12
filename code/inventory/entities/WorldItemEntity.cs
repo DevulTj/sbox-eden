@@ -9,4 +9,17 @@ public partial class WorldItemEntity : Prop
 {
 	[Net]
 	public ItemAsset Asset { get; set; }
+
+	public override void Spawn()
+	{
+		base.Spawn();
+	}
+
+	public void SetItem( Item item )
+	{
+		Asset = item.Asset;
+
+		if ( item.Asset.WorldModel is not null )
+			Model = item.Asset.WorldModel;
+	}
 }
