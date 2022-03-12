@@ -41,4 +41,12 @@ itempanel {
             background-color: rgba( white, 0.2 );
         }
     }
+
+    &.empty {
+        background-color: rgba( #808080, 0.1 );
+
+        .quantity {
+            opacity: 0;
+        }
+    }
 }

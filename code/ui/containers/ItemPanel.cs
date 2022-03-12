@@ -21,6 +21,11 @@ public partial class ItemPanel : Panel
 
 	public void SetItem( Item item )
 	{
+		SetClass( "empty", item is null );
+
+		if ( item is null )
+			return;
+
 		Item = item;
 
 		IconPanel.Style.SetBackgroundImage( item.Asset.IconPath );
