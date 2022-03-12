@@ -1,8 +1,10 @@
 //
-// Eden.ItemAsset
+// Eden.ConsumableItemAsset
 //
-@BaseClass = e_item : ""
+@BaseClass = e_food : ""
 [
+	hunger(integer) : "Hunger" : 0 : ""
+	thirst(integer) : "Thirst" : 0 : ""
 	itemname(string) { group = "Meta" } : "Item Name" :  : ""
 	itemdescription(string) { group = "Meta" } : "Item Description" :  : ""
 	iconpath(string) { group = "Meta" editor = "AssetBrowse(png)" } : "Icon Path" :  : ""

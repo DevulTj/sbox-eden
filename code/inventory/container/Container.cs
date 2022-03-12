@@ -10,15 +10,32 @@ namespace Eden;
 
 public partial class Container : BaseNetworkable
 {
-	[Net]
-	public IList<InventoryItem> Items { get; set; }
+	[Net] public int Size { get; protected set; } = 12;
 
-	public void Add( InventoryItem item, int slot = -1 )
+	public IList<Slot> Items { get; set; }
+
+	public Container()
+	{
+	}
+
+	public void SetSize( int size )
+	{
+		Items.Clear();
+
+		Size = size;
+
+		for ( int i = 0; i < size; i++ )
+		{
+			Items.Add( new Slot() );
+		}
+	}
+
+	public void Add( Item item, int slot = -1 )
 	{
 		//
 	}
 
-	public void Remove( InventoryItem item )
+	public void Remove( Item item )
 	{
 		//
 	}

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Eden;
 
-public partial class InventoryItem : BaseNetworkable
+public partial class ConsumableItem : Item
 {
-
+	public override ItemType Type => ItemType.Consumable;
 }

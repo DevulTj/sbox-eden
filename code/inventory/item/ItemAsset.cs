@@ -15,8 +15,7 @@ public partial class ItemAsset : Asset
 	public static HashSet<ItemAsset> All { get; protected set; } = new();
 	public static Dictionary<string, ItemAsset> Classes { get; protected set; } = new();
 
-	[Property, Category( "Meta" )]
-	public ItemType ItemType { get; set; } = ItemType.Item;
+	public virtual ItemType Type => ItemType.Item;
 
 	[Property, Category( "Meta" )]
 	public string ItemName { get; set; }
