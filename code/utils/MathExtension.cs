@@ -1,11 +1,7 @@
-﻿// Copyright (c) 2022 Ape Tavern, do not share, re-distribute or modify
-// without permission of its author (insert_email_here)
-
-using Sandbox;
+﻿using Sandbox;
 using System;
 
 namespace Eden;
-
 public static class MathExtension
 {
 	/// <summary>
@@ -57,4 +53,6 @@ public static class MathExtension
 
 		return res;
 	}
+
+	public static byte ColorComponentToByte( this float v ) => (byte)MathF.Floor( ( v >= 1.0f ) ? 255f : v * 256.0f );
 }
