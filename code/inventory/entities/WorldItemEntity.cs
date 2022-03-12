@@ -7,6 +7,22 @@ namespace Eden;
 
 public partial class WorldItemEntity : Prop
 {
+	public static WorldItemEntity Instantiate( Item item )
+	{
+		var entity = new WorldItemEntity();
+		entity.SetItem( item );
+
+		return entity;
+	}
+
+	public static WorldItemEntity InstantiateFromPlayer( Player player, Item item )
+	{
+		var entity = Instantiate( item );
+		entity.Position = player.EyePosition + player.EyeRotation.Forward * 85;
+
+		return entity;
+	}
+
 	[Net]
 	public ItemAsset Asset { get; set; }
 
