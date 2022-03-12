@@ -1,7 +1,7 @@
 //
 // Eden.ItemAsset
 //
-@BaseClass = item : ""
+@BaseClass = e_item : ""
 [
 	itemtype(choices) { group = "Meta" } : "Item Type" : 0 : "" =
 	[

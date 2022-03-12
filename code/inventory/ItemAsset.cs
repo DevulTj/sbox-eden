@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Eden;
 
-[Library( "item" ), AutoGenerate]
+[Library( "e_item" ), AutoGenerate]
 public partial class ItemAsset : Asset
 {
 	public static HashSet<ItemAsset> All { get; set; } = new();
