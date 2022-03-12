@@ -5,9 +5,9 @@ using System;
 
 namespace Eden;
 
-public partial class RadialWheel
+partial class RadialWheel
 {
-	public struct Item
+	private struct Item
 	{
 		public string Icon { get; set; }
 		public string Text { get; set; }
