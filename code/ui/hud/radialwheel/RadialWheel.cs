@@ -54,6 +54,16 @@ public partial class RadialWheel : Panel
 		BuildIcons();
 	}
 
+	protected override void OnMouseUp( MousePanelEvent e )
+	{
+		base.OnMouseUp( e );
+
+		var activeItem = GetCurrentItem();
+		activeItem?.OnSelected?.Invoke();
+
+		Delete();
+	}
+
 	protected override void PostTemplateApplied()
 	{
 		base.PostTemplateApplied();
@@ -154,10 +164,6 @@ public partial class RadialWheel : Panel
 
 			ActiveIcon.SetTexture( newSelectedItem?.Icon ?? "" );
 			ActiveName = newSelectedItem?.Text ?? "None";
-
-			OnChange();
 		}
 	}
-
-	protected virtual void OnChange() { }
 }
