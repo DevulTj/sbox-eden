@@ -110,7 +110,7 @@ public partial class InventoryPanel
 		}
 	}
 
-	[Event.Tick.ClientAttribute]
+	[Event.Tick.Client]
 	protected void TickInternalDrag()
 	{
 		var mousePos = Mouse.Position / Screen.Size;
