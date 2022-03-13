@@ -106,6 +106,8 @@ partial class StoneHatchet : Weapon
 	{
 		Host.AssertClient();
 
+		ViewModelEntity?.SetAnimParameter( "hit", true );
+
 		if ( IsLocalPawn )
 		{
 			_ = new Sandbox.ScreenShake.Perlin();
