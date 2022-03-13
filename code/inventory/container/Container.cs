@@ -89,18 +89,18 @@ public partial class Container : BaseNetworkable
 		Items[slot].RemoveItem();
 	}
 
-	public void Move( int slotA, int slotB )
+	public void Move( int slotA, int slotB, Container destination = null )
 	{
 		var slotAItem = Items[slotA].Item;
-		var slotBItem = Items[slotB].Item;
+		var slotBItem = destination is not null ? destination.Items[slotB].Item : Items[slotB].Item;
 
 		Items[slotA].SetItem( slotBItem );
-		Items[slotB].SetItem( slotAItem );
-	}
 
-	public void Transfer( int slotA, Container destination, int slotB )
-	{
-		//
+		if ( destination is not null )
+			destination.Items[slotB].SetItem( slotAItem );
+		else
+			Items[slotB].SetItem( slotAItem );
+
 	}
 
 	public Slot GetSlot( int slotA )

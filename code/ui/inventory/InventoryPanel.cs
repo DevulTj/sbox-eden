@@ -13,6 +13,7 @@ public partial class InventoryPanel : Panel
 
 	// @ref
 	public InventoryContainerPanel Inventory { get; set; }
+	public HotbarContainerPanel Hotbar { get; set; }
 
 	public InventoryPanel()
 	{

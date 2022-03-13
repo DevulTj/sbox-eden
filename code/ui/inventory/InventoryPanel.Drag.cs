@@ -56,14 +56,28 @@ public partial class InventoryPanel
 
 			if ( destination != null )
 			{
-				var panel = destination.ContainerPanel;
+				var originPanel = item.ContainerPanel;
 
-				ContainerNetwork.ContainerMove(
-					panel.Container.ID.ToString(),
-					panel.GetSlotIndex( FocusedItem ),
-					panel.GetSlotIndex( destination )
-				);
+				var destinationPanel = destination.ContainerPanel;
 
+				if ( originPanel.Container.ID == destinationPanel.Container.ID )
+				{
+					ContainerNetwork.ContainerMove(
+						destinationPanel.Container.ID.ToString(),
+						destinationPanel.GetSlotIndex( item ),
+						destinationPanel.GetSlotIndex( destination )
+					);
+				}
+				else
+				{
+					ContainerNetwork.ContainerMoveExternal(
+						originPanel.Container.ID.ToString(),
+						originPanel.GetSlotIndex( item ),
+						//
+						destinationPanel.Container.ID.ToString(),
+						destinationPanel.GetSlotIndex( destination )
+					);
+				}
 			}
 		}
 
@@ -76,6 +90,9 @@ public partial class InventoryPanel
 	{
 		var inventoryItem = Inventory.FindHoveredItem();
 		if ( inventoryItem != null ) return inventoryItem;
+
+		var hotbarItem = Hotbar.FindHoveredItem();
+		if ( hotbarItem != null ) return hotbarItem;
 
 		return null;
 	}

@@ -47,9 +47,35 @@ public partial class ContainerNetwork
 		if ( container is null )
 			return;
 
+		Log.Info( $"container: {guidString}, slotA: {slotA}, slotB: {slotB}" );
+
 		container.Move( slotA, slotB );
 
 		UpdatePlayer( To.Single( player.Client ), guidString );
+	}
+
+	[ServerCmd( "eden_container_move_external" )]
+	public static void ContainerMoveExternal( string guidString, int slotA, string destinationGuidString, int slotB )
+	{
+		var guid = Guid.Parse( guidString );
+		var destinationGuid = Guid.Parse( destinationGuidString );
+		var container = Get( guid );
+		var destinationContainer = Get( destinationGuid );
+
+		var player = ConsoleSystem.Caller.Pawn as Player;
+		// @TODO: validate this so it's not abused by players
+		// We will need a verification method on containers
+		// like container.CanInteract( player )
+
+		if ( container is null )
+			return;
+
+		Log.Info( $"container: {guidString}, slotA: {slotA}, slotB: {slotB}" );
+
+		container.Move( slotA, slotB, destinationContainer );
+
+		UpdatePlayer( To.Single( player.Client ), guidString );
+		UpdatePlayer( To.Single( player.Client ), destinationGuidString );
 	}
 
 	public static void PickupItem( Player player, WorldItemEntity worldItem )
