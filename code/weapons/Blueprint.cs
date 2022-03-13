@@ -2,7 +2,6 @@
 // without permission of its author (insert_email_here)
 
 using Sandbox;
-using System.Linq;
 
 namespace Eden;
 
@@ -32,9 +31,15 @@ partial class Blueprint : Weapon
 
 		buildWheel = RadialWheel.Create();
 
-		var buildingTypes = Library.GetAttributes<DisplayOnBuildWheelAttribute>();
-		buildingTypes.ToList().ForEach( t =>
-			buildWheel.AddOption( t.Title, t.Icon, () => Log.Trace( $"Build {t.Title}" ) ) );
+		var buildTypes = Library.GetAttributes<DisplayOnBuildWheelAttribute>();
+		foreach ( var buildType in buildTypes )
+		{
+			buildWheel.AddOption( buildType.Title, buildType.Icon, () =>
+			{
+				Log.Trace( $"Build {buildType.Title}" );
+				DeleteBuildWheel();
+			} );
+		}
 	}
 
 	private void DeleteBuildWheel()
