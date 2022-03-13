@@ -35,7 +35,6 @@ public partial class Player : Sandbox.Player, IContainerEntity
 		Controller = new WalkController();
 		Animator = new StandardPlayerAnimator();
 		CameraMode = new FirstPersonCamera();
-		Inventory = new PlayerInventory( this );
 
 		EnableAllCollisions = true;
 		EnableDrawing = true;
@@ -44,9 +43,6 @@ public partial class Player : Sandbox.Player, IContainerEntity
 
 		Clothing.DressEntity( this );
 
-		Inventory.Add( new Hands(), true );
-		Inventory.Add( new StoneHatchet(), true );
-
 		ResetVitals();
 
 		Backpack = new();
@@ -54,6 +50,8 @@ public partial class Player : Sandbox.Player, IContainerEntity
 
 		Hotbar = new( this );
 		Hotbar.SetSize( 7 );
+		Hotbar.Add( Item.FromAsset( "stone_hatchet" ) );
+		Hotbar.SetActiveSlot( 0 );
 
 		base.Respawn();
 	}

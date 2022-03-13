@@ -135,9 +135,6 @@ public partial class Weapon : BaseWeapon, IUse
 		var player = user as Player;
 		if ( Owner != null ) return false;
 
-		if ( player.Inventory is PlayerInventory inventory )
-			return inventory.CanAdd( this );
-
 		return true;
 	}
 
