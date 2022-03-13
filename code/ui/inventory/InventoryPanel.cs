@@ -28,8 +28,12 @@ public partial class InventoryPanel : Panel
 	public override void Tick()
 	{
 		base.Tick();
+	}
 
-		if ( Input.Pressed( InputButton.Score ) )
+	[Event.BuildInput]
+	public void BuildInput( InputBuilder input )
+	{
+		if ( input.Pressed( InputButton.Score ) )
 		{
 			IsOpen = !IsOpen;
 		}
