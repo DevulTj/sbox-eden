@@ -68,10 +68,10 @@ public partial class ContainerNetwork
 		if ( slot is null || slot.Item is null )
 			return;
 
+		var entity = WorldItemEntity.InstantiateFromPlayer( player, slot.Item );
+
 		// @TODO: unfuck this later
 		container.Remove( slotA );
-
-		var entity = WorldItemEntity.InstantiateFromPlayer( player, slot.Item );
 
 		Log.Info( $"{entity} was spawned as a result of dropping an item" );
 	}
