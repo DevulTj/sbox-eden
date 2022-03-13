@@ -115,23 +115,51 @@ public partial class Container : BaseNetworkable
 	public void Remove( int slot )
 	{
 		Items[slot].RemoveItem();
+		Items[slot].SetQuantity( 1 );
 
 		OnItemRemoved( slot );
 	}
 
-	public void Move( int slotA, int slotB, Container destination = null )
+	public void Move( int slotAIndex, int slotBIndex, Container destination = null )
 	{
-		var slotAItem = Items[slotA].Item;
-		var slotBItem = destination is not null ? destination.Items[slotB].Item : Items[slotB].Item;
+		Slot slotA = Items[slotAIndex];
+		Slot slotB = destination is not null ? destination.Items[slotBIndex] : Items[slotBIndex];
 
-		Items[slotA].SetItem( slotBItem );
+		Item slotAItem = slotA.Item;
+		Item slotBItem = slotB.Item;
 
-		if ( destination is not null )
-			destination.Items[slotB].SetItem( slotAItem );
+		bool sameType = slotAItem.IsSame( slotBItem );
+		if ( sameType )
+		{
+			// Combine items together
+			// How many items can we move from A to B?
+			int availableSpaceOnB = slotBItem.MaxStack - slotB.Quantity;
+			// Clamp it to our available items
+			int amountToAdd = Math.Min( availableSpaceOnB, slotA.Quantity );
+			// Update destination's slots
+			slotB.SetQuantity( slotB.Quantity + amountToAdd );
+
+			int newQuantityForA = slotA.Quantity - amountToAdd;
+			if ( newQuantityForA < 1 )
+				Remove( slotAIndex );
+			else
+				slotA.SetQuantity( newQuantityForA );
+
+			OnItemMoved( slotAIndex, slotBIndex, destination );
+		}
 		else
-			Items[slotB].SetItem( slotAItem );
+		{
+			int quantityOfA = slotA.Quantity;
 
-		OnItemMoved( slotA, slotB, destination );
+			// Set new A
+			slotA.SetItem( slotBItem );
+			slotA.SetQuantity( slotB.Quantity );
+			// Set new B
+			slotB.SetItem( slotAItem );
+			slotB.SetQuantity( quantityOfA );
+
+			OnItemMoved( slotAIndex, slotBIndex, destination );
+		}
 	}
 
 	public Slot GetSlot( int slotA )
