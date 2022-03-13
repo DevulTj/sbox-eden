@@ -36,6 +36,13 @@ public partial class Slot : BaseNetworkable, INetworkSerializer
 		WriteNetworkData();
 	}
 
+	public void SetQuantity( int quantity )
+	{
+		Quantity = quantity;
+
+		WriteNetworkData();
+	}
+
 	void INetworkSerializer.Read( ref NetRead read )
 	{
 		var hasItem = read.Read<bool>();
@@ -45,12 +52,13 @@ public partial class Slot : BaseNetworkable, INetworkSerializer
 			return;
 		}
 
+		Quantity = read.Read<int>();
+
 		var type = read.Read<ItemType>();
 		var newItem = type.Instantiate();
 		newItem.Read( read );
 
 		Item = newItem;
-		Quantity = read.Read<int>();
 	}
 
 	void INetworkSerializer.Write( NetWrite write )
@@ -59,10 +67,10 @@ public partial class Slot : BaseNetworkable, INetworkSerializer
 
 		if ( Item is not null )
 		{
+			write.Write( Quantity );
 			write.Write( Item.Type );
 			Item.Write( write );
 
-			write.Write( Quantity );
 		}
 	}
 }

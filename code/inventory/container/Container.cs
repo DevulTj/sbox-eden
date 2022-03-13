@@ -65,19 +65,47 @@ public partial class Container : BaseNetworkable
 		return -1;
 	}
 
-	public int Add( Item item, int slot = -1 )
+	public int Add( Item item, int slotIndex = -1, int quantity = 1 )
 	{
-		if ( slot == -1 )
-			slot = FindEmptySlot();
+		int quantityLeft = quantity;
+		int maxStack = item.MaxStack;
 
-		if ( slot == -1 )
-			return -1;
+		// Try and fill items that exist
+		foreach ( var slot in Items )
+		{
+			if ( slot.Item is not null && slot.Quantity <= maxStack )
+			{
+				var availableSpace = maxStack - slot.Quantity;
+				var amountToAdd = Math.Min( availableSpace, quantity );
 
-		Items[slot].SetItem( item );
+				slot.SetQuantity( slot.Quantity + amountToAdd );
 
-		OnItemAdded( item, slot );
+				quantityLeft -= amountToAdd;
+			}
+		}
 
-		return slot;
+		// Now let's go through empty slots
+		while ( quantityLeft > 0 )
+		{
+			var newQuantity = quantity.Clamp( 1, maxStack );
+			var slot = FindEmptySlot();
+
+			if ( slot != -1 )
+			{
+				Items[slot].SetItem( item );
+				Items[slot].SetQuantity( newQuantity );
+
+				OnItemAdded( item, slot );
+
+				return slot;
+			}
+			else
+			{
+				return -1;
+			}
+		}
+
+		return slotIndex;
 	}
 
 	public void Remove( int slot )
