@@ -65,17 +65,19 @@ public partial class Container : BaseNetworkable
 		return -1;
 	}
 
-	public void Add( Item item, int slot = -1 )
+	public int Add( Item item, int slot = -1 )
 	{
 		if ( slot == -1 )
 			slot = FindEmptySlot();
 
 		if ( slot == -1 )
-			return;
+			return -1;
 
 		Items[slot].SetItem( item );
 
 		OnItemAdded( item, slot );
+
+		return slot;
 	}
 
 	public void Remove( int slot )

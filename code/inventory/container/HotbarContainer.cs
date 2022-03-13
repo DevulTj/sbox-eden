@@ -24,15 +24,14 @@ public partial class HotbarContainer : Container
 
 	public void SetActiveSlot( int index )
 	{
-		if ( index >= Items.Count ) return;
+		if ( index >= Items.Count )
+			return;
 
 		// Nothing interesting here
 		if ( index == -1 && ActiveSlotIndex == -1 )
 			return;
 
-
 		Slot slot = null;
-
 		if ( index != -1 )
 			slot = Items[index];
 
@@ -88,31 +87,37 @@ public partial class HotbarContainer : Container
 		}
 	}
 
-	public void Add( Item item, bool makeActive = false, int slot = -1 )
+	public int Add( Item item, bool makeActive = false, int slot = -1 )
 	{
-		Add( item, slot );
-		SetActiveItem( item );
-	}
+		slot = Add( item, slot );
 
+		if ( makeActive )
+			SetActiveSlot( slot );
+
+		return slot;
+	}
 
 	protected override void OnItemMoved( int slotA, int slotB, Container destination = null )
 	{
 		base.OnItemMoved( slotA, slotB, destination );
 
-		SetActiveSlot( ActiveSlotIndex );
+		if ( slotA == ActiveSlotIndex )
+			SetActiveSlot( ActiveSlotIndex );
 	}
 
 	protected override void OnItemRemoved( int slotA )
 	{
 		base.OnItemRemoved( slotA );
 
-		SetActiveSlot( ActiveSlotIndex );
+		if ( slotA == ActiveSlotIndex )
+			SetActiveSlot( ActiveSlotIndex );
 	}
 
 	protected override void OnItemAdded( Item item, int slot )
 	{
 		base.OnItemAdded( item, slot );
 
-		SetActiveSlot( ActiveSlotIndex );
+		if ( ActiveSlotIndex == slot )
+			SetActiveSlot( ActiveSlotIndex );
 	}
 }
