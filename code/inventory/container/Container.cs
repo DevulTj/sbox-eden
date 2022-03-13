@@ -74,16 +74,15 @@ public partial class Container : BaseNetworkable
 			return;
 
 		Items[slot].SetItem( item );
-	}
 
-	public void Remove( Slot slot )
-	{
-		slot.RemoveItem();
+		OnItemAdded( item, slot );
 	}
 
 	public void Remove( int slot )
 	{
 		Items[slot].RemoveItem();
+
+		OnItemRemoved( slot );
 	}
 
 	public void Move( int slotA, int slotB, Container destination = null )
@@ -98,6 +97,7 @@ public partial class Container : BaseNetworkable
 		else
 			Items[slotB].SetItem( slotAItem );
 
+		OnItemMoved( slotA, slotB, destination );
 	}
 
 	public Slot GetSlot( int slotA )
@@ -106,5 +106,20 @@ public partial class Container : BaseNetworkable
 			return null;
 
 		return Items[slotA];
+	}
+
+	protected virtual void OnItemMoved( int slotA, int slotB, Container destination = null )
+	{
+		//
+	}
+
+	protected virtual void OnItemRemoved( int slotA )
+	{
+		//
+	}
+
+	protected virtual void OnItemAdded( Item item, int slot )
+	{
+		//
 	}
 }
