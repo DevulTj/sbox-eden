@@ -2,6 +2,8 @@
 // without permission of its author (insert_email_here)
 
 using Sandbox.UI;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Eden;
@@ -9,6 +11,10 @@ namespace Eden;
 [UseTemplate]
 public partial class ContainerPanel : Panel
 {
+	public static Dictionary<Guid, ContainerPanel> Panels { get; set; } = new();
+
+	public static ContainerPanel GetFromID( Guid guid ) => Panels.GetValueOrDefault( guid );
+
 	public Container Container { get; set; }
 
 	// @text
@@ -27,12 +33,21 @@ public partial class ContainerPanel : Panel
 		Container = container;
 		Title = container.ID.ToString();
 
+		Panels[container.ID] = this;
+
 		Log.Info( $"{container.ID}" );
 
 		Refresh();
 	}
 
-	protected void Refresh()
+	public override void OnDeleted()
+	{
+		Panels[Container.ID] = null;
+
+		base.OnDeleted();
+	}
+
+	public void Refresh()
 	{
 		ItemLayout.DeleteChildren( true );
 

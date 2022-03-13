@@ -48,6 +48,18 @@ public partial class ContainerNetwork
 			return;
 
 		container.Move( slotA, slotB );
+
+		UpdatePlayer( To.Single( player.Client ), guidString );
+	}
+
+	public static void PickupItem( Player player, WorldItemEntity worldItem )
+	{
+		var container = player.Backpack;
+		container.Add( worldItem.Item );
+
+		UpdatePlayer( To.Single( player.Client ), container.ID.ToString() );
+
+		worldItem.Delete();
 	}
 
 	[ServerCmd( "eden_container_drop" )]
@@ -74,5 +86,18 @@ public partial class ContainerNetwork
 		container.Remove( slotA );
 
 		Log.Info( $"{entity} was spawned as a result of dropping an item" );
+
+		UpdatePlayer( To.Single( player.Client ), guidString );
+	}
+
+	[ClientRpc]
+	public static void UpdatePlayer( string guid )
+	{
+		var containerPanel = ContainerPanel.GetFromID( Guid.Parse( guid ) );
+
+		if ( containerPanel is not null )
+		{
+			containerPanel.Refresh();
+		}
 	}
 }

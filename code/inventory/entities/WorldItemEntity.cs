@@ -49,9 +49,7 @@ public partial class WorldItemEntity : Prop, IUse
 		var player = user as Player;
 		if ( player is null ) return false;
 
-		player.Container.Add( Item );
-
-		Delete();
+		ContainerNetwork.PickupItem( player, this );
 
 		return true;
 	}
