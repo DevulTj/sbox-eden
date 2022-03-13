@@ -7,8 +7,12 @@ namespace Eden;
 
 public partial class HotbarContainer : Container
 {
+	public static HotbarContainer Current { get; set; }
+
 	public HotbarContainer()
 	{
+		if ( Host.IsClient )
+			Current = this;
 	}
 
 	public HotbarContainer( Player owner )
