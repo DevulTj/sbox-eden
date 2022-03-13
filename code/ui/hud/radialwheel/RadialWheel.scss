@@ -1,4 +1,4 @@
-﻿$background: #121212;
+﻿$background: rgba( #121212, 0.5 );
 
 .wheel {
     position: absolute;
@@ -55,7 +55,7 @@ pieselector {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: rgba( $background, 0.5 );
+    background-color: $background;
     box-shadow: 0 0 25px rgba( black, 0.1 );
 
     label {
@@ -65,7 +65,7 @@ pieselector {
     .icon {
         width: 128px;
         height: 128px;
-        filter: saturate( 0 );
+        margin-bottom: 32px;
     }
 }
 
@@ -79,7 +79,7 @@ pieselector {
 
 .item-icon {
     position: absolute;
-    width: 96px;
+    width: 64px;
     aspect-ratio: 1;
     font-size: 64px;
     background-size: contain;
@@ -89,14 +89,6 @@ pieselector {
     text-align: center;
     transform: translate(-50% -50%);
     transition: all 150ms ease;
-    filter: saturate( 0 );
-
-    &.active {
-        color: $background;
-        background-image-tint: red;
-        transform-origin: center;
-        filter: saturate( 100% );
-    }
 }
 
 .image {
