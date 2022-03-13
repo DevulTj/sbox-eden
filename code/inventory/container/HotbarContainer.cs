@@ -20,18 +20,13 @@ public partial class HotbarContainer : Container
 	public Player Owner { get; set; }
 
 	[Net]
-	public Slot ActiveSlot { get; set; }
+	public int ActiveSlotIndex { get; set; } = -1;
 
 	public void SetActiveSlot( int index )
 	{
 		if ( index >= Items.Count ) return;
 
 		var slot = Items[index];
-		SetActiveSlot( slot );
-	}
-
-	public void SetActiveSlot( Slot slot )
-	{
 		if ( slot is null )
 		{
 			SetActiveItem( null );
@@ -39,12 +34,16 @@ public partial class HotbarContainer : Container
 		}
 
 		// Allow to toggle by hitting the same slot
-		if ( slot == ActiveSlot )
-			ActiveSlot = null;
+		if ( index == ActiveSlotIndex )
+		{
+			ActiveSlotIndex = -1;
+			SetActiveItem( null );
+		}
 		else
-			ActiveSlot = slot;
-
-		SetActiveItem( slot.Item );
+		{
+			ActiveSlotIndex = index;
+			SetActiveItem( slot.Item );
+		}
 	}
 
 	public void SetActiveChild( BaseCarriable carriable )
