@@ -2,11 +2,13 @@
 // without permission of its author (insert_email_here)
 
 using Sandbox;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Eden;
 
-public partial class WorldItemEntity : Prop
+public partial class Container
 {
-	[Net]
-	public ItemAsset Asset { get; set; }
+
 }

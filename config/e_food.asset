@@ -1,0 +1,13 @@
+//
+// Eden.ConsumableItemAsset
+//
+@BaseClass = e_food : ""
+[
+	hunger(integer) { group = "Consumable" } : "Hunger" : 0 : ""
+	thirst(integer) { group = "Consumable" } : "Thirst" : 0 : ""
+	itemname(string) { group = "Meta" } : "Item Name" :  : ""
+	itemdescription(string) { group = "Meta" } : "Item Description" :  : ""
+	iconpath(string) { group = "Meta" editor = "AssetBrowse(png)" } : "Icon Path" :  : ""
+	worldmodelpath(resource:vmdl) { group = "World" } : "World Model Path" :  : ""
+]
+

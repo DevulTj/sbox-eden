@@ -10,7 +10,7 @@ namespace Eden;
 [Library( "eden_hands", Title = "Hands", Spawnable = false )]
 partial class Hands : Weapon
 {
-	public override string ViewModelPath => "models/first_person/first_person_arms.vmdl";
+	public override string ViewModelPath => "models/arms/toon_arms.vmdl";
 	public override float PrimaryRate => 2.0f;
 	public override float SecondaryRate => 2.0f;
 
@@ -43,6 +43,11 @@ partial class Hands : Weapon
 		Attack( true );
 	}
 
+	protected override void OnPlayerUse()
+	{
+		ViewModelEntity?.SetAnimParameter( "grab", true );
+	}
+
 	public override void AttackSecondary()
 	{
 		Attack( false );
@@ -63,12 +68,12 @@ partial class Hands : Weapon
 		ViewModelData = new()
 		{
 			SwingInfluence = 0.03f,
-			Offset = new Vector3( 1f, -1f, -2f ),
+			Offset = new Vector3( 1f, -1f, -4f ),
 		};
 
 		base.CreateViewModel();
 
-		ViewModelEntity.SetAnimGraph( "models/first_person/first_person_arms_punching.vanmgrph" );
+		//ViewModelEntity.SetAnimGraph( "models/first_person/first_person_arms_punching.vanmgrph" );
 	}
 
 	private bool MeleeAttack()
@@ -113,7 +118,6 @@ partial class Hands : Weapon
 		}
 
 		ViewModelEntity?.SetAnimParameter( "attack_has_hit", false );
-		ViewModelEntity?.SetAnimParameter( "attack", true );
 		ViewModelEntity?.SetAnimParameter( "holdtype_attack", leftHand ? 2 : 1 );
 	}
 
@@ -128,7 +132,6 @@ partial class Hands : Weapon
 		}
 
 		ViewModelEntity?.SetAnimParameter( "attack_has_hit", true );
-		ViewModelEntity?.SetAnimParameter( "attack", true );
 		ViewModelEntity?.SetAnimParameter( "holdtype_attack", leftHand ? 2 : 1 );
 	}
 }

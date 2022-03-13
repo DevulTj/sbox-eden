@@ -1,0 +1,62 @@
+@import "/ui/Theme.scss";
+
+draggeditempanel {
+    position: absolute;
+    aspect-ratio: 1;
+    min-width: 128px;
+    min-height: 128px;
+    border-radius: 2px;
+    pointer-events: none;
+    transition: transform 0.1s ease;
+    background-color: rgba( white, 0.1 );
+    border: 2px solid rgba( red, 0.5 );
+
+
+    .icon {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        pointer-events: none;
+    }
+
+    .quantity {
+        left: 8px;
+        top: 4px;
+        text-stroke: 2px black;
+    }
+
+    &:hover {
+        transform: scale( 1.05 );
+
+        .overlay {
+            background-color: rgba( white, 0.05 );
+        }
+    }
+
+    &:active {
+        transform: scale( 0.95 );
+
+        .overlay {
+            background-color: rgba( white, 0.2 );
+        }
+    }
+
+    &.empty {
+        background-color: rgba( #808080, 0.1 );
+
+        .quantity {
+            opacity: 0;
+        }
+
+        &:active {
+            transform: scale( 1.02 );
+        }
+
+        &:hover {
+            transform: scale( 1.02 );
+        }
+    }
+}
