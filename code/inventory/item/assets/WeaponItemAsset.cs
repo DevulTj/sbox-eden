@@ -12,10 +12,6 @@ public partial class WeaponItemAsset : ItemAsset
 	public override ItemType Type => ItemType.Weapon;
 	public override Color DefaultColor => Color.Blue;
 
-
-	[Property, Range( 0, 500 )]
-	public int Hunger { get; set; } = 0;
-
-	[Property, Range( 0, 300 )]
-	public int Thirst { get; set; } = 0;
+	[Property]
+	public string WeaponClassName { get; set; }
 }
