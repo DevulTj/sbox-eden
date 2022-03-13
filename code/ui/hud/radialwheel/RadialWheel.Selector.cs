@@ -98,7 +98,7 @@ partial class RadialWheel
 			base.Tick();
 
 			// Interpolate angle here because scss transition does a shit job of it
-			float angle = parentWheel.SelectedIndex * parentWheel.AngleIncrement;
+			float angle = parentWheel.ActiveIndex * parentWheel.AngleIncrement;
 			lerpedSelectionAngle = lerpedSelectionAngle.LerpToAngle( angle, 50f * Time.Delta );
 
 			float angleOffset = parentWheel.AngleIncrement / 2f; // Display icons in the middle of the selector
