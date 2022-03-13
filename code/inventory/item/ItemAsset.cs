@@ -42,6 +42,8 @@ public partial class ItemAsset : Asset
 
 	public Model WorldModel { get; set; }
 
+	public static Model FallbackWorldModel = Model.Load( "models/sbox_props/bin/rubbish_bag.vmdl" );
+
 	protected override void PostLoad()
 	{
 		base.PostLoad();

@@ -29,6 +29,8 @@ public partial class WorldItemEntity : Prop
 	public override void Spawn()
 	{
 		base.Spawn();
+
+		Model = ItemAsset.FallbackWorldModel;
 	}
 
 	public void SetItem( Item item )
