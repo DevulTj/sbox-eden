@@ -11,7 +11,7 @@ public partial class ItemPanel : Panel
 	// @ref
 	public Panel IconPanel { get; set; }
 	// @text
-	public int Quantity => Item?.Quantity ?? 0;
+	public int Quantity => Slot?.Quantity ?? 0;
 
 	public Slot Slot { get; protected set; }
 	public Item Item { get; protected set; }

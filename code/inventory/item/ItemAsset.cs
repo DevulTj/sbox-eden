@@ -34,6 +34,9 @@ public partial class ItemAsset : Asset
 	[Property, Category( "Meta" )]
 	public string ItemDescription { get; set; }
 
+	[Property, Category( "Meta" ), Range( 0, 256 )]
+	public int StackSize { get; set; } = 1;
+
 	[Property, Category( "Meta" ), ResourceType( "png" )]
 	public string IconPath { get; set; }
 

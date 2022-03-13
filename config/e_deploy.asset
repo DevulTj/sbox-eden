@@ -6,6 +6,7 @@
 	entityclassname(string) : "Entity Class Name" :  : ""
 	itemname(string) { group = "Meta" } : "Item Name" :  : ""
 	itemdescription(string) { group = "Meta" } : "Item Description" :  : ""
+	stacksize(integer) { group = "Meta" } : "Stack Size" : 1 : ""
 	iconpath(string) { group = "Meta" editor = "AssetBrowse(png)" } : "Icon Path" :  : ""
 	worldmodelpath(resource:vmdl) { group = "World" } : "World Model Path" :  : ""
 ]

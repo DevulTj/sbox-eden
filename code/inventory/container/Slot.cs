@@ -9,7 +9,10 @@ public partial class Slot : BaseNetworkable, INetworkSerializer
 {
 	public override string ToString() => Item is null ? "Empty" : Item.ToString();
 
+	// @net
 	public Item Item { get; protected set; } = null;
+	// @net
+	public int Quantity { get; protected set; } = 1;
 
 	public void SetItem( ItemAsset asset )
 	{
@@ -47,6 +50,7 @@ public partial class Slot : BaseNetworkable, INetworkSerializer
 		newItem.Read( read );
 
 		Item = newItem;
+		Quantity = read.Read<int>();
 	}
 
 	void INetworkSerializer.Write( NetWrite write )
@@ -57,6 +61,8 @@ public partial class Slot : BaseNetworkable, INetworkSerializer
 		{
 			write.Write( Item.Type );
 			Item.Write( write );
+
+			write.Write( Quantity );
 		}
 	}
 }
