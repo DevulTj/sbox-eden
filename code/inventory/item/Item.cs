@@ -10,6 +10,18 @@ namespace Eden;
 public partial class Item
 {
 	/// <summary>
+	/// Tells if an item is the same as another
+	/// </summary>
+	/// <param name="other"></param>
+	/// <returns>true if <type><paramref name="other"/></type> has the same asset as our item, otherwise false</returns>
+	public bool IsSame( Item other )
+	{
+		if ( other is null ) return false;
+
+		return other.Asset == Asset;
+	}
+
+	/// <summary>
 	/// Creates an item based off an Item Asset.
 	/// </summary>
 	/// <param name="asset"></param>
