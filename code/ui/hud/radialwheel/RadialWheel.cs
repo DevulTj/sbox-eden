@@ -28,7 +28,7 @@ public partial class RadialWheel : Panel
 	// Runtime
 	//
 	private PieSelector selector;
-	public int SelectedIndex { get; set; }
+	public int ActiveIndex { get; set; }
 
 	private List<Item> Items { get; } = new();
 
@@ -61,7 +61,7 @@ public partial class RadialWheel : Panel
 	{
 		base.OnMouseUp( e );
 
-		var activeItem = GetCurrentItem();
+		var activeItem = GetActiveItem();
 		activeItem?.OnSelected?.Invoke();
 	}
 
@@ -120,7 +120,7 @@ public partial class RadialWheel : Panel
 		return ang;
 	}
 
-	protected int GetCurrentIndex()
+	protected int GetActiveIndex()
 	{
 		var ang = GetCurrentAngle();
 		return ( ang.UnsignedMod( 360.0f ) / AngleIncrement ).FloorToInt();
@@ -129,15 +129,15 @@ public partial class RadialWheel : Panel
 	/// <summary>
 	/// Get the current <see cref="Item"/> based on the value returned from <see cref="GetCurrentAngle"/>
 	/// </summary>
-	private Item? GetCurrentItem()
+	private Item? GetActiveItem()
 	{
-		int selectedIndex = GetCurrentIndex();
+		int activeIndex = GetActiveIndex();
 
-		if ( selectedIndex < 0 || selectedIndex > Items.Count )
+		if ( activeIndex < 0 || activeIndex > Items.Count )
 			return null;
 
-		var selectedItem = Items[selectedIndex];
-		return selectedItem;
+		var activeItem = Items[activeIndex];
+		return activeItem;
 	}
 
 	public override void Tick()
@@ -148,20 +148,20 @@ public partial class RadialWheel : Panel
 
 	private void UpdateWheel()
 	{
-		var newSelectedItem = GetCurrentItem();
-		int newSelectedIndex = GetCurrentIndex();
+		var newActiveItem = GetActiveItem();
+		int newActiveIndex = GetActiveIndex();
 
 		for ( int i = 0; i < IconPanels.Count; i++ )
 		{
-			IconPanels[i].SetClass( "active", i == newSelectedIndex );
+			IconPanels[i].SetClass( "active", i == newActiveIndex );
 		}
 
-		if ( newSelectedIndex != SelectedIndex )
+		if ( newActiveIndex != ActiveIndex )
 		{
-			SelectedIndex = newSelectedIndex;
+			ActiveIndex = newActiveIndex;
 
-			ActiveIcon.SetTexture( newSelectedItem?.Icon ?? "" );
-			ActiveName = newSelectedItem?.Text ?? "None";
+			ActiveIcon.SetTexture( newActiveItem?.Icon ?? "" );
+			ActiveName = newActiveItem?.Text ?? "None";
 		}
 	}
 }
