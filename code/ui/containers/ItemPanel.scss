@@ -8,7 +8,6 @@ itempanel {
     background-color: rgba( white, 0.1 );
     border: 2px solid rgba( black, 0.5 );
 
-
     .icon {
         position: absolute;
         width: 100%;
@@ -31,6 +30,8 @@ itempanel {
         .overlay {
             background-color: rgba( white, 0.05 );
         }
+
+        cursor: pointer;
     }
 
     &:active {
@@ -54,6 +55,7 @@ itempanel {
 
         &:hover {
             transform: scale( 1.02 );
+            cursor: default;
         }
     }
 }
