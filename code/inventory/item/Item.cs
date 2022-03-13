@@ -30,13 +30,17 @@ public partial class Item
 
 	public ItemAsset Asset { get; set; }
 
+	public int Quantity { get; set; } = 1;
+
 	public virtual void Write( NetWrite write )
 	{
 		write.Write( Asset );
+		write.Write( Quantity );
 	}
 
 	public virtual void Read( NetRead read )
 	{
 		Asset = read.ReadClass<ItemAsset>();
+		Quantity = read.Read<int>();
 	}
 }
