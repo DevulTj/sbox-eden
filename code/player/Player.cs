@@ -67,7 +67,7 @@ public partial class Player : Sandbox.Player, IContainerEntity
 
 		TickPlayerUse();
 		SimulateActiveChild( cl, ActiveChild );
-
+		HotbarSimulate();
 		TickVitals();
 	}
 

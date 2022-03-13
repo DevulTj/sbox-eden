@@ -16,11 +16,22 @@ public partial class Player
 	[Net, Local]
 	public HotbarContainer Hotbar { get; protected set; }
 
-	protected void PrintBackpack()
+	public void HotbarSimulate()
 	{
-		var position = Host.IsServer ? new Vector2( 100, 100 ) : new Vector2( 100, 200 );
+		int desiredSlot = -1;
 
-		DebugOverlay.ScreenText( position, 0, Color.White,
-			$"{( Host.IsServer ? "[Server]" : "[Client]" )} Inventory of \"{Client?.Name ?? "Unknown player"}\"\n" + Backpack );
+		if ( Input.Pressed( InputButton.Slot1 ) ) desiredSlot = 0;
+		if ( Input.Pressed( InputButton.Slot2 ) ) desiredSlot = 1;
+		if ( Input.Pressed( InputButton.Slot3 ) ) desiredSlot = 2;
+		if ( Input.Pressed( InputButton.Slot4 ) ) desiredSlot = 3;
+		if ( Input.Pressed( InputButton.Slot5 ) ) desiredSlot = 4;
+		if ( Input.Pressed( InputButton.Slot6 ) ) desiredSlot = 5;
+		if ( Input.Pressed( InputButton.Slot7 ) ) desiredSlot = 6;
+		if ( Input.Pressed( InputButton.Slot8 ) ) desiredSlot = 7;
+
+		if ( desiredSlot == -1 )
+			return;
+
+		Hotbar.SetActiveSlot( desiredSlot );
 	}
 }

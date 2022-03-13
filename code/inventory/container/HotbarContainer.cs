@@ -32,10 +32,50 @@ public partial class HotbarContainer : Container
 
 	public void SetActiveSlot( Slot slot )
 	{
+		if ( slot is null )
+		{
+			SetActiveItem( null );
+			return;
+		}
+
 		// Allow to toggle by hitting the same slot
 		if ( slot == ActiveSlot )
 			ActiveSlot = null;
 		else
 			ActiveSlot = slot;
+
+		SetActiveItem( slot.Item );
+	}
+
+	public void ActiveDrop()
+	{
+		( Owner.ActiveChild as BaseCarriable )?.OnCarryDrop( Owner );
+		Owner.ActiveChild?.Delete();
+	}
+
+	public void SetActiveItem( Item item )
+	{
+		if ( Host.IsClient ) return;
+
+		if ( item is not null && item.Type == ItemType.Weapon )
+		{
+			var weaponItemAsset = item.Asset as WeaponItemAsset;
+			var weaponEntity = Library.Create<Weapon>( weaponItemAsset.WeaponClassName );
+
+			ActiveDrop();
+			Owner.ActiveChild = weaponEntity;
+			( Owner.ActiveChild as BaseCarriable )?.OnCarryStart( Owner );
+		}
+		else if ( item is not null && item.Type == ItemType.Deployable )
+		{
+			// Some generic deployable weapon here
+		}
+		else
+		{
+			ActiveDrop();
+
+			Owner.ActiveChild = new Hands();
+			( Owner.ActiveChild as BaseCarriable )?.OnCarryStart( Owner );
+		}
 	}
 }
