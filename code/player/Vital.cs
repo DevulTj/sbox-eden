@@ -27,13 +27,18 @@ public partial class Vital : BaseNetworkable
 		Value = MaxValue;
 	}
 
+	protected virtual void OnVitalTick()
+	{
+		Value -= DrainSpeed * Time.Delta;
+		// Clamp
+		Value = Value.Clamp( 0, MaxValue );
+	}
+
 	public void Tick()
 	{
 		if ( LastTick > TickSpeed )
 		{
-			Value -= DrainSpeed * Time.Delta;
-			// Clamp
-			Value = Value.Clamp( 0, MaxValue );
+			OnVitalTick();
 			LastTick = 0;
 		}
 	}
