@@ -1,8 +1,7 @@
 @import "/ui/Theme.scss";
 
 containerpanel, .containerpanel {
-    aspect-ratio: 1;
-    height: 100%;
+    width: 50%;
     border-radius: 2px;
     pointer-events: all;
     flex-direction: column;

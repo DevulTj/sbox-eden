@@ -33,7 +33,7 @@ public partial class ContainerPanel : Panel
 	public void SetContainer( Container container )
 	{
 		Container = container;
-		Title = container.ID.ToString();
+		Title = "";
 
 		Panels[container.ID] = this;
 
