@@ -36,6 +36,7 @@ public partial class Player : Sandbox.Player, IContainerEntity
 		Hotbar = new( this );
 		Hotbar.SetSize( 7 );
 		Hotbar.Add( Item.FromAsset( "stone_hatchet" ), true );
+		Hotbar.Add( Item.FromAsset( "blueprint" ), true );
 	}
 
 	public override void Respawn()

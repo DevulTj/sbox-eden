@@ -6,5 +6,7 @@
 		itemdescription = "Use this to build stuff"
 		iconpath = "ui/items/blueprint.png"
 		worldmodelpath = resource:""
+		weaponclassname = "eden_blueprint"
+		stacksize = 1
 	}
 }
