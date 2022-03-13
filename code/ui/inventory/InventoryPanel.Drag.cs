@@ -57,6 +57,8 @@ public partial class InventoryPanel
 			if ( destination != null )
 			{
 				// net move
+
+				Log.Info( $"destination: {destination.Item?.Asset?.ItemName ?? "empty slot"}" );
 			}
 		}
 

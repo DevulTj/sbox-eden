@@ -25,5 +25,6 @@ public partial class DraggedItemPanel : ItemPanel
 		transform.AddTranslateX( Length.Fraction( -0.5f ) );
 
 		Style.Transform = transform;
+		Style.PointerEvents = "none";
 	}
 }

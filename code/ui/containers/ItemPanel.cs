@@ -17,6 +17,8 @@ public partial class ItemPanel : Panel
 	public Item Item { get; protected set; }
 	protected ContainerPanel ContainerPanel { get; set; }
 
+	public bool IsHovered { get; set; } = false;
+
 	public ItemPanel()
 	{
 	}
@@ -65,5 +67,22 @@ public partial class ItemPanel : Panel
 		base.OnRightClick( e );
 
 		ContainerPanel.HandleDrop( this );
+	}
+
+	protected override void OnMouseOver( MousePanelEvent e )
+	{
+		base.OnMouseOver( e );
+
+		AddClass( "hovered-item" );
+
+		IsHovered = true;
+	}
+
+	protected override void OnMouseOut( MousePanelEvent e )
+	{
+		base.OnMouseOut( e );
+
+		RemoveClass( "hovered-item" );
+		IsHovered = false;
 	}
 }

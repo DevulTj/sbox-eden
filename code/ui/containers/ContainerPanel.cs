@@ -44,7 +44,7 @@ public partial class ContainerPanel : Panel
 
 	public ItemPanel FindHoveredItem()
 	{
-		return Slots.FirstOrDefault( x => x.HasHovered || x.HasActive );
+		return Slots.FirstOrDefault( x => x.IsHovered );
 	}
 
 	public override void OnDeleted()

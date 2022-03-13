@@ -6,7 +6,7 @@ draggeditempanel {
     min-width: 128px;
     min-height: 128px;
     border-radius: 2px;
-    pointer-events: all;
+    pointer-events: none;
     transition: transform 0.1s ease;
     background-color: rgba( white, 0.1 );
     border: 2px solid rgba( red, 0.5 );
