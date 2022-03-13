@@ -3,8 +3,7 @@
 //
 @BaseClass = e_weapon : ""
 [
-	hunger(integer) : "Hunger" : 0 : ""
-	thirst(integer) : "Thirst" : 0 : ""
+	weaponclassname(string) : "Weapon Class Name" :  : ""
 	itemname(string) { group = "Meta" } : "Item Name" :  : ""
 	itemdescription(string) { group = "Meta" } : "Item Description" :  : ""
 	iconpath(string) { group = "Meta" editor = "AssetBrowse(png)" } : "Icon Path" :  : ""
