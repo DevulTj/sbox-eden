@@ -1,17 +1,13 @@
 //
-// Eden.ItemAsset
+// Eden.WeaponItemAsset
 //
-@BaseClass = item : ""
+@BaseClass = e_weapon : ""
 [
-	itemtype(choices) { group = "Meta" } : "Item Type" : 0 : "" =
-	[
-		0 : "Item"
-		1 : "Food"
-		2 : "Deployable"
-		3 : "Tool"
-	]
+	hunger(integer) : "Hunger" : 0 : ""
+	thirst(integer) : "Thirst" : 0 : ""
 	itemname(string) { group = "Meta" } : "Item Name" :  : ""
 	itemdescription(string) { group = "Meta" } : "Item Description" :  : ""
 	iconpath(string) { group = "Meta" editor = "AssetBrowse(png)" } : "Icon Path" :  : ""
+	worldmodelpath(resource:vmdl) { group = "World" } : "World Model Path" :  : ""
 ]
 
