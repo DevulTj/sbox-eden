@@ -71,7 +71,6 @@ public partial class Player : Sandbox.Player, IContainerEntity
 		SimulateActiveChild( cl, ActiveChild );
 		HotbarSimulate();
 		TickVitals();
-		TickBuilding();
 	}
 
 	public override void FrameSimulate( Client cl )
