@@ -1,0 +1,37 @@
+@import "/ui/Theme.scss";
+
+eyeentityvital {
+    position: absolute;
+    transform: translateX( -50% ) translateY( -100% );
+    left: 50%;
+    top: 45%;
+    height: 52px;
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: stretch;
+    transition: opacity 0.1s ease;
+    text-stroke: 4px rgba( black, 0.5 );
+    background-image: linear-gradient(to top, rgba( black, 0 ), rgba( black, 0.5 ));
+    padding-left: 8px;
+    padding-right: 8px;
+    border-bottom: 2px solid rgba( white, 0.5 );
+    opacity: 0;
+
+    .name {
+        width: 100%;
+        text-align: center;
+    }
+
+    .subtitle {
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+        padding-bottom: 4px;
+    }
+
+    &.show {
+        opacity: 1;
+    }
+}

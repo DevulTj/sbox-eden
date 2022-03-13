@@ -24,6 +24,7 @@ public partial class GameHud : HudEntity<RootPanel>
 		RootPanel.AddChild<InventoryPanel>();
 		RootPanel.AddChild<HudHotbarPanel>();
 		RootPanel.AddChild<WipText>();
+		RootPanel.AddChild<EyeEntityVital>();
 
 		RootPanel.AddChild<VoiceList>();
 		RootPanel.AddChild<ChatBox>();
