@@ -74,7 +74,7 @@ public partial class ContainerPanel : Panel
 		return itemPanel;
 	}
 
-	protected int GetSlotIndex( ItemPanel panel )
+	public int GetSlotIndex( ItemPanel panel )
 	{
 		return Slots.IndexOf( panel );
 	}

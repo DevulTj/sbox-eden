@@ -96,9 +96,6 @@ public partial class Container : BaseNetworkable
 
 		Items[slotA].SetItem( slotBItem );
 		Items[slotB].SetItem( slotAItem );
-
-		Items[slotA].WriteNetworkData();
-		Items[slotB].WriteNetworkData();
 	}
 
 	public void Transfer( int slotA, Container destination, int slotB )

@@ -56,9 +56,14 @@ public partial class InventoryPanel
 
 			if ( destination != null )
 			{
-				// net move
+				var panel = destination.ContainerPanel;
 
-				Log.Info( $"destination: {destination.Item?.Asset?.ItemName ?? "empty slot"}" );
+				ContainerNetwork.ContainerMove(
+					panel.Container.ID.ToString(),
+					panel.GetSlotIndex( FocusedItem ),
+					panel.GetSlotIndex( destination )
+				);
+
 			}
 		}
 

@@ -15,7 +15,7 @@ public partial class ItemPanel : Panel
 
 	public Slot Slot { get; protected set; }
 	public Item Item { get; protected set; }
-	protected ContainerPanel ContainerPanel { get; set; }
+	public ContainerPanel ContainerPanel { get; protected set; }
 
 	public bool IsHovered { get; set; } = false;
 
