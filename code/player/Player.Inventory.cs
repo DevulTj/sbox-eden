@@ -13,6 +13,9 @@ public partial class Player
 	// @IContainerEntity
 	public Container Container { get => Backpack; set => Backpack = value; }
 
+	[Net, Local]
+	public Container Hotbar { get; protected set; }
+
 	protected void PrintBackpack()
 	{
 		var position = Host.IsServer ? new Vector2( 100, 100 ) : new Vector2( 100, 200 );

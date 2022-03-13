@@ -51,6 +51,9 @@ public partial class Player : Sandbox.Player, IContainerEntity
 		Backpack = new();
 		Backpack.SetSize( 28 );
 
+		Hotbar = new();
+		Hotbar.SetSize( 7 );
+
 		base.Respawn();
 	}
 
