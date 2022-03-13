@@ -7,7 +7,7 @@ using System.Linq;
 namespace Eden;
 
 [Library( "eden_blueprint", Title = "Blueprint", Spawnable = false )]
-partial class Blueprint : BaseCarriable
+partial class Blueprint : Weapon
 {
 	RadialWheel buildWheel;
 
@@ -18,10 +18,10 @@ partial class Blueprint : BaseCarriable
 		if ( !IsClient )
 			return;
 
-		if ( Input.Pressed( InputButton.Menu ) )
+		if ( Input.Pressed( InputButton.Attack2 ) )
 			CreateBuildWheel();
 
-		if ( Input.Released( InputButton.Menu ) )
+		if ( Input.Released( InputButton.Attack2 ) )
 			DeleteBuildWheel();
 	}
 
