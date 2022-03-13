@@ -126,6 +126,8 @@ public partial class Container : BaseNetworkable
 		Slot slotB = destination is not null ? destination.Items[slotBIndex] : Items[slotBIndex];
 
 		Item slotAItem = slotA.Item;
+		if ( slotAItem is null ) return;
+
 		Item slotBItem = slotB.Item;
 
 		bool sameType = slotAItem.IsSame( slotBItem );
