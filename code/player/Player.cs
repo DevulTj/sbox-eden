@@ -45,13 +45,14 @@ public partial class Player : Sandbox.Player, IContainerEntity
 		Clothing.DressEntity( this );
 
 		Inventory.Add( new Hands(), true );
+		Inventory.Add( new StoneHatchet(), true );
 
 		ResetVitals();
 
 		Backpack = new();
 		Backpack.SetSize( 28 );
 
-		Hotbar = new();
+		Hotbar = new( this );
 		Hotbar.SetSize( 7 );
 
 		base.Respawn();

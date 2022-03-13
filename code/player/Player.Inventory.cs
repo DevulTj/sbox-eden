@@ -14,7 +14,7 @@ public partial class Player
 	public Container Container { get => Backpack; set => Backpack = value; }
 
 	[Net, Local]
-	public Container Hotbar { get; protected set; }
+	public HotbarContainer Hotbar { get; protected set; }
 
 	protected void PrintBackpack()
 	{
