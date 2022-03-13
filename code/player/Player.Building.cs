@@ -3,6 +3,7 @@
 
 using Sandbox;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Eden;
 
@@ -19,19 +20,9 @@ partial class Player
 		{
 			buildWheel = RadialWheel.Create();
 
-			List<string> buildingTypes = new( new[] {
-				"door",
-				"floor",
-				"roof",
-				"stairs",
-				"wall",
-				"window"
-			} );
-
-			buildingTypes.ForEach( t =>
-			{
-				buildWheel.AddOption( t.ToTitleCase(), $"ui/building/{t}.png", () => Log.Trace( $"Build {t}" ) );
-			} );
+			var buildingTypes = Library.GetAttributes<DisplayOnBuildWheelAttribute>();
+			buildingTypes.ToList().ForEach( t =>
+				buildWheel.AddOption( t.Title, t.Icon, () => Log.Trace( $"Build {t.Title}" ) ) );
 		}
 
 		if ( Input.Released( InputButton.Menu ) )
