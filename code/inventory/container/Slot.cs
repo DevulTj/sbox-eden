@@ -9,19 +9,38 @@ public partial class Slot : BaseNetworkable, INetworkSerializer
 {
 	public override string ToString() => Item is null ? "Empty" : Item.ToString();
 
-	public Item Item { get; set; } = null;
+	public Item Item { get; protected set; } = null;
 
 	public void SetItem( ItemAsset asset )
 	{
 		Item = asset.Type.Instantiate();
 		Item.Asset = asset;
+
+		WriteNetworkData();
+	}
+
+	public void SetItem( Item item )
+	{
+		Item = item;
+
+		WriteNetworkData();
+	}
+
+	public void RemoveItem()
+	{
+		Item = null;
+
+		WriteNetworkData();
 	}
 
 	void INetworkSerializer.Read( ref NetRead read )
 	{
 		var hasItem = read.Read<bool>();
 		if ( !hasItem )
+		{
+			Item = null;
 			return;
+		}
 
 		var type = read.Read<ItemType>();
 		var newItem = type.Instantiate();

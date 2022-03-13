@@ -81,17 +81,17 @@ public partial class Container : BaseNetworkable
 		if ( slot == -1 )
 			return;
 
-		Items[slot].Item = item;
+		Items[slot].SetItem( item );
 	}
 
 	public void Remove( Slot slot )
 	{
-		slot.Item = null;
+		slot.RemoveItem();
 	}
 
 	public void Remove( int slot )
 	{
-		Items[slot].Item = null;
+		Items[slot].RemoveItem();
 	}
 
 	public void Move( int slotA, int slotB )
@@ -101,6 +101,8 @@ public partial class Container : BaseNetworkable
 
 		Items[slotB] = _slotA;
 		Items[slotA] = _slotB;
+		Items[slotA].WriteNetworkData();
+		Items[slotB].WriteNetworkData();
 	}
 
 	public void Transfer( int slotA, Container destination, int slotB )
