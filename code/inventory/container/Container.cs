@@ -91,11 +91,12 @@ public partial class Container : BaseNetworkable
 
 	public void Move( int slotA, int slotB )
 	{
-		var _slotA = Items[slotA];
-		var _slotB = Items[slotB];
+		var slotAItem = Items[slotA].Item;
+		var slotBItem = Items[slotB].Item;
 
-		Items[slotB] = _slotA;
-		Items[slotA] = _slotB;
+		Items[slotA].SetItem( slotBItem );
+		Items[slotB].SetItem( slotAItem );
+
 		Items[slotA].WriteNetworkData();
 		Items[slotB].WriteNetworkData();
 	}
