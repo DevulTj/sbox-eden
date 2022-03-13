@@ -119,11 +119,11 @@ public partial class ContainerNetwork
 	[ClientRpc]
 	public static void UpdatePlayer( string guid )
 	{
-		var containerPanel = ContainerPanel.GetFromID( Guid.Parse( guid ) );
+		var matchingPanels = ContainerPanel.GetFromID( Guid.Parse( guid ) );
 
-		if ( containerPanel is not null )
+		if ( matchingPanels is not null && matchingPanels.Count > 0 )
 		{
-			containerPanel.Refresh();
+			matchingPanels.ForEach( x => x.Refresh() );
 		}
 	}
 }

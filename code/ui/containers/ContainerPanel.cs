@@ -11,9 +11,9 @@ namespace Eden;
 [UseTemplate]
 public partial class ContainerPanel : Panel
 {
-	public static Dictionary<Guid, ContainerPanel> Panels { get; set; } = new();
+	public static Dictionary<Guid, List<ContainerPanel>> Panels { get; set; } = new();
 
-	public static ContainerPanel GetFromID( Guid guid ) => Panels.GetValueOrDefault( guid );
+	public static List<ContainerPanel> GetFromID( Guid guid ) => Panels.GetValueOrDefault( guid );
 
 	public Container Container { get; set; }
 
@@ -35,9 +35,10 @@ public partial class ContainerPanel : Panel
 		Container = container;
 		Title = "";
 
-		Panels[container.ID] = this;
+		if ( !Panels.ContainsKey( container.ID ) || Panels[container.ID] == null )
+			Panels[container.ID] = new();
 
-		Log.Info( $"{container.ID}" );
+		Panels[container.ID].Add( this );
 
 		Refresh();
 	}
@@ -49,7 +50,7 @@ public partial class ContainerPanel : Panel
 
 	public override void OnDeleted()
 	{
-		Panels[Container.ID] = null;
+		Panels[Container.ID].Remove( this );
 
 		base.OnDeleted();
 	}
