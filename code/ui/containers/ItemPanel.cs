@@ -13,10 +13,24 @@ public partial class ItemPanel : Panel
 	// @text
 	public int Quantity { get; set; } = 1;
 
+	protected Slot Slot { get; set; }
 	protected Item Item { get; set; }
+	protected ContainerPanel ContainerPanel { get; set; }
 
 	public ItemPanel()
 	{
+	}
+
+	public void SetPanel( ContainerPanel panel )
+	{
+		ContainerPanel = panel;
+	}
+
+	public void SetSlot( Slot slot )
+	{
+		Slot = slot;
+
+		SetItem( slot.Item );
 	}
 
 	public void SetItem( Item item )
@@ -44,5 +58,12 @@ public partial class ItemPanel : Panel
 
 			SetItem( item );
 		}
+	}
+
+	protected override void OnRightClick( MousePanelEvent e )
+	{
+		base.OnRightClick( e );
+
+		ContainerPanel.HandleDrop( this );
 	}
 }

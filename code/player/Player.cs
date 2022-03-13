@@ -67,12 +67,6 @@ public partial class Player : Sandbox.Player, IContainerEntity
 		TickVitals();
 	}
 
-	[Event.Tick]
-	protected void InventoryTick()
-	{
-		PrintBackpack();
-	}
-
 	public override void FrameSimulate( Client cl )
 	{
 		base.FrameSimulate( cl );

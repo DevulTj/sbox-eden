@@ -17,6 +17,8 @@ public partial class ContainerPanel : Panel
 
 	public Container Container { get; set; }
 
+	protected List<ItemPanel> Slots { get; set; } = new();
+
 	// @text
 	public string Title { get; set; } = "Inventory";
 
@@ -51,14 +53,29 @@ public partial class ContainerPanel : Panel
 	{
 		ItemLayout.DeleteChildren( true );
 
+		Slots.Clear();
+
 		Container.Items.ToList().ForEach( x => AddSlot( x ) );
 	}
 
 	protected ItemPanel AddSlot( Slot slot )
 	{
 		var itemPanel = ItemLayout.AddChild<ItemPanel>();
-		itemPanel.SetItem( slot.Item );
+		itemPanel.SetSlot( slot );
+		itemPanel.SetPanel( this );
+
+		Slots.Add( itemPanel );
 
 		return itemPanel;
+	}
+
+	protected int GetSlotIndex( ItemPanel panel )
+	{
+		return Slots.IndexOf( panel );
+	}
+
+	public void HandleDrop( ItemPanel itemPanel )
+	{
+		ContainerNetwork.ContainerDrop( Container.ID.ToString(), GetSlotIndex( itemPanel ) );
 	}
 }
