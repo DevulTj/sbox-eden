@@ -11,6 +11,9 @@ public partial class InventoryPanel : Panel
 {
 	public bool IsOpen { get; protected set; } = false;
 
+	// @ref
+	public InventoryContainerPanel Inventory { get; set; }
+
 	public InventoryPanel()
 	{
 		BindClass( "open", () => IsOpen );

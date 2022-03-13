@@ -13,8 +13,8 @@ public partial class ItemPanel : Panel
 	// @text
 	public int Quantity { get; set; } = 1;
 
-	protected Slot Slot { get; set; }
-	protected Item Item { get; set; }
+	public Slot Slot { get; protected set; }
+	public Item Item { get; protected set; }
 	protected ContainerPanel ContainerPanel { get; set; }
 
 	public ItemPanel()

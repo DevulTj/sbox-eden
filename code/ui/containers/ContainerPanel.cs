@@ -42,6 +42,11 @@ public partial class ContainerPanel : Panel
 		Refresh();
 	}
 
+	public ItemPanel FindHoveredItem()
+	{
+		return Slots.FirstOrDefault( x => x.HasHovered || x.HasActive );
+	}
+
 	public override void OnDeleted()
 	{
 		Panels[Container.ID] = null;
