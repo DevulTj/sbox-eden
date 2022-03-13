@@ -106,7 +106,7 @@ public partial class ContainerNetwork
 		if ( slot is null || slot.Item is null )
 			return;
 
-		var entity = WorldItemEntity.InstantiateFromPlayer( player, slot.Item );
+		var entity = WorldItemEntity.InstantiateFromPlayer( player, slot.Item, slot.Quantity );
 
 		// @TODO: unfuck this later
 		container.Remove( slotA );
