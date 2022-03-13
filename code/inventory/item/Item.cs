@@ -9,6 +9,21 @@ namespace Eden;
 
 public partial class Item
 {
+	public static Item FromAsset( ItemAsset asset )
+	{
+		var item = new Item();
+		item.Asset = asset;
+		return item;
+	}
+
+	public static Item FromAsset( string assetName )
+	{
+		if ( ItemAsset.Classes.TryGetValue( assetName, out var asset ) )
+			return FromAsset( asset );
+
+		return null;
+	}
+
 	public override string ToString() => Asset?.ItemName ?? "Item";
 	public virtual ItemType Type => ItemType.Item;
 	public virtual Color DefaultColor => Asset?.DefaultColor ?? Color.White;
