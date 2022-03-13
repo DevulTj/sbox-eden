@@ -79,4 +79,10 @@ public partial class HotbarContainer : Container
 			( Owner.ActiveChild as BaseCarriable )?.OnCarryStart( Owner );
 		}
 	}
+
+	public void Add( Item item, bool makeActive = false, int slot = -1 )
+	{
+		Add( item, slot );
+		SetActiveItem( item );
+	}
 }
