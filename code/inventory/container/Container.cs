@@ -61,24 +61,46 @@ public partial class Container : BaseNetworkable
 		}
 	}
 
-	public void Add( Item item, int slot = -1 )
+	public int FindEmptySlot()
 	{
-		//
+		for ( int i = 0; i < Items.Count; i++ )
+		{
+			var slot = Items[i];
+			if ( slot.Item is null )
+				return i;
+		}
+
+		return -1;
 	}
 
-	public void Remove( Item item )
+	public void Add( Item item, int slot = -1 )
 	{
-		//
+		if ( slot == -1 )
+			slot = FindEmptySlot();
+
+		if ( slot == -1 )
+			return;
+
+		Items[slot].Item = item;
+	}
+
+	public void Remove( Slot slot )
+	{
+		slot.Item = null;
 	}
 
 	public void Remove( int slot )
 	{
-		// 
+		Items[slot].Item = null;
 	}
 
 	public void Move( int slotA, int slotB )
 	{
-		//
+		var _slotA = Items[slotA];
+		var _slotB = Items[slotB];
+
+		Items[slotB] = _slotA;
+		Items[slotA] = _slotB;
 	}
 
 	public void Transfer( int slotA, Container destination, int slotB )

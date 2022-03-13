@@ -5,7 +5,7 @@ using Sandbox;
 
 namespace Eden;
 
-public partial class WorldItemEntity : Prop
+public partial class WorldItemEntity : Prop, IUse
 {
 	public static WorldItemEntity Instantiate( Item item )
 	{
@@ -26,6 +26,8 @@ public partial class WorldItemEntity : Prop
 	[Net]
 	public ItemAsset Asset { get; set; }
 
+	public Item Item { get; set; }
+
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -35,9 +37,27 @@ public partial class WorldItemEntity : Prop
 
 	public void SetItem( Item item )
 	{
+		Item = item;
 		Asset = item.Asset;
 
 		if ( item.Asset.WorldModel is not null )
 			Model = item.Asset.WorldModel;
+	}
+
+	bool IUse.OnUse( Entity user )
+	{
+		var player = user as Player;
+		if ( player is null ) return false;
+
+		player.Container.Add( Item );
+
+		Delete();
+
+		return true;
+	}
+
+	bool IUse.IsUsable( Entity user )
+	{
+		return true;
 	}
 }
