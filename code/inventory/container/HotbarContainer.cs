@@ -47,10 +47,13 @@ public partial class HotbarContainer : Container
 		SetActiveItem( slot.Item );
 	}
 
-	public void ActiveDrop()
+	public void SetActiveChild( BaseCarriable carriable )
 	{
 		( Owner.ActiveChild as BaseCarriable )?.OnCarryDrop( Owner );
 		Owner.ActiveChild?.Delete();
+		//
+		Owner.ActiveChild = carriable;
+		carriable?.OnCarryStart( Owner );
 	}
 
 	public void SetActiveItem( Item item )
@@ -62,7 +65,6 @@ public partial class HotbarContainer : Container
 			var weaponItemAsset = item.Asset as WeaponItemAsset;
 			var weaponEntity = Library.Create<Weapon>( weaponItemAsset.WeaponClassName );
 
-			ActiveDrop();
 			Owner.ActiveChild = weaponEntity;
 			( Owner.ActiveChild as BaseCarriable )?.OnCarryStart( Owner );
 		}
@@ -72,9 +74,8 @@ public partial class HotbarContainer : Container
 		}
 		else
 		{
-			ActiveDrop();
-
-			Owner.ActiveChild = new Hands();
+			// Fall back to hands
+			SetActiveChild( new Hands() );
 			( Owner.ActiveChild as BaseCarriable )?.OnCarryStart( Owner );
 		}
 	}
