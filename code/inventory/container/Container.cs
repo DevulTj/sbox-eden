@@ -65,14 +65,17 @@ public partial class Container : BaseNetworkable
 		return -1;
 	}
 
-	public int Add( Item item, int slotIndex = -1, int quantity = 1 )
+	public int Add( Item item, int quantity = 1 )
 	{
 		int quantityLeft = quantity;
 		int maxStack = item.MaxStack;
 
 		// Try and fill items that exist
-		foreach ( var slot in Items )
+		int lastSlot = -1;
+		for ( int i = 0; i < Items.Count; i++ )
 		{
+			var slot = Items[i];
+
 			if ( slot.Item is not null && slot.Quantity <= maxStack )
 			{
 				var availableSpace = maxStack - slot.Quantity;
@@ -81,6 +84,7 @@ public partial class Container : BaseNetworkable
 				slot.SetQuantity( slot.Quantity + amountToAdd );
 
 				quantityLeft -= amountToAdd;
+				lastSlot = i;
 			}
 		}
 
@@ -101,11 +105,11 @@ public partial class Container : BaseNetworkable
 			}
 			else
 			{
-				return -1;
+				return lastSlot;
 			}
 		}
 
-		return slotIndex;
+		return lastSlot;
 	}
 
 	public void Remove( int slot )

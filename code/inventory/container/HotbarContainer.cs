@@ -91,9 +91,9 @@ public partial class HotbarContainer : Container
 		}
 	}
 
-	public int Add( Item item, bool makeActive = false, int slot = -1 )
+	public int Add( Item item, bool makeActive = false, int quantity = 1 )
 	{
-		slot = Add( item, slot );
+		var slot = Add( item, quantity );
 
 		if ( makeActive )
 			SetActiveSlot( slot );

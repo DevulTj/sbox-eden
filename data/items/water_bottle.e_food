@@ -7,5 +7,7 @@
 		itemname = "Water Bottle"
 		itemdescription = "A Bo\'o\'o\'wo\'a"
 		iconpath = "ui/items/water_bottle.png"
+		stacksize = 10
+		worldmodelpath = resource:""
 	}
 }

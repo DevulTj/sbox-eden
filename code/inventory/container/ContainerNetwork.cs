@@ -81,7 +81,7 @@ public partial class ContainerNetwork
 	public static void PickupItem( Player player, WorldItemEntity worldItem )
 	{
 		var container = player.Backpack;
-		container.Add( worldItem.Item );
+		container.Add( worldItem.Item, worldItem.Quantity );
 
 		UpdatePlayer( To.Single( player.Client ), container.ID.ToString() );
 
@@ -124,6 +124,18 @@ public partial class ContainerNetwork
 		if ( matchingPanels is not null && matchingPanels.Count > 0 )
 		{
 			matchingPanels.ForEach( x => x.Refresh() );
+		}
+	}
+
+	[AdminCmd( "eden_admin_spawnitem" )]
+	public static void SpawnItem( string assetClass, int quantity = 1 )
+	{
+		var item = Item.FromAsset( assetClass );
+		if ( item is not null )
+		{
+			var player = ConsoleSystem.Caller.Pawn as Player;
+
+			WorldItemEntity.InstantiateFromPlayer( player, item, quantity );
 		}
 	}
 }

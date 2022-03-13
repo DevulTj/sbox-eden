@@ -7,17 +7,17 @@ namespace Eden;
 
 public partial class WorldItemEntity : Prop, IUse
 {
-	public static WorldItemEntity Instantiate( Item item )
+	public static WorldItemEntity Instantiate( Item item, int quantity = 1 )
 	{
 		var entity = new WorldItemEntity();
-		entity.SetItem( item );
+		entity.SetItem( item, quantity );
 
 		return entity;
 	}
 
-	public static WorldItemEntity InstantiateFromPlayer( Player player, Item item )
+	public static WorldItemEntity InstantiateFromPlayer( Player player, Item item, int quantity = 1 )
 	{
-		var entity = Instantiate( item );
+		var entity = Instantiate( item, quantity );
 		entity.Position = player.EyePosition + player.EyeRotation.Forward * 85;
 
 		return entity;
@@ -25,6 +25,9 @@ public partial class WorldItemEntity : Prop, IUse
 
 	[Net]
 	public ItemAsset Asset { get; set; }
+
+	[Net]
+	public int Quantity { get; set; } = 1;
 
 	public Item Item { get; set; }
 
@@ -35,10 +38,11 @@ public partial class WorldItemEntity : Prop, IUse
 		Model = ItemAsset.FallbackWorldModel;
 	}
 
-	public void SetItem( Item item )
+	public void SetItem( Item item, int quantity = 1 )
 	{
 		Item = item;
 		Asset = item.Asset;
+		Quantity = quantity;
 
 		if ( item.Asset.WorldModel is not null )
 			Model = item.Asset.WorldModel;
