@@ -28,6 +28,16 @@ public partial class Player : Sandbox.Player, IContainerEntity
 		SetupVitals();
 	}
 
+	public void SetupInventory()
+	{
+		Backpack = new();
+		Backpack.SetSize( 28 );
+
+		Hotbar = new( this );
+		Hotbar.SetSize( 7 );
+		Hotbar.Add( Item.FromAsset( "stone_hatchet" ), true );
+	}
+
 	public override void Respawn()
 	{
 		SetModel( "models/citizen/citizen.vmdl" );
@@ -45,12 +55,7 @@ public partial class Player : Sandbox.Player, IContainerEntity
 
 		ResetVitals();
 
-		Backpack = new();
-		Backpack.SetSize( 28 );
-
-		Hotbar = new( this );
-		Hotbar.SetSize( 7 );
-		Hotbar.Add( Item.FromAsset( "stone_hatchet" ), true );
+		SetupInventory();
 
 		base.Respawn();
 	}
