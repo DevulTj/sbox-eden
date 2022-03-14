@@ -96,13 +96,13 @@ public partial class MainMenuPanel : Panel
 
 		if ( !IsOpen ) return;
 
-		if ( input.Released( InputButton.Menu ) )
+		if ( input.Pressed( InputButton.Menu ) )
 		{
 			SetPageIndex( GetPreviousPageIndex() );
 			input.ClearButton( InputButton.Menu );
 		}
 
-		if ( input.Released( InputButton.Use ) )
+		if ( input.Pressed( InputButton.Use ) )
 		{
 			SetPageIndex( GetNextPageIndex() );
 			input.ClearButton( InputButton.Use );
