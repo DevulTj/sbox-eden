@@ -1,0 +1,43 @@
+
+@import "/ui/Theme.scss";
+
+resourcenotifications {
+    position: absolute;
+    right: 16px;
+    bottom: 386px;
+    width: 386px;
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+    padding: 8px;
+
+    .notify {
+        align-items: center;
+
+        &:intro {
+            height: 0;
+            opacity: 0;
+        }
+
+        &:outro {
+            height: 0;
+            opacity: 0;
+        }
+
+        height: 40px;
+        opacity: 1;
+        transition: all 0.2s ease;
+        flex-direction: row-reverse;
+
+        .amount {
+            font-size: 28px;
+            padding-left: 40px;
+        }
+
+        .name {
+            font-size: 24px;
+        }
+    }
+}

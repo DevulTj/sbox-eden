@@ -8,28 +8,29 @@ namespace Eden;
 
 public partial class GameHud : HudEntity<RootPanel>
 {
-    public static GameHud Current { get; set; }
+	public static GameHud Current { get; set; }
 
-    public GameHud()
-    {
-        if ( !IsClient )
-            return;
+	public GameHud()
+	{
+		if ( !IsClient )
+			return;
 
-        Current = this;
+		Current = this;
 
-        RootPanel.StyleSheet.Load( "/ui/hud/GameHud.scss" );
+		RootPanel.StyleSheet.Load( "/ui/hud/GameHud.scss" );
 
-        // List of elements used by the game
-        RootPanel.AddChild<PlayerVitals>();
-        RootPanel.AddChild<MainMenuPanel>();
-        RootPanel.AddChild<HudHotbarPanel>();
-        RootPanel.AddChild<WipText>();
-        RootPanel.AddChild<EyeEntityVital>();
+		// List of elements used by the game
+		RootPanel.AddChild<PlayerVitals>();
+		RootPanel.AddChild<MainMenuPanel>();
+		RootPanel.AddChild<HudHotbarPanel>();
+		RootPanel.AddChild<WipText>();
+		RootPanel.AddChild<EyeEntityVital>();
+		RootPanel.AddChild<ResourceNotifications>();
 
-        RootPanel.AddChild<VoiceList>();
-        RootPanel.AddChild<ChatBox>();
-        RootPanel.AddChild<KillFeed>();
-        RootPanel.AddChild<Crosshair>();
-        RootPanel.AddChild<NameTags>();
-    }
+		RootPanel.AddChild<VoiceList>();
+		RootPanel.AddChild<ChatBox>();
+		RootPanel.AddChild<KillFeed>();
+		RootPanel.AddChild<Crosshair>();
+		RootPanel.AddChild<NameTags>();
+	}
 }
