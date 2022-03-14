@@ -21,9 +21,6 @@ public partial class HotbarContainer : Container
 	}
 
 	[Net]
-	public Player Owner { get; set; }
-
-	[Net]
 	public int ActiveSlotIndex { get; set; } = -1;
 
 	public void SetActiveSlot( int index )

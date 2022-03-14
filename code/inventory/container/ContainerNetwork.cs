@@ -36,15 +36,14 @@ public partial class ContainerNetwork
 	[ServerCmd( "eden_container_move" )]
 	public static void ContainerMove( string guidString, int slotA, int slotB )
 	{
+		var player = ConsoleSystem.Caller.Pawn as Player;
 		var guid = Guid.Parse( guidString );
 		var container = Get( guid );
 
-		var player = ConsoleSystem.Caller.Pawn as Player;
-		// @TODO: validate this so it's not abused by players
-		// We will need a verification method on containers
-		// like container.CanInteract( player )
-
 		if ( container is null )
+			return;
+
+		if ( !container.CanInteract( player ) )
 			return;
 
 		Log.Info( $"container: {guidString}, slotA: {slotA}, slotB: {slotB}" );
@@ -57,17 +56,14 @@ public partial class ContainerNetwork
 	[ServerCmd( "eden_container_move_external" )]
 	public static void ContainerMoveExternal( string guidString, int slotA, string destinationGuidString, int slotB )
 	{
-		var guid = Guid.Parse( guidString );
-		var destinationGuid = Guid.Parse( destinationGuidString );
-		var container = Get( guid );
-		var destinationContainer = Get( destinationGuid );
-
 		var player = ConsoleSystem.Caller.Pawn as Player;
-		// @TODO: validate this so it's not abused by players
-		// We will need a verification method on containers
-		// like container.CanInteract( player )
+		var container = Get( Guid.Parse( guidString ) );
+		var destinationContainer = Get( Guid.Parse( destinationGuidString ) );
 
-		if ( container is null )
+		if ( container is null || destinationContainer is null )
+			return;
+
+		if ( !container.CanInteract( player ) || !destinationContainer.CanInteract( player ) )
 			return;
 
 		Log.Info( $"container: {guidString}, slotA: {slotA}, slotB: {slotB}" );
@@ -101,15 +97,14 @@ public partial class ContainerNetwork
 	[ServerCmd( "eden_container_drop" )]
 	public static void ContainerDrop( string guidString, int slotA )
 	{
+		var player = ConsoleSystem.Caller.Pawn as Player;
 		var guid = Guid.Parse( guidString );
 		var container = Get( guid );
 
-		var player = ConsoleSystem.Caller.Pawn as Player;
-		// @TODO: validate this so it's not abused by players
-		// We will need a verification method on containers
-		// like container.CanInteract( player )
-
 		if ( container is null )
+			return;
+
+		if ( !container.CanInteract( player ) )
 			return;
 
 		var slot = container.GetSlot( slotA );

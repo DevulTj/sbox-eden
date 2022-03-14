@@ -13,6 +13,9 @@ public partial class Container : BaseNetworkable
 	public override string ToString() => $"[{Size}]( {string.Join( ", ", Items )} )";
 
 	[Net]
+	public Player Owner { get; set; }
+
+	[Net]
 	public int Size { get; protected set; } = 12;
 
 	[Net]
@@ -179,6 +182,9 @@ public partial class Container : BaseNetworkable
 
 	public virtual bool CanInteract( Player player )
 	{
+		if ( Owner.IsValid() )
+			return Owner == player;
+
 		return true;
 	}
 
