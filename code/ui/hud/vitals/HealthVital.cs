@@ -21,5 +21,6 @@ public partial class HealthVital : VitalEntry
 		base.Tick();
 
 		BoundValue = Local.Pawn?.Health ?? 100f;
+		FormattedValue = $"{BoundValue}";
 	}
 }

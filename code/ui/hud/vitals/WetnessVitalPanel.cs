@@ -7,13 +7,15 @@ using Sandbox.UI;
 namespace Eden;
 
 [UseTemplate( "ui/hud/vitals/vitalentry.html" )]
-public partial class HungerVital : VitalEntry
+public partial class WetnessVitalPanel : VitalEntry
 {
-	public string IconPath => "/ui/hud/vitals/hunger.png";
+	public string IconPath => "/ui/hud/vitals/wetness.png";
 
-	public HungerVital() : base()
+	public WetnessVitalPanel() : base()
 	{
 		Icon.Style.SetBackgroundImage( IconPath );
+
+		BindClass( "invisible", () => BoundValue < 5f );
 	}
 
 	public override void Tick()
@@ -21,7 +23,7 @@ public partial class HungerVital : VitalEntry
 		base.Tick();
 
 		var player = Local.Pawn as Player;
-		var vital = player.GetVital( "Hunger" );
+		var vital = player.GetVital( "Wetness" );
 
 		BoundValue = vital.Value.CeilToInt();
 		BoundMaxValue = vital.MaxValue.CeilToInt();
