@@ -1,0 +1,8 @@
+//
+// Eden.ModelSnapPoints
+//
+@ModelGameData game_data_list( eden_snap_points_list ) = eden_snap_points : "Determines which attachments are used for snapping.   Snapped buildings will be rotated in the forward (X) direction for each attachment."
+[
+	snap_points(array:model_attachment) : "Snap Points" :  : ""
+]
+
