@@ -8,6 +8,9 @@ namespace Eden;
 [Library( "eden_resource", Spawnable = true )]
 public partial class ResourceEntity : Prop
 {
+	[Net]
+	public ResourceType Type { get; set; } = ResourceType.Wood;
+
 	public static Model BaseModel { get; set; } = Model.Load( "models/resources/resource_blockout.vmdl" );
 
 	public override void Spawn()
@@ -16,5 +19,12 @@ public partial class ResourceEntity : Prop
 
 		Model = BaseModel;
 		MoveType = MoveType.None;
+	}
+
+	public override void TakeDamage( DamageInfo info )
+	{
+		base.TakeDamage( info );
+
+		Log.Info( info.Weapon );
 	}
 }
