@@ -84,12 +84,10 @@ public partial class HotbarContainer : Container
 		}
 		else if ( item is not null )
 		{
-			var heldItemWeapon = new HeldItem()
-			{
-				Item = item,
-			};
+			var heldItemWeapon = new HeldItem();
 
 			SetActiveChild( heldItemWeapon );
+			heldItemWeapon.Item = item;
 		}
 		else
 		{

@@ -37,15 +37,22 @@ partial class HeldItem : Weapon
 		Crosshair.SetCrosshair( new HandsCrosshair() );
 	}
 
+	protected void Throw()
+	{
+		ViewModelEntity?.SetAnimParameter( "fire", true );
+		( Owner as AnimEntity )?.SetAnimParameter( "b_attack", true );
+
+		if ( IsServer )
+		{
+			var entity = WorldItemEntity.Instantiate( Item, Quantity );
+			entity.Position = Position + Owner.EyeRotation.Forward * 10f;
+			entity.ApplyAbsoluteImpulse( Owner.EyeRotation.Forward * 1000f + Vector3.Up * 100f );
+		}
+	}
+
 	public override void AttackPrimary()
 	{
-		//if ( MeleeAttack() )
-		//	OnMeleeHit();
-		//else
-		//	OnMeleeMiss();
-
-		//ViewModelEntity?.SetAnimParameter( "fire", true );
-		//( Owner as AnimEntity )?.SetAnimParameter( "b_attack", true );
+		Throw();
 	}
 
 	protected override void OnPlayerUse()
