@@ -77,7 +77,7 @@
 						anim_markup_ordered = false
 						disable_compression = false
 						source_filename = "models/arms/toon_arms.fbx"
-						start_frame = 0
+						start_frame = 5
 						end_frame = 19
 						framerate = 15.0
 						take = 0
@@ -142,6 +142,48 @@
 						source_filename = "models/arms/toon_arms.fbx"
 						start_frame = 74
 						end_frame = 109
+						framerate = 40.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "punch_L"
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = false
+						disable_compression = false
+						source_filename = "models/arms/toon_arms.fbx"
+						start_frame = 109
+						end_frame = 129
+						framerate = 40.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "punch_R"
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = false
+						disable_compression = false
+						source_filename = "models/arms/toon_arms.fbx"
+						start_frame = 129
+						end_frame = 149
 						framerate = 40.0
 						take = 0
 						reverse = false
