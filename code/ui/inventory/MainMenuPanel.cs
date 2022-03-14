@@ -7,14 +7,14 @@ using Sandbox.UI;
 namespace Eden;
 
 [UseTemplate]
-public partial class InventoryPanel : Panel
+public partial class MainMenuPanel : Panel
 {
 	public bool IsOpen { get; protected set; } = false;
 
 	// @ref
 	public Panel PageLayout { get; set; }
 
-	public InventoryPanel()
+	public MainMenuPanel()
 	{
 		BindClass( "open", () => IsOpen );
 	}
@@ -36,5 +36,10 @@ public partial class InventoryPanel : Panel
 		{
 			IsOpen = !IsOpen;
 		}
+	}
+
+	public void SetActivePage( MainMenuPage page )
+	{
+		//
 	}
 }

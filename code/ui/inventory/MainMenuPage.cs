@@ -7,10 +7,10 @@ using System.Collections.Generic;
 namespace Eden;
 
 [UseTemplate]
-public partial class InventoryPanelPage : Panel
+public partial class MainMenuPage : Panel
 {
-	public static List<InventoryPanelPage> All { get; set; }
-	public static InventoryPanelPage Active { get; set; }
+	public static List<MainMenuPage> All { get; set; }
+	public static MainMenuPage Active { get; set; }
 
 	public virtual string PageName => "PAGE";
 

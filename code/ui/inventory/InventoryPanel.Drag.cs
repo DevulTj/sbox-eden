@@ -3,7 +3,7 @@ using Sandbox.UI;
 
 namespace Eden;
 
-public partial class InventoryPanel
+public partial class MainMenuPanel
 {
 	public ItemPanel FocusedItem { get; set; }
 	public DraggedItemPanel Dummy { get; set; }

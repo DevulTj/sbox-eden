@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Eden;
 
 [UseTemplate]
-public partial class BackpackPage : InventoryPanelPage
+public partial class BackpackPage : MainMenuPage
 {
 	public override string PageName => "INVENTORY";
 }
