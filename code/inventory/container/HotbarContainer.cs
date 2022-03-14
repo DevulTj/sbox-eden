@@ -88,6 +88,8 @@ public partial class HotbarContainer : Container
 
 			SetActiveChild( heldItemWeapon );
 			heldItemWeapon.Item = item;
+			heldItemWeapon.Quantity = Items[ActiveSlotIndex].Quantity;
+			heldItemWeapon.HotbarSlotIndex = ActiveSlotIndex;
 		}
 		else
 		{

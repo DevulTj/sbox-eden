@@ -47,6 +47,12 @@ partial class HeldItem : Weapon
 			var entity = WorldItemEntity.Instantiate( Item, Quantity );
 			entity.Position = Position + Owner.EyeRotation.Forward * 10f;
 			entity.ApplyAbsoluteImpulse( Owner.EyeRotation.Forward * 1000f + Vector3.Up * 100f );
+
+			var player = Owner as Player;
+			player.Hotbar.Remove( HotbarSlotIndex );
+
+			// @TODO: rethink, this is shit
+			ContainerNetwork.UpdatePlayer( To.Single( player.Client ), player.Hotbar.ID.ToString() );
 		}
 	}
 
