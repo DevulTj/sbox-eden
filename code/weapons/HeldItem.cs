@@ -4,6 +4,7 @@
 using Sandbox;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Eden;
 
@@ -37,6 +38,15 @@ partial class HeldItem : Weapon
 		Crosshair.SetCrosshair( new HandsCrosshair() );
 	}
 
+	// @TODO: hack central, find a better way for this
+	public async Task DelayedDelete( Player player, int slotIndex )
+	{
+		await GameTask.DelaySeconds( 0.2f );
+
+		player.Hotbar.Remove( slotIndex );
+		ContainerNetwork.UpdatePlayer( To.Single( player.Client ), player.Hotbar.ID.ToString() );
+	}
+
 	protected void Throw()
 	{
 		ViewModelEntity?.SetAnimParameter( "fire", true );
@@ -48,11 +58,11 @@ partial class HeldItem : Weapon
 			entity.Position = Position + Owner.EyeRotation.Forward * 10f;
 			entity.ApplyAbsoluteImpulse( Owner.EyeRotation.Forward * 1000f + Vector3.Up * 100f );
 
-			var player = Owner as Player;
-			player.Hotbar.Remove( HotbarSlotIndex );
+			_ = DelayedDelete( Owner as Player, HotbarSlotIndex );
+
 
 			// @TODO: rethink, this is shit
-			ContainerNetwork.UpdatePlayer( To.Single( player.Client ), player.Hotbar.ID.ToString() );
+
 		}
 	}
 
