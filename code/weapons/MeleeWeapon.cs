@@ -3,6 +3,7 @@
 
 using Sandbox;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Eden;
@@ -12,6 +13,12 @@ partial class MeleeWeapon : Weapon
 	public virtual float PrimaryAttackRange => 160f;
 	public virtual float AttackRadius => 20f;
 	public virtual float BaseDamage => 50f;
+
+	public virtual Dictionary<ResourceType, int> ResourceYield => new()
+	{
+		{ ResourceType.Wood, 0 },
+		{ ResourceType.Stone, 0 }
+	};
 
 	public override bool CanReload()
 	{

@@ -3,6 +3,7 @@
 
 using Sandbox;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Eden;
@@ -12,6 +13,12 @@ partial class StoneHatchet : MeleeWeapon
 {
 	public override string ViewModelPath => "models/tools/hatchet/hatchet_v.vmdl";
 	public override float PrimaryRate => 1.0f;
+
+	public override Dictionary<ResourceType, int> ResourceYield => new()
+	{
+		{ ResourceType.Wood, 80 },
+		{ ResourceType.Stone, 0 }
+	};
 
 	public override void Spawn()
 	{
