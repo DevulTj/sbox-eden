@@ -71,6 +71,18 @@ public partial class Player : Sandbox.Player, IContainerEntity
 		SimulateActiveChild( cl, ActiveChild );
 		HotbarSimulate();
 		TickVitals();
+
+		if ( Input.Released( InputButton.View ) )
+		{
+			if ( CameraMode is FirstPersonCamera )
+			{
+				CameraMode = new ThirdPersonCamera();
+			}
+			else
+			{
+				CameraMode = new FirstPersonCamera();
+			}
+		}
 	}
 
 	public override void FrameSimulate( Client cl )

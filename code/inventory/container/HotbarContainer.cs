@@ -76,18 +76,25 @@ public partial class HotbarContainer : Container
 			var weaponItemAsset = item.Asset as WeaponItemAsset;
 			var weaponEntity = Library.Create<Weapon>( weaponItemAsset.WeaponClassName );
 
-			Owner.ActiveChild = weaponEntity;
-			( Owner.ActiveChild as BaseCarriable )?.OnCarryStart( Owner );
+			SetActiveChild( weaponEntity );
 		}
 		else if ( item is not null && item.Type == ItemType.Deployable )
 		{
 			// Some generic deployable weapon here
 		}
+		else if ( item is not null )
+		{
+			var heldItemWeapon = new HeldItem()
+			{
+				Item = item,
+			};
+
+			SetActiveChild( heldItemWeapon );
+		}
 		else
 		{
 			// Fall back to hands
 			SetActiveChild( new Hands() );
-			( Owner.ActiveChild as BaseCarriable )?.OnCarryStart( Owner );
 		}
 	}
 
