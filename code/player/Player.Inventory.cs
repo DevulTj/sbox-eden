@@ -8,13 +8,25 @@ namespace Eden;
 
 public partial class Player
 {
-	[Net, Local]
+	[Net, Local, Change( nameof( OnBackpackChanged ) )]
 	public Container Backpack { get; protected set; }
 	// @IContainerEntity
 	public Container Container { get => Backpack; set => Backpack = value; }
 
-	[Net, Local]
+	[Net, Local, Change( nameof( OnHotbarChanged ) )]
 	public HotbarContainer Hotbar { get; protected set; }
+
+	protected void OnHotbarChanged( HotbarContainer old, HotbarContainer @new )
+	{
+		Log.Info( "Hotbar Container flagged as different by the server" );
+		Event.Run( GameEvent.Client.HotbarChanged, @new );
+	}
+
+	protected void OnBackpackChanged( Container old, Container @new )
+	{
+		Log.Info( "Backpack Container flagged as different by the server" );
+		Event.Run( GameEvent.Client.BackpackChanged, @new );
+	}
 
 	public void HotbarSimulate()
 	{

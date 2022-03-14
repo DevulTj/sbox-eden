@@ -39,7 +39,7 @@ public partial class ItemPanel : Panel
 	{
 		SetClass( "empty", item is null );
 
-		if ( item is null )
+		if ( item is null || item.Asset is null )
 			return;
 
 		Item = item;

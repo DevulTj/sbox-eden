@@ -10,23 +10,14 @@ namespace Eden;
 [UseTemplate( "/ui/containers/ContainerPanel.html" )]
 public partial class HotbarContainerPanel : ContainerPanel
 {
-	public HotbarContainerPanel()
+
+	[GameEvent.Client.HotbarChanged]
+	protected void Setup( HotbarContainer container )
 	{
+		SetContainer( container );
 	}
 
-	bool _waiting = true;
-
-	public override void Tick()
+	public HotbarContainerPanel()
 	{
-		base.Tick();
-
-		if ( !_waiting ) return;
-
-		var player = Local.Pawn as Player;
-		if ( player.IsValid() && player.Hotbar != null )
-		{
-			SetContainer( player.Hotbar );
-			_waiting = false;
-		}
 	}
 }

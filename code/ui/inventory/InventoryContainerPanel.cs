@@ -10,23 +10,13 @@ namespace Eden;
 [UseTemplate( "/ui/containers/ContainerPanel.html" )]
 public partial class InventoryContainerPanel : ContainerPanel
 {
-	public InventoryContainerPanel()
+	[GameEvent.Client.BackpackChanged]
+	protected void Setup( Container container )
 	{
+		SetContainer( container );
 	}
 
-	bool _waiting = true;
-
-	public override void Tick()
+	public InventoryContainerPanel()
 	{
-		base.Tick();
-
-		if ( !_waiting ) return;
-
-		var player = Local.Pawn as Player;
-		if ( player.IsValid() && player.Backpack != null )
-		{
-			SetContainer( player.Backpack );
-			_waiting = false;
-		}
 	}
 }
