@@ -6,4 +6,10 @@ mainmenupage {
     left: 0;
     bottom: 0;
     right: 0;
+    // Default invis
+    opacity: 0;
+    // Controlled by active page
+    &.show {
+        opacity: 1;
+    }
 }

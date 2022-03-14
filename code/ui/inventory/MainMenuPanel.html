@@ -3,15 +3,15 @@
 <div>
     <div class="header-bg"></div>
     <div class="header">
-        <label class="active">EQUIPMENT</label>
+        <label class="active" @ref="CurrentPageLabel">EQUIPMENT</label>
 
         <inputhint class="prevhint" btn="Menu"></inputhint>
-        <label class="prev">SKILLS</label>
+        <label class="prev" @ref="PreviousPageLabel">SKILLS</label>
 
         <inputhint class="nexthint" btn="Use"></inputhint>
-        <label class="next">TASKS</label>
+        <label class="next" @ref="NextPageLabel">TASKS</label>
 
-        <div class="sections">
+        <div class="sections" @ref="SectionDotsPanel">
             <div class="section"></div>
             <div class="activesection"></div>
             <div class="section"></div>
@@ -19,7 +19,7 @@
     </div>
 
     <div class="main" @ref="PageLayout">
-        <BackpackPage></BackpackPage>
+
     </div>
 
     <div class="footer">
