@@ -28,7 +28,10 @@ public partial class InventoryHelpers
 		var desiredSlot = container.Add( item, quantity );
 
 		if ( desiredSlot != -1 )
+		{
+			ResourceNotifications.AddResource( To.Single( player.Client ), quantity, item.Asset.ItemName );
 			ContainerNetwork.UpdatePlayer( To.Single( player.Client ), container.ID.ToString() );
+		}
 
 		return desiredSlot != -1;
 	}
