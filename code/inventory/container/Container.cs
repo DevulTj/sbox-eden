@@ -78,6 +78,9 @@ public partial class Container : BaseNetworkable
 
 			if ( slot.Item is not null && slot.Quantity <= maxStack )
 			{
+				bool sameType = slot.Item.IsSame( item );
+				if ( !sameType ) continue;
+
 				var availableSpace = maxStack - slot.Quantity;
 				var amountToAdd = Math.Min( availableSpace, quantity );
 
