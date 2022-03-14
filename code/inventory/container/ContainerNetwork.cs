@@ -81,6 +81,16 @@ public partial class ContainerNetwork
 	public static void PickupItem( Player player, WorldItemEntity worldItem )
 	{
 		var container = player.Backpack;
+		// If the item is a weapon, try to prioritize the hotbar.
+		if ( worldItem.Item.Type == ItemType.Weapon )
+		{
+			var hotbar = player.Hotbar;
+			var emptySlot = hotbar.FindEmptySlot();
+			// If we have space in our hotbar
+			if ( emptySlot != -1 )
+				container = hotbar;
+		}
+
 		container.Add( worldItem.Item, worldItem.Quantity );
 
 		UpdatePlayer( To.Single( player.Client ), container.ID.ToString() );
