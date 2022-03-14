@@ -180,7 +180,7 @@ public partial class Container : BaseNetworkable
 		return Items[slotA];
 	}
 
-	public virtual bool CanInteract( Player player )
+	public virtual bool HasAccess( Player player )
 	{
 		if ( Owner.IsValid() )
 			return Owner == player;

@@ -43,7 +43,7 @@ public partial class ContainerNetwork
 		if ( container is null )
 			return;
 
-		if ( !container.CanInteract( player ) )
+		if ( !container.HasAccess( player ) )
 			return;
 
 		Log.Info( $"container: {guidString}, slotA: {slotA}, slotB: {slotB}" );
@@ -63,7 +63,7 @@ public partial class ContainerNetwork
 		if ( container is null || destinationContainer is null )
 			return;
 
-		if ( !container.CanInteract( player ) || !destinationContainer.CanInteract( player ) )
+		if ( !container.HasAccess( player ) || !destinationContainer.HasAccess( player ) )
 			return;
 
 		Log.Info( $"container: {guidString}, slotA: {slotA}, slotB: {slotB}" );
@@ -104,7 +104,7 @@ public partial class ContainerNetwork
 		if ( container is null )
 			return;
 
-		if ( !container.CanInteract( player ) )
+		if ( !container.HasAccess( player ) )
 			return;
 
 		var slot = container.GetSlot( slotA );
