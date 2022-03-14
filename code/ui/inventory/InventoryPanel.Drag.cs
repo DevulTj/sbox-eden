@@ -88,11 +88,14 @@ public partial class InventoryPanel
 
 	protected ItemPanel FindHoveredItem()
 	{
-		var inventoryItem = Inventory.FindHoveredItem();
-		if ( inventoryItem != null ) return inventoryItem;
-
-		var hotbarItem = Hotbar.FindHoveredItem();
-		if ( hotbarItem != null ) return hotbarItem;
+		foreach ( var kv in ContainerPanel.Panels )
+		{
+			foreach ( var panel in kv.Value )
+			{
+				var hoveredPanel = panel.FindHoveredItem();
+				if ( hoveredPanel != null ) return hoveredPanel;
+			}
+		}
 
 		return null;
 	}

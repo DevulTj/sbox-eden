@@ -12,8 +12,7 @@ public partial class InventoryPanel : Panel
 	public bool IsOpen { get; protected set; } = false;
 
 	// @ref
-	public InventoryContainerPanel Inventory { get; set; }
-	public HotbarContainerPanel Hotbar { get; set; }
+	public Panel PageLayout { get; set; }
 
 	public InventoryPanel()
 	{

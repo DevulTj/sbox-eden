@@ -115,17 +115,6 @@ inventorypanel {
     .main {
         width: 100%;
         height: 85%;
-
-        .itemlayout {
-            margin-top: 40px;
-            width: 100%;
-            height: 100%;
-            flex-direction: column;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            align-content: center;
-        }
     }
 
     .footer {
