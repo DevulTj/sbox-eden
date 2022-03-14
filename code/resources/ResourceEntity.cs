@@ -60,11 +60,7 @@ public partial class ResourceEntity : Prop
 		if ( ResourceAmount < 0 )
 			grantedAmount += ResourceAmount;
 
-		if ( InventoryHelpers.GiveItem( player, item, resourceYield ) )
-		{
-			ResourceNotifications.AddResource( To.Single( player.Client ), grantedAmount, item.Asset.ItemName );
-		}
-		else
+		if ( !InventoryHelpers.GiveItem( player, item, resourceYield ) )
 		{
 			ResourceNotifications.AddResource( To.Single( player.Client ), grantedAmount, item.Asset.ItemName );
 
