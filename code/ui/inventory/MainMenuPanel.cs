@@ -91,7 +91,6 @@ public partial class MainMenuPanel : Panel
 	[Event.BuildInput]
 	public void BuildInput( InputBuilder input )
 	{
-
 		if ( input.Pressed( InputButton.Score ) )
 			IsOpen = !IsOpen;
 
@@ -115,8 +114,6 @@ public partial class MainMenuPanel : Panel
 		var page = Pages[index];
 		CurrentPage = page;
 		CurrentPageIndex = index;
-
-		Log.Info( $"current: {index}, prev: {GetPreviousPageIndex()}, next: {GetNextPageIndex()}" );
 
 		CurrentPageLabel.Text = page.PageName;
 		PreviousPageLabel.Text = GetPreviousPage().PageName;
