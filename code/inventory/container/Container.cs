@@ -177,6 +177,11 @@ public partial class Container : BaseNetworkable
 		return Items[slotA];
 	}
 
+	public virtual bool CanInteract( Player player )
+	{
+		return true;
+	}
+
 	protected virtual void OnItemMoved( int slotA, int slotB, Container destination = null )
 	{
 		//
