@@ -225,7 +225,7 @@
 					},
 				]
 				m_seed = 271918726
-				m_choiceMethod = "WeightedRandom"
+				m_choiceMethod = "Iterate"
 				m_choiceChangeMethod = "OnReset"
 				m_blendMethod = "SingleBlendTime"
 				m_blendTime = 0.2
@@ -402,12 +402,6 @@
 								m_conditions = 
 								[
 									{
-										_class = "CFinishedCondition"
-										m_comparisonOp = 0
-										m_option = "FinishedConditionOption_OnFinished"
-										m_bIsFinished = true
-									},
-									{
 										_class = "CParameterAnimCondition"
 										m_comparisonOp = 0
 										m_paramID = 
@@ -420,11 +414,56 @@
 											m_data = false
 										}
 									},
+									{
+										_class = "CCycleCondition"
+										m_comparisonOp = 0
+										m_comparisonValue = 1.0
+										m_comparisonValueType = 0
+										m_comparisonControlValue = "ControlValue_MoveHeading"
+										m_comparisonParamID = 
+										{
+											m_id = 4294967295
+										}
+									},
 								]
 								m_blendDuration = 0.2
 								m_destState = 
 								{
 									m_id = 1653630885
+								}
+								m_bReset = true
+								m_resetCycleOption = "Beginning"
+								m_flFixedCycleValue = 0.0
+								m_blendCurve = 
+								{
+									m_vControlPoint1 = [ 0.5, 0.0 ]
+									m_vControlPoint2 = [ 0.5, 1.0 ]
+								}
+								m_bForceFootPlant = false
+								m_bDisabled = false
+							},
+							{
+								_class = "CAnimStateTransition"
+								m_conditions = 
+								[
+									{
+										_class = "CParameterAnimCondition"
+										m_comparisonOp = 0
+										m_paramID = 
+										{
+											m_id = 644706208
+										}
+										m_comparisonValue = 
+										{
+											m_nType = 1
+											m_data = true
+										}
+									},
+								]
+								m_blendDuration = 0.2
+								m_destState = 
+								{
+									m_id = 1211206004
 								}
 								m_bReset = true
 								m_resetCycleOption = "Beginning"
@@ -617,7 +656,7 @@
 						m_name = "hover"
 						m_childNodeID = 
 						{
-							m_id = 1275741599
+							m_id = 1729238645
 						}
 						m_stateID = 
 						{
@@ -682,7 +721,7 @@
 					},
 				]
 				m_bBlockWaningTags = false
-				m_bLockStateWhenWaning = false
+				m_bLockStateWhenWaning = true
 			}
 		},
 		{
@@ -757,27 +796,6 @@
 		{
 			key = 
 			{
-				m_id = 1275741599
-			}
-			value = 
-			{
-				_class = "CSingleFrameAnimNode"
-				m_sName = "Unnamed"
-				m_vecPosition = [ -992.0, 48.0 ]
-				m_nNodeID = 
-				{
-					m_id = 1275741599
-				}
-				m_networkMode = "ClientSimulate"
-				m_sNote = ""
-				m_sequenceName = "grab_R"
-				m_nFrameIndex = 7
-				m_tagSpans = [  ]
-			}
-		},
-		{
-			key = 
-			{
 				m_id = 1436884954
 			}
 			value = 
@@ -822,22 +840,23 @@
 		{
 			key = 
 			{
-				m_id = 1804119702
+				m_id = 1729238645
 			}
 			value = 
 			{
-				_class = "CSingleFrameAnimNode"
+				_class = "CSequenceAnimNode"
 				m_sName = "Unnamed"
-				m_vecPosition = [ -992.0, -112.0 ]
+				m_vecPosition = [ -992.0, 48.0 ]
 				m_nNodeID = 
 				{
-					m_id = 1804119702
+					m_id = 1729238645
 				}
 				m_networkMode = "ClientSimulate"
 				m_sNote = ""
-				m_sequenceName = "grab_L"
-				m_nFrameIndex = 7
 				m_tagSpans = [  ]
+				m_sequenceName = "grab_R_hover"
+				m_playbackSpeed = 1.0
+				m_bLoop = false
 			}
 		},
 		{
@@ -902,7 +921,7 @@
 						m_name = "hover"
 						m_childNodeID = 
 						{
-							m_id = 1804119702
+							m_id = 2093354710
 						}
 						m_stateID = 
 						{
@@ -967,7 +986,29 @@
 					},
 				]
 				m_bBlockWaningTags = false
-				m_bLockStateWhenWaning = false
+				m_bLockStateWhenWaning = true
+			}
+		},
+		{
+			key = 
+			{
+				m_id = 2093354710
+			}
+			value = 
+			{
+				_class = "CSequenceAnimNode"
+				m_sName = "Unnamed"
+				m_vecPosition = [ -992.0, -128.0 ]
+				m_nNodeID = 
+				{
+					m_id = 2093354710
+				}
+				m_networkMode = "ClientSimulate"
+				m_sNote = ""
+				m_tagSpans = [  ]
+				m_sequenceName = "grab_L_hover"
+				m_playbackSpeed = 1.0
+				m_bLoop = false
 			}
 		},
 	]
