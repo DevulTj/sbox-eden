@@ -16,7 +16,7 @@ public partial class MainMenuPanel : Panel
 	public List<Panel> SectionDots { get; set; } = new();
 
 	public MainMenuPage CurrentPage { get; set; }
-	public int CurrentPageIndex { get; set; }
+	public int CurrentPageIndex { get; set; } = 0;
 
 
 	// @ref
@@ -111,6 +111,8 @@ public partial class MainMenuPanel : Panel
 
 	public void SetPageIndex( int index )
 	{
+		var previousIndex = CurrentPageIndex;
+
 		var page = Pages[index];
 		CurrentPage = page;
 		CurrentPageIndex = index;
@@ -118,6 +120,9 @@ public partial class MainMenuPanel : Panel
 		CurrentPageLabel.Text = page.PageName;
 		PreviousPageLabel.Text = GetPreviousPage().PageName;
 		NextPageLabel.Text = GetNextPage().PageName;
+
+		SectionDots[previousIndex].SetClass( "activesection", false );
+		SectionDots[index].SetClass( "activesection", true );
 	}
 
 	public void AddPage( MainMenuPage page )
