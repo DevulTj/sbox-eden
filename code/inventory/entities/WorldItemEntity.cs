@@ -29,6 +29,7 @@ public partial class WorldItemEntity : Prop, IUse
 	[Net]
 	public int Quantity { get; set; } = 1;
 
+	// @net
 	public Item Item { get; set; }
 
 	public override void Spawn()

@@ -19,7 +19,7 @@ public partial class Container : BaseNetworkable
 	public int Size { get; protected set; } = 12;
 
 	[Net]
-	public IList<Slot> Items { get; set; }
+	public IList<Slot> Items { get; protected set; }
 
 	/// <summary>
 	/// Used to interact with the Container over the network
@@ -30,17 +30,13 @@ public partial class Container : BaseNetworkable
 	public Container()
 	{
 		if ( Host.IsServer )
-		{
 			ContainerNetwork.Register( this );
-		}
 	}
 
 	~Container()
 	{
 		if ( Host.IsServer )
-		{
 			ContainerNetwork.Dispose( this );
-		}
 	}
 
 	public void SetSize( int size )
@@ -112,9 +108,7 @@ public partial class Container : BaseNetworkable
 				return slot;
 			}
 			else
-			{
 				return lastSlot;
-			}
 		}
 
 		return lastSlot;
