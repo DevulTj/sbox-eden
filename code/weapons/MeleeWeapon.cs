@@ -20,6 +20,8 @@ partial class MeleeWeapon : Weapon
 		{ ResourceType.Stone, 0 }
 	};
 
+	public virtual int GetResourceYield( ResourceType type ) => ResourceYield[type];
+
 	public override bool CanReload()
 	{
 		return false;
