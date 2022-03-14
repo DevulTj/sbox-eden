@@ -54,7 +54,7 @@ public partial class WorldItemEntity : Prop, IUse
 		var player = user as Player;
 		if ( player is null ) return false;
 
-		ContainerNetwork.PickupItem( player, this );
+		InventoryHelpers.PickupItem( player, this );
 
 		return true;
 	}

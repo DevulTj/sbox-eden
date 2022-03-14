@@ -60,15 +60,16 @@ public partial class ResourceEntity : Prop
 		if ( ResourceAmount < 0 )
 			grantedAmount += ResourceAmount;
 
-
-		if ( ContainerNetwork.GiveItem( player, item, resourceYield ) )
+		if ( InventoryHelpers.GiveItem( player, item, resourceYield ) )
 		{
 			ResourceNotifications.AddResource( To.Single( player.Client ), grantedAmount, item.Asset.ItemName );
 		}
 		else
 		{
-			// @TODO:
-			// Throw it on the ground or something
+			ResourceNotifications.AddResource( To.Single( player.Client ), grantedAmount, item.Asset.ItemName );
+
+			var entity = WorldItemEntity.Instantiate( item, grantedAmount );
+			entity.Position = Position + Vector3.Up * 10f;
 		}
 	}
 }
