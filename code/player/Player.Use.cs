@@ -18,9 +18,11 @@ public partial class Player
 		// Turn prediction off
 		using ( Prediction.Off() )
 		{
+			var usable = FindUsable();
+
 			if ( Input.Pressed( InputButton.Use ) )
 			{
-				Using = FindUsable();
+				Using = usable;
 
 				if ( Using == null )
 				{
@@ -28,6 +30,10 @@ public partial class Player
 					return;
 				}
 			}
+
+			var weapon = ActiveChild as Weapon;
+			if ( weapon.IsValid() )
+				weapon.CanGrabSomething = usable.IsValid();
 
 			if ( !Input.Down( InputButton.Use ) )
 			{
@@ -45,7 +51,6 @@ public partial class Player
 			//
 			if ( Using is IUse use && use.OnUse( this ) )
 			{
-				var weapon = ActiveChild as Weapon;
 				weapon?.OnUse( To.Single( Client ) );
 
 				return;

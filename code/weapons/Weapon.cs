@@ -22,6 +22,9 @@ public partial class Weapon : BaseWeapon, IUse
 	[Net, Predicted]
 	public TimeSince TimeSinceDeployed { get; set; }
 
+	[Net, Predicted]
+	public bool CanGrabSomething { get; set; } = false;
+
 	//
 	protected ViewModelData ViewModelData { get; set; } = new();
 
