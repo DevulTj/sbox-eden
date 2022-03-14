@@ -117,6 +117,7 @@ partial class Hands : Weapon
 			_ = new Sandbox.ScreenShake.Perlin();
 		}
 
+		ViewModelEntity?.SetAnimParameter( "attack", true );
 		ViewModelEntity?.SetAnimParameter( "attack_has_hit", false );
 		ViewModelEntity?.SetAnimParameter( "holdtype_attack", leftHand ? 2 : 1 );
 	}
@@ -131,6 +132,7 @@ partial class Hands : Weapon
 			_ = new Sandbox.ScreenShake.Perlin( 1.0f, 1.0f, 3.0f );
 		}
 
+		ViewModelEntity?.SetAnimParameter( "attack", true );
 		ViewModelEntity?.SetAnimParameter( "attack_has_hit", true );
 		ViewModelEntity?.SetAnimParameter( "holdtype_attack", leftHand ? 2 : 1 );
 	}
