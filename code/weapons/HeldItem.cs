@@ -12,7 +12,18 @@ namespace Eden;
 partial class HeldItem : Weapon
 {
 	// 
-	public Item Item { get; set; }
+
+	protected Item _item { get; set; }
+	public Item Item
+	{
+		get => _item; set
+		{
+			_item = value;
+
+			if ( Item.Asset.WorldModel is not null )
+				Model = Item.Asset.WorldModel;
+		}
+	}
 
 	[Net]
 	public int Quantity { get; set; } = 1;
