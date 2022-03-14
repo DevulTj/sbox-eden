@@ -12,6 +12,7 @@ craftingpage {
     align-content: center;
     opacity: 0;
     display: none;
+    transition: opacity 0.2s ease;
     // Controlled by active page
     &.show {
         opacity: 1;
