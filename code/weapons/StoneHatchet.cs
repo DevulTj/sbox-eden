@@ -16,7 +16,7 @@ partial class StoneHatchet : MeleeWeapon
 
 	public override Dictionary<ResourceType, int> ResourceYield => new()
 	{
-		{ ResourceType.Wood, 80 },
+		{ ResourceType.Wood, 1 },
 		{ ResourceType.Stone, 0 }
 	};
 

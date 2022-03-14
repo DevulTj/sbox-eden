@@ -17,7 +17,7 @@ public partial class ResourceNotifications : Panel
 		Current = this;
 	}
 
-	[ClientCmd]
+	[ClientRpc]
 	public static void AddResource( int amount, string name )
 	{
 		bool positive = amount >= 0;
