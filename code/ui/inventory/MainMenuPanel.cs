@@ -91,8 +91,11 @@ public partial class MainMenuPanel : Panel
 	[Event.BuildInput]
 	public void BuildInput( InputBuilder input )
 	{
+
 		if ( input.Pressed( InputButton.Score ) )
 			IsOpen = !IsOpen;
+
+		if ( !IsOpen ) return;
 
 		if ( input.Released( InputButton.Menu ) )
 		{
