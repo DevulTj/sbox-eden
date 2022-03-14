@@ -52,7 +52,8 @@ public partial class MainMenuPanel : Panel
 		// 2
 		AddPage( new CraftingPage() );
 		// @TODO: better way to handle the default page?
-		SetPageIndex( 1 );
+
+		SetPageByName( "inventory" );
 	}
 
 	public int GetNextPageIndex()
@@ -106,6 +107,19 @@ public partial class MainMenuPanel : Panel
 		{
 			SetPageIndex( GetNextPageIndex() );
 			input.ClearButton( InputButton.Use );
+		}
+	}
+
+	public void SetPageByName( string identifier )
+	{
+		for ( int i = 0; i < Pages.Count; i++ )
+		{
+			var page = Pages[i];
+			if ( page.PageName.ToLower() == identifier.ToLower() )
+			{
+				SetPageIndex( i );
+				break;
+			}
 		}
 	}
 
