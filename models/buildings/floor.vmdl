@@ -60,6 +60,68 @@
 					},
 				]
 			},
+			{
+				_class = "GameDataList"
+				children = 
+				[
+					{
+						_class = "GenericGameData"
+						game_class = "eden_snap_points"
+						game_keys = 
+						{
+							snap_points = 
+							[
+								"snap0",
+								"snap1",
+								"snap2",
+								"snap3",
+							]
+						}
+					},
+				]
+			},
+			{
+				_class = "AttachmentList"
+				children = 
+				[
+					{
+						_class = "Attachment"
+						name = "snap0"
+						parent_bone = ""
+						relative_origin = [ 64.0, 0.0, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "snap1"
+						parent_bone = ""
+						relative_origin = [ -64.0, 0.0, 0.0 ]
+						relative_angles = [ 0.0, 180.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "snap2"
+						parent_bone = ""
+						relative_origin = [ 0.0, 64.0, 0.0 ]
+						relative_angles = [ 0.0, 90.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "snap3"
+						parent_bone = ""
+						relative_origin = [ 0.0, -64.0, 0.0 ]
+						relative_angles = [ 0.0, 270.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+				]
+			},
 		]
 		model_archetype = ""
 		primary_associated_entity = ""
