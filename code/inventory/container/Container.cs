@@ -67,6 +67,8 @@ public partial class Container : BaseNetworkable
 
 	public int Add( Item item, int quantity = 1 )
 	{
+		if ( item is null ) return -1;
+
 		int quantityLeft = quantity;
 		int maxStack = item.MaxStack;
 
