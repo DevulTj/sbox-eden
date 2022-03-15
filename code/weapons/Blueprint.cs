@@ -102,8 +102,7 @@ partial class Blueprint : Weapon
 		var building = new BuildingEntity();
 		building.Position = position;
 		building.Rotation = rotation;
-		building.Model = asset.BuildingModel;
-		building.SetupPhysicsFromModel( PhysicsMotionType.Static );
+		building.UpdateFromAsset( asset );
 	}
 
 	private static TraceResult TraceForward( Entity entity, float distance = maxBuildDistance )
