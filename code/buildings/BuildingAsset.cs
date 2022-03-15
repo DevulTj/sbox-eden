@@ -4,6 +4,7 @@
 using Sandbox;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Eden;
 
@@ -17,9 +18,10 @@ public class BuildingAsset : Asset
 	[Property, Category( "Meta" ), ResourceType( "vmdl" )] public string BuildingModelPath { get; set; }
 	[Property, Category( "Meta" ), ResourceType( "png" )] public string BuildingIconPath { get; set; }
 
-	public Vector3 FindClosestSnapPoint( Vector3 position )
+	public List<Transform> GetSnapPoints()
 	{
-		return Vector3.Zero;
+		var snapPoints = ModelSnapPoints.GetSnapPoints( BuildingModel );
+		return snapPoints;
 	}
 
 	public bool IsPlacementValid()

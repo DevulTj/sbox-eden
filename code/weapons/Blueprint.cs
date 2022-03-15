@@ -54,7 +54,7 @@ partial class Blueprint : Weapon
 		if ( !ghostEntity.IsValid )
 			return;
 
-		foreach ( var snapPoint in ghostEntity.GetSnapPoints( worldSpace: false ) )
+		foreach ( var snapPoint in selectedAsset.GetSnapPoints() )
 		{
 			var worldSnapPoint = GetSnappedTransform().ToWorld( snapPoint );
 			DebugOverlay.Sphere( worldSnapPoint.Position, 4f, Color.Green, false );
@@ -148,7 +148,7 @@ partial class Blueprint : Weapon
 
 		// Convert everything into local space; this prevents us from entering any funky feedback loops
 		var localOther = ghostEntity.Transform.ToLocal( nearestSnapPoint );
-		var localGhostSnapPoints = ghostEntity.GetSnapPoints( worldSpace: false );
+		var localGhostSnapPoints = selectedAsset.GetSnapPoints();
 		var localClosestSnapPoint = localGhostSnapPoints.OrderBy( x => x.Position.Distance( localOther.Position ) ).First();
 
 		// Return best available snap point, offset by best ghost snap point

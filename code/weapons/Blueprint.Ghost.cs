@@ -2,8 +2,6 @@
 // without permission of its author (insert_email_here)
 
 using Sandbox;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Eden;
 
@@ -46,16 +44,6 @@ partial class Blueprint : Weapon
 
 			var snappedTransform = Blueprint.GetSnappedTransform();
 			SceneObject.Transform = snappedTransform;
-		}
-
-		public List<Transform> GetSnapPoints( bool worldSpace = true )
-		{
-			var snapPoints = ModelSnapPoints.GetSnapPoints( Model );
-
-			if ( worldSpace )
-				return snapPoints.Select( x => Transform.ToWorld( x ) ).ToList();
-
-			return snapPoints;
 		}
 	}
 }
