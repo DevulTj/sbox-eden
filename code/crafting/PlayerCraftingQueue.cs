@@ -8,12 +8,12 @@ namespace Eden;
 public partial class PlayerCraftingQueue : CraftingQueue
 {
 	[ServerCmd( "eden_crafting_playercraft" )]
-	public static void Craft( string assetName, int quantity )
+	public static void Craft( int resourceId, int quantity )
 	{
 		var player = ConsoleSystem.Caller.Pawn as Player;
 		if ( !player.IsValid() ) return;
 
-		var asset = ItemAsset.FromName( assetName );
+		var asset = Asset.FromId<ItemAsset>( resourceId );
 		if ( asset is null ) return;
 
 		var queue = player.CraftingQueue;

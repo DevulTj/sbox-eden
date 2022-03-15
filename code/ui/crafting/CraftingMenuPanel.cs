@@ -82,6 +82,8 @@ public partial class CraftingMenuPanel : Panel
 
 			var itemButton = new CraftingItemButton( item );
 			itemButton.Parent = ItemsLayout;
+
+			itemButton.AddEventListener( "onclick", () => PlayerCraftingQueue.Craft( item.Id, 1 ) );
 		}
 	}
 
