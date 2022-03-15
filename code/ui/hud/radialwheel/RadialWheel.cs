@@ -57,9 +57,9 @@ public partial class RadialWheel : Panel
 		BuildIcons();
 	}
 
-	protected override void OnMouseUp( MousePanelEvent e )
+	protected override void OnMouseDown( MousePanelEvent e )
 	{
-		base.OnMouseUp( e );
+		base.OnMouseDown( e );
 
 		var activeItem = GetActiveItem();
 		activeItem?.OnSelected?.Invoke();
