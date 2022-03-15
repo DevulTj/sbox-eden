@@ -52,10 +52,10 @@ public partial class ItemAsset : Asset
 	public string WorldModelPath { get; set; }
 
 	[Property, Category( "Crafting" )]
-	public int CraftingDuration { get; set; } = 10;
+	public int CraftingDuration { get; set; }
 
 	[Property, Category( "Crafting" )]
-	public List<CraftingRecipe> CraftingRecipe { get; set; } = new();
+	public CraftingRecipe Recipe { get; set; }
 
 	public Model WorldModel { get; set; }
 

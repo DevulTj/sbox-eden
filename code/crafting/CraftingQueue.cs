@@ -54,11 +54,13 @@ public partial class CraftingQueue : BaseNetworkable
 	{
 		Log.Info( $"Crafting routine started: {craft.Asset.ItemName} x{craft.Quantity}" );
 
+		var duration = craft.Asset.CraftingDuration;
+
 		CraftStarted = 0;
-		CraftFinished = craft.Asset.CraftingDuration;
+		CraftFinished = duration;
 
 		// Wait for a while
-		await GameTask.DelaySeconds( craft.Asset.CraftingDuration );
+		await GameTask.DelaySeconds( duration );
 
 		Log.Info( $"Crafting finished for: {craft.Asset.ItemName} x{craft.Quantity}" );
 
