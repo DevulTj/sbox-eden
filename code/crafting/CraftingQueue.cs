@@ -26,6 +26,19 @@ public partial class Craft : BaseNetworkable
 
 public partial class CraftingQueue : BaseNetworkable
 {
+	[ServerCmd( "eden_crafting_playercraft" )]
+	public static void PlayerCraft( int assetId, int quantity )
+	{
+		var player = ConsoleSystem.Caller as Player;
+		if ( player.IsValid() ) return;
+
+		var asset = Asset.FromId<ItemAsset>( assetId );
+		if ( asset is null ) return;
+
+		var queue = player.CraftingQueue;
+		queue.AddToQueue( player.Backpack, asset, quantity );
+	}
+
 	[Net]
 	public IList<Craft> Queue { get; set; }
 	[Net]
