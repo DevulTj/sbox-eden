@@ -1,10 +1,35 @@
 // Copyright (c) 2022 Ape Tavern, do not share, re-distribute or modify
 // without permission of its author (insert_email_here)
 
+using Sandbox;
+
 namespace Eden;
 
 public partial class PlayerCraftingQueue : CraftingQueue
 {
+	[ServerCmd( "eden_crafting_playercraft" )]
+	public static void Craft( string assetName, int quantity )
+	{
+		var player = ConsoleSystem.Caller as Player;
+		if ( player.IsValid() ) return;
+
+		var asset = ItemAsset.FromName( assetName );
+		if ( asset is null ) return;
+
+		var queue = player.CraftingQueue;
+		queue.AddToQueue( asset, quantity );
+	}
+
+	[ServerCmd( "eden_crafting_playercraft_cancel" )]
+	public static void CraftCancel( int index )
+	{
+		var player = ConsoleSystem.Caller as Player;
+		if ( player.IsValid() ) return;
+
+		var queue = player.CraftingQueue;
+		queue.Cancel( index );
+	}
+
 	// Required for BaseNetworkable
 	public PlayerCraftingQueue()
 	{
