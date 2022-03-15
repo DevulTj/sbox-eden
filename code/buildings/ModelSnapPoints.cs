@@ -2,6 +2,8 @@
 // without permission of its author (insert_email_here)
 
 using Sandbox;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace Eden;
@@ -18,4 +20,27 @@ public class ModelSnapPoints
 {
 	[JsonPropertyName( "snap_points" ), FGDType( "model_attachment" )]
 	public string[] SnapPoints { get; set; }
+
+	public static List<Transform> GetSnapPoints( Model model )
+	{
+		if ( model == null )
+			Log.Error( "Model is null" );
+
+		var snapPointNodes = model.GetData<ModelSnapPoints[]>();
+
+		if ( snapPointNodes == null )
+		{
+			Log.Error( "Model has no snap point nodes" );
+			return new();
+		}
+
+		var list = new List<Transform>();
+
+		var snapPointNode = snapPointNodes[0];
+		var snapPoints = snapPointNode.SnapPoints;
+		var snapTransforms = snapPoints.Select( attachment => model.GetAttachment( attachment ) );
+		snapTransforms.ToList().ForEach( snapPoint => list.Add( snapPoint ?? default ) );
+
+		return list;
+	}
 }
