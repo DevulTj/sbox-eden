@@ -15,6 +15,14 @@ public partial class ItemAsset : Asset
 	public static HashSet<ItemAsset> All { get; protected set; } = new();
 	public static Dictionary<string, ItemAsset> Classes { get; protected set; } = new();
 
+	public static ItemAsset FromName( string assetName )
+	{
+		if ( Classes.TryGetValue( assetName, out var asset ) )
+			return asset;
+
+		return null;
+	}
+
 	public static ItemAsset Random
 	{
 		get
