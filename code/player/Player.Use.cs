@@ -7,18 +7,23 @@ namespace Eden;
 
 public partial class Player
 {
+	[Net, Predicted]
+	public bool WantToGrab { get; set; } = false;
+
 	/// <summary>
 	/// This should be called somewhere in your player's tick to allow them to use entities
 	/// </summary>
 	protected override void TickPlayerUse()
 	{
+		var usable = FindUsable();
+		WantToGrab = usable.IsValid();
+
 		// This is serverside only
 		if ( !Host.IsServer ) return;
 
 		// Turn prediction off
 		using ( Prediction.Off() )
 		{
-			var usable = FindUsable();
 
 			if ( Input.Pressed( InputButton.Use ) )
 			{
@@ -31,9 +36,7 @@ public partial class Player
 				}
 			}
 
-			var weapon = ActiveChild as Weapon;
-			if ( weapon.IsValid() )
-				weapon.CanGrabSomething = usable.IsValid();
+			Log.Info( WantToGrab );
 
 			if ( !Input.Down( InputButton.Use ) )
 			{
@@ -51,6 +54,7 @@ public partial class Player
 			//
 			if ( Using is IUse use && use.OnUse( this ) )
 			{
+				var weapon = ActiveChild as Weapon;
 				weapon?.OnUse( To.Single( Client ) );
 
 				return;

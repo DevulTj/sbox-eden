@@ -62,7 +62,7 @@ partial class Hands : Weapon
 		anim.SetAnimParameter( "holdtype", 5 );
 		anim.SetAnimParameter( "aim_body_weight", 1.0f );
 
-		ViewModelEntity?.SetAnimParameter( "cangrab", CanGrabSomething );
+		ViewModelEntity?.SetAnimParameter( "cangrab", ( Owner as Player ).WantToGrab );
 	}
 
 	public override void CreateViewModel()
