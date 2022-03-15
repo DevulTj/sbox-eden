@@ -15,6 +15,8 @@ partial class Blueprint : Weapon
 
 	private BuildingAsset selectedAsset = BuildingAsset.All.First();
 
+	private const float maxBuildDistance = 128f;
+
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );
@@ -33,18 +35,6 @@ partial class Blueprint : Weapon
 			var targetTransform = GetSnappedTransform( new Transform( TraceForward( Owner ).EndPosition, Rotation.Identity ) );
 			PlaceBuilding( selectedAsset.Id, targetTransform.Position, targetTransform.Rotation );
 		}
-	}
-
-	[ServerCmd( "eden_building_place" )]
-	public static void PlaceBuilding( int assetId, Vector3 position, Rotation rotation )
-	{
-		var asset = Asset.FromId<BuildingAsset>( assetId );
-
-		var building = new BuildingEntity();
-		building.Position = position;
-		building.Rotation = rotation;
-		building.Model = asset.BuildingModel;
-		building.SetupPhysicsFromModel( PhysicsMotionType.Static );
 	}
 
 	public override void ActiveStart( Entity ent )
@@ -69,75 +59,56 @@ partial class Blueprint : Weapon
 			ghostEntity?.Delete();
 	}
 
-	private static TraceResult TraceForward( Entity entity, float distance = 512f )
+	[ServerCmd( "eden_building_place" )]
+	public static void PlaceBuilding( int assetId, Vector3 position, Rotation rotation )
+	{
+		var asset = Asset.FromId<BuildingAsset>( assetId );
+
+		var building = new BuildingEntity();
+		building.Position = position;
+		building.Rotation = rotation;
+		building.Model = asset.BuildingModel;
+		building.SetupPhysicsFromModel( PhysicsMotionType.Static );
+	}
+
+	private static TraceResult TraceForward( Entity entity, float distance = maxBuildDistance )
 	{
 		return Trace.Ray( entity.EyePosition, entity.EyePosition + entity.EyeRotation.Forward * distance ).Ignore( entity ).Run();
 	}
 
-	private List<Transform> GetNearestSnapPoints()
+	private List<Transform> GetNearbySnapPoints()
 	{
-		var trace = TraceForward( Owner, 128f );
-		var overlaps = Entity.FindInSphere( trace.EndPosition, 128f ).OfType<BuildingEntity>();
+		var trace = TraceForward( Owner );
+		var overlaps = Entity.FindInSphere( trace.EndPosition, maxBuildDistance ).OfType<BuildingEntity>();
 
-		var list = new List<Transform>();
+		var snapPoints = new List<Transform>();
 
 		foreach ( var overlap in overlaps )
 		{
 			if ( !overlap.IsValid )
 				continue;
 
-			var datas = overlap.Model?.GetData<ModelSnapPoints[]>();
-
-			if ( datas == null )
-				continue;
-
-			var data = datas[0];
-			var snapPoints = data.SnapPoints;
-			var snapTransforms = snapPoints.Select( attachment => overlap.GetAttachment( attachment ) );
-			snapTransforms.ToList().ForEach( snapPoint => list.Add( snapPoint ?? default ) );
+			snapPoints.AddRange( ModelSnapPoints.GetSnapPoints( overlap.Model ).Select( x => overlap.Transform.ToWorld( x ) ) );
 		}
 
-		return list;
-	}
-
-	[Event.Frame]
-	public void OnFrame()
-	{
-		foreach ( var snapPoint in GetNearestSnapPoints() )
-		{
-			DebugOverlay.Sphere( snapPoint.Position, 4f, Color.Cyan, false );
-		}
-
-		if ( ghostEntity == null )
-			return;
-
-		foreach ( var snapPoint in ghostEntity.GetSnapPoints() )
-		{
-			DebugOverlay.Sphere( snapPoint.Position, 4f, Color.Green, false );
-		}
+		return snapPoints;
 	}
 
 	private Transform GetSnappedTransform( Transform transform )
 	{
-		var forwardTracePosition = TraceForward( Owner, 128f ).EndPosition;
+		var forwardTracePosition = TraceForward( Owner ).EndPosition;
 
-		var nearestSnapPoint = GetNearestSnapPoints().OrderBy( x => x.Position.Distance( forwardTracePosition ) ).FirstOrDefault();
-
-		if ( nearestSnapPoint == default )
+		var orderedSnapPoints = GetNearbySnapPoints().OrderBy( x => x.Position.Distance( forwardTracePosition ) );
+		if ( !orderedSnapPoints.Any() )
 			return transform;
 
-		if ( forwardTracePosition.Distance( nearestSnapPoint.Position ) < 128 )
-		{
-			var localOther = ghostEntity.Transform.ToLocal( nearestSnapPoint );
-			var localGhostSnapPoints = ghostEntity.GetSnapPoints().Select( x => ghostEntity.Transform.ToLocal( x ) );
-			var localClosestSnapPoint = localGhostSnapPoints.OrderBy( x => x.Position.Distance( localOther.Position ) ).First();
+		var nearestSnapPoint = orderedSnapPoints.First();
 
-			DebugOverlay.ScreenText( 0, localClosestSnapPoint.Position.ToString() );
+		var localOther = ghostEntity.Transform.ToLocal( nearestSnapPoint );
+		var localGhostSnapPoints = ghostEntity.GetSnapPoints().Select( x => ghostEntity.Transform.ToLocal( x ) );
+		var localClosestSnapPoint = localGhostSnapPoints.OrderBy( x => x.Position.Distance( localOther.Position ) ).First();
 
-			return nearestSnapPoint.WithPosition( nearestSnapPoint.Position - localClosestSnapPoint.Position );
-		}
-
-		return transform;
+		return nearestSnapPoint.WithPosition( nearestSnapPoint.Position - localClosestSnapPoint.Position );
 	}
 
 	private void CreateBuildWheel()

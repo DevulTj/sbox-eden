@@ -24,37 +24,33 @@ partial class Blueprint : Weapon
 			SetMaterialOverride( "materials/buildings/building_ghost.vmat" );
 		}
 
+		/// <summary>
+		/// Update entity position to wherever the player is looking
+		/// </summary>
 		[Event.Frame]
 		public void OnFrameUpdate()
 		{
-			var snappedTransform = TraceForward( Owner, 128f ).EndPosition;
-			Position = snappedTransform;
+			var tracePosition = TraceForward( Owner ).EndPosition;
+			Position = tracePosition;
 			Rotation = Rotation.Identity;
 		}
 
+		/// <summary>
+		/// Show snapped position to player
+		/// </summary>
 		[Event.PreRender]
 		public void OnPreRender()
 		{
-			var snappedTransform = Blueprint?.GetSnappedTransform( new Transform( TraceForward( Owner ).EndPosition, Rotation.Identity ) ) ?? default;
+			if ( SceneObject == null || Blueprint == null )
+				return;
+
+			var snappedTransform = Blueprint.GetSnappedTransform( new Transform( TraceForward( Owner ).EndPosition ) );
 			SceneObject.Transform = snappedTransform;
 		}
 
-		// TODO: bit of a shit place to put this
-		internal List<Transform> GetSnapPoints()
+		public List<Transform> GetSnapPoints()
 		{
-			var list = new List<Transform>();
-
-			var datas = Model?.GetData<ModelSnapPoints[]>();
-
-			if ( datas == null )
-				return new();
-
-			var data = datas[0];
-			var snapPoints = data.SnapPoints;
-			var snapTransforms = snapPoints.Select( attachment => GetAttachment( attachment ) );
-			snapTransforms.ToList().ForEach( snapPoint => list.Add( snapPoint ?? default ) );
-
-			return list;
+			return ModelSnapPoints.GetSnapPoints( Model ).Select( x => Transform.ToWorld( x )).ToList();
 		}
 	}
 }
