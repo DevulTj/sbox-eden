@@ -21,7 +21,10 @@ public partial class ResourceEntity : Prop
 	public ResourceType Type { get; set; } = ResourceType.Wood;
 
 	[Net]
-	public int ResourceAmount { get; set; } = 1000;
+	public int ResourceAmount { get; set; } = 10;
+
+	[Net]
+	public int MaxResourceAmount { get; set; } = 10;
 
 	public static Model BaseModel { get; set; } = Model.Load( "models/resources/resource_blockout.vmdl" );
 
@@ -67,5 +70,14 @@ public partial class ResourceEntity : Prop
 			var entity = WorldItemEntity.Instantiate( item, grantedAmount );
 			entity.Position = Position + Vector3.Up * 10f;
 		}
+
+		if ( ResourceAmount <= 0 )
+			Explode();
+	}
+
+	public void Explode()
+	{
+		// @todo: stuff
+		Delete();
 	}
 }
