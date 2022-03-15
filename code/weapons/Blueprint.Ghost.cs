@@ -30,7 +30,7 @@ partial class Blueprint : Weapon
 		{
 			var tracePosition = TraceForward( Owner ).EndPosition;
 			Position = tracePosition;
-			Rotation = Rotation.Identity;
+			Rotation = Rotation.From( 0, Owner.EyeRotation.Yaw(), 0 );
 		}
 
 		/// <summary>
