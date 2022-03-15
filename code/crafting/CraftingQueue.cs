@@ -10,10 +10,7 @@ namespace Eden;
 public partial class Craft : BaseNetworkable
 {
 	//
-	public bool IsValid => Asset is not null;
-
-	//
-	public ItemAsset Asset { get; set; } = null;
+	public ItemAsset Asset { get; set; }
 	public int Quantity { get; set; } = 1;
 
 	//
@@ -21,6 +18,11 @@ public partial class Craft : BaseNetworkable
 	{
 		Asset = asset;
 		Quantity = quantity;
+	}
+
+	// @BaseNetworkable
+	public Craft()
+	{
 	}
 }
 
@@ -91,7 +93,8 @@ public partial class CraftingQueue : BaseNetworkable
 
 		Queue.Add( new Craft( asset, quantity ) );
 
-		if ( !CurrentCraft.IsValid )
+		// If the queue was empty before, start crafting!
+		if ( Queue.Count - 1 == 0 )
 			StartCrafting();
 	}
 

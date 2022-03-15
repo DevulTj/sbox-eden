@@ -8,7 +8,7 @@
 		iconpath = "ui/items/stone_hatchet.png"
 		worldmodelpath = resource:"models/tools/hatchet/hatchet_w.vmdl"
 		stacksize = 1
-		craftingduration = 0
+		craftingduration = 5
 		recipe = 
 		{
 			items = 

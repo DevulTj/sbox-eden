@@ -30,7 +30,7 @@ public partial class PlayerCraftingQueue : CraftingQueue
 		queue.Cancel( index );
 	}
 
-	// Required for BaseNetworkable
+	// @BaseNetworkable
 	public PlayerCraftingQueue()
 	{
 	}
