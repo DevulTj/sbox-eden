@@ -7,4 +7,11 @@ namespace Eden;
 
 public class BuildingEntity : ModelEntity
 {
+	public void UpdateFromAsset( BuildingAsset asset )
+	{
+		Host.AssertServer();
+
+		Model = asset.BuildingModel;
+		SetupPhysicsFromModel( PhysicsMotionType.Static );
+	}
 }
