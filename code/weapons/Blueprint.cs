@@ -136,7 +136,7 @@ partial class Blueprint : Weapon
 	/// </summary>
 	private Transform GetSnappedTransform()
 	{
-		var transform = new Transform( TraceForward( Owner ).EndPosition );
+		var transform = new Transform( TraceForward( Owner ).EndPosition, Rotation.From( 0, Owner.EyeRotation.Yaw(), 0 ) );
 
 		// Where are we aiming / what are we aiming at
 		var forwardTracePosition = TraceForward( Owner ).EndPosition;
