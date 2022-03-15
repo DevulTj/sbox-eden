@@ -44,6 +44,9 @@ public partial class ItemAsset : Asset
 	public string WorldModelPath { get; set; }
 
 	[Property, Category( "Crafting" )]
+	public int CraftingDuration { get; set; } = 10;
+
+	[Property, Category( "Crafting" )]
 	public List<CraftingRecipe> CraftingRecipe { get; set; } = new();
 
 	public Model WorldModel { get; set; }
