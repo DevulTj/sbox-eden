@@ -48,6 +48,36 @@
 					},
 				]
 			},
+			{
+				_class = "PhysicsShapeList"
+				children = 
+				[
+					{
+						_class = "PhysicsShapeCylinder"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_group = ""
+						collision_interact_as = ""
+						collision_interact_with = ""
+						collision_interact_exclude = ""
+						radius = 2.0
+						point0 = [ 0.0, 0.0, 39.089218 ]
+						point1 = [ 0.0, 0.0, -39.618858 ]
+					},
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_group = ""
+						collision_interact_as = ""
+						collision_interact_with = ""
+						collision_interact_exclude = ""
+						origin = [ -0.327447, -0.557543, 38.504486 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 3.628258, 3.409058, 3.57106 ]
+					},
+				]
+			},
 		]
 		model_archetype = ""
 		primary_associated_entity = ""
