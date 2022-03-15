@@ -43,7 +43,7 @@ public partial class ItemAsset : Asset
 	public string ItemDescription { get; set; }
 
 	[Property, Category( "Meta" )]
-	public ItemCategory Category { get; set; }
+	public ItemCategory Category { get; set; } = ItemCategory.Misc;
 
 	[Property, Category( "Meta" ), Range( 0, 256 )]
 	public int StackSize { get; set; } = 1;
