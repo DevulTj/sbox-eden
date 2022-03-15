@@ -18,6 +18,7 @@
 	stacksize(integer) { group = "Meta" } : "Stack Size" : 1 : ""
 	iconpath(string) { group = "Meta" editor = "AssetBrowse(png)" } : "Icon Path" :  : ""
 	worldmodelpath(resource:vmdl) { group = "World" } : "World Model Path" :  : ""
+	craftingduration(integer) { group = "Crafting" } : "Crafting Duration" : 10 : ""
 	craftingrecipe(array:struct:Eden_CraftingRecipe) { group = "Crafting" } : "Crafting Recipe" :  : ""
 ]
 
