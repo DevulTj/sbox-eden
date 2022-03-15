@@ -17,6 +17,9 @@ partial class Blueprint : Weapon
 
 	private const float maxBuildDistance = 128f;
 
+	[ClientVar( "eden_debug_blueprint" )]
+	public static bool Debug { get; set; } = false;
+
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );
@@ -32,8 +35,29 @@ partial class Blueprint : Weapon
 
 		if ( Input.Pressed( InputButton.Attack1 ) )
 		{
-			var targetTransform = GetSnappedTransform( new Transform( TraceForward( Owner ).EndPosition, Rotation.Identity ) );
+			var targetTransform = GetSnappedTransform();
 			PlaceBuilding( selectedAsset.Id, targetTransform.Position, targetTransform.Rotation );
+		}
+	}
+
+	[Event.Frame]
+	public void OnFrame()
+	{
+		if ( !Debug )
+			return;
+
+		foreach ( var snapPoint in GetNearbySnapPoints() )
+		{
+			DebugOverlay.Sphere( snapPoint.Position, 4f, Color.Cyan, false );
+		}
+
+		if ( !ghostEntity.IsValid )
+			return;
+
+		foreach ( var snapPoint in ghostEntity.GetSnapPoints( worldSpace: false ) )
+		{
+			var worldSnapPoint = GetSnappedTransform().ToWorld( snapPoint );
+			DebugOverlay.Sphere( worldSnapPoint.Position, 4f, Color.Green, false );
 		}
 	}
 
@@ -59,6 +83,9 @@ partial class Blueprint : Weapon
 			ghostEntity?.Delete();
 	}
 
+	/// <summary>
+	/// Place a building down
+	/// </summary>
 	[ServerCmd( "eden_building_place" )]
 	public static void PlaceBuilding( int assetId, Vector3 position, Rotation rotation )
 	{
@@ -69,6 +96,8 @@ partial class Blueprint : Weapon
 		building.Rotation = rotation;
 		building.Model = asset.BuildingModel;
 		building.SetupPhysicsFromModel( PhysicsMotionType.Static );
+
+		// TODO: Server-side validation checks, make sure the player isn't doing anything funky
 	}
 
 	private static TraceResult TraceForward( Entity entity, float distance = maxBuildDistance )
@@ -76,6 +105,9 @@ partial class Blueprint : Weapon
 		return Trace.Ray( entity.EyePosition, entity.EyePosition + entity.EyeRotation.Forward * distance ).Ignore( entity ).Run();
 	}
 
+	/// <summary>
+	/// Find nearby entities, fetch their snap points
+	/// </summary>
 	private List<Transform> GetNearbySnapPoints()
 	{
 		var trace = TraceForward( Owner );
@@ -94,21 +126,32 @@ partial class Blueprint : Weapon
 		return snapPoints;
 	}
 
-	private Transform GetSnappedTransform( Transform transform )
+	/// <summary>
+	/// Fetch a transform that snaps our ghost entity to a nearby building
+	/// </summary>
+	private Transform GetSnappedTransform()
 	{
+		var transform = new Transform( TraceForward( Owner ).EndPosition );
+
+		// Where are we aiming / what are we aiming at
 		var forwardTracePosition = TraceForward( Owner ).EndPosition;
 		var forwardTraceDirection = Owner.EyeRotation;
 
+		// Get all nearby snap points, order them by most appropriate (closest & with similar rotation angles)
+		// TODO: Ensure that the placement is valid too
 		var orderedSnapPoints = GetNearbySnapPoints().OrderBy( x => x.Position.Distance( forwardTracePosition ) + x.Rotation.Distance( forwardTraceDirection ) );
 		if ( !orderedSnapPoints.Any() )
 			return transform;
 
+		// Get the best available snap point
 		var nearestSnapPoint = orderedSnapPoints.First();
 
+		// Convert everything into local space; this prevents us from entering any funky feedback loops
 		var localOther = ghostEntity.Transform.ToLocal( nearestSnapPoint );
 		var localGhostSnapPoints = ghostEntity.GetSnapPoints( worldSpace: false );
 		var localClosestSnapPoint = localGhostSnapPoints.OrderBy( x => x.Position.Distance( localOther.Position ) ).First();
 
+		// Return best available snap point, offset by best ghost snap point
 		return nearestSnapPoint.WithPosition( nearestSnapPoint.Position - localClosestSnapPoint.Position );
 	}
 
