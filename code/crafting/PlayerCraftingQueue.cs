@@ -10,8 +10,8 @@ public partial class PlayerCraftingQueue : CraftingQueue
 	[ServerCmd( "eden_crafting_playercraft" )]
 	public static void Craft( string assetName, int quantity )
 	{
-		var player = ConsoleSystem.Caller as Player;
-		if ( player.IsValid() ) return;
+		var player = ConsoleSystem.Caller.Pawn as Player;
+		if ( !player.IsValid() ) return;
 
 		var asset = ItemAsset.FromName( assetName );
 		if ( asset is null ) return;
@@ -23,8 +23,8 @@ public partial class PlayerCraftingQueue : CraftingQueue
 	[ServerCmd( "eden_crafting_playercraft_cancel" )]
 	public static void CraftCancel( int index )
 	{
-		var player = ConsoleSystem.Caller as Player;
-		if ( player.IsValid() ) return;
+		var player = ConsoleSystem.Caller.Pawn as Player;
+		if ( !player.IsValid() ) return;
 
 		var queue = player.CraftingQueue;
 		queue.Cancel( index );
