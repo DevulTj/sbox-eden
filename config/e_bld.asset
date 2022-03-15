@@ -1,0 +1,10 @@
+//
+// Eden.BuildingAsset
+//
+@BaseClass = e_bld : ""
+[
+	buildingname(string) { group = "Meta" } : "Building Name" :  : ""
+	buildingmodelpath(resource:vmdl) { group = "Meta" } : "Building Model Path" :  : ""
+	buildingiconpath(string) { group = "Meta" editor = "AssetBrowse(png)" } : "Building Icon Path" :  : ""
+]
+
