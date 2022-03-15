@@ -1,4 +1,13 @@
 //
+// Eden.CraftingRecipe
+//
+@struct = Eden_CraftingRecipe
+[
+	itemid(string) : "Item Id" :  : ""
+	amount(integer) : "Amount" : 0 : ""
+]
+
+//
 // Eden.ItemAsset
 //
 @BaseClass = e_item : ""
@@ -8,5 +17,6 @@
 	stacksize(integer) { group = "Meta" } : "Stack Size" : 1 : ""
 	iconpath(string) { group = "Meta" editor = "AssetBrowse(png)" } : "Icon Path" :  : ""
 	worldmodelpath(resource:vmdl) { group = "World" } : "World Model Path" :  : ""
+	craftingrecipe(array:struct:Eden_CraftingRecipe) { group = "Crafting" } : "Crafting Recipe" :  : ""
 ]
 

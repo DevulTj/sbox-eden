@@ -43,6 +43,9 @@ public partial class ItemAsset : Asset
 	[Property, Category( "World" ), ResourceType( "vmdl" )]
 	public string WorldModelPath { get; set; }
 
+	[Property, Category( "Crafting" )]
+	public List<CraftingRecipe> CraftingRecipe { get; set; } = new();
+
 	public Model WorldModel { get; set; }
 
 	public static Model FallbackWorldModel = Model.Load( "models/sbox_props/bin/rubbish_bag.vmdl" );
