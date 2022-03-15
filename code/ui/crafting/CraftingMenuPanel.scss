@@ -55,9 +55,11 @@ craftingmenupanel {
         justify-content: flex-start;
         align-items: baseline;
         align-content: flex-start;
+        padding: 16px;
 
         .item {
-            background-color: rgba( black, 0.5 );
+            border: 2px solid rgba( white, 0.2 );
+            background-image: linear-gradient(to right, rgba( black, 0.6 ), rgba( #888888, 0 ) );
 
             &:hover {
                 background-image: linear-gradient(to right, rgba( #888888, 0.5 ), rgba( #888888, 0 ) );
@@ -69,6 +71,8 @@ craftingmenupanel {
             }
 
             .icon {
+                width: 128px;
+                height: 128px;
                 transform: scale( 0.7 );
             }
 
@@ -76,6 +80,11 @@ craftingmenupanel {
                 position: absolute;
                 bottom: 4px;
                 right: 8px;
+                opacity: 0;
+
+                &.show {
+                    opacity: 1;
+                }
             }
         }
     }
