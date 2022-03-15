@@ -48,9 +48,14 @@ partial class Blueprint : Weapon
 			SceneObject.Transform = snappedTransform;
 		}
 
-		public List<Transform> GetSnapPoints()
+		public List<Transform> GetSnapPoints( bool worldSpace = true )
 		{
-			return ModelSnapPoints.GetSnapPoints( Model ).Select( x => Transform.ToWorld( x )).ToList();
+			var snapPoints = ModelSnapPoints.GetSnapPoints( Model );
+
+			if ( worldSpace )
+				return snapPoints.Select( x => Transform.ToWorld( x ) ).ToList();
+
+			return snapPoints;
 		}
 	}
 }

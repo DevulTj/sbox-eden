@@ -97,15 +97,16 @@ partial class Blueprint : Weapon
 	private Transform GetSnappedTransform( Transform transform )
 	{
 		var forwardTracePosition = TraceForward( Owner ).EndPosition;
+		var forwardTraceDirection = Owner.EyeRotation;
 
-		var orderedSnapPoints = GetNearbySnapPoints().OrderBy( x => x.Position.Distance( forwardTracePosition ) );
+		var orderedSnapPoints = GetNearbySnapPoints().OrderBy( x => x.Position.Distance( forwardTracePosition ) + x.Rotation.Distance( forwardTraceDirection ) );
 		if ( !orderedSnapPoints.Any() )
 			return transform;
 
 		var nearestSnapPoint = orderedSnapPoints.First();
 
 		var localOther = ghostEntity.Transform.ToLocal( nearestSnapPoint );
-		var localGhostSnapPoints = ghostEntity.GetSnapPoints().Select( x => ghostEntity.Transform.ToLocal( x ) );
+		var localGhostSnapPoints = ghostEntity.GetSnapPoints( worldSpace: false );
 		var localClosestSnapPoint = localGhostSnapPoints.OrderBy( x => x.Position.Distance( localOther.Position ) ).First();
 
 		return nearestSnapPoint.WithPosition( nearestSnapPoint.Position - localClosestSnapPoint.Position );
