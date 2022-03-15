@@ -3,7 +3,7 @@
 
 namespace Eden;
 
-public enum CraftingCategory
+public enum ItemCategory
 {
 	Misc,
 	Building,

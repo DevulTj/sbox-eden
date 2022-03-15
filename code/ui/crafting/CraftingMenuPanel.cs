@@ -10,22 +10,22 @@ namespace Eden;
 
 public partial class CraftingCategoryButton : Button
 {
-	public string GetCategoryImage( CraftingCategory category )
+	public string GetCategoryImage( ItemCategory category )
 	{
 		return category switch
 		{
-			CraftingCategory.Misc => "/ui/items/water_bottle.png",
-			CraftingCategory.Building => "/ui/items/water_bottle.png",
-			CraftingCategory.Food => "/ui/items/water_bottle.png",
-			CraftingCategory.Tools => "/ui/items/stone_hatchet.png",
-			CraftingCategory.Weapons => "/ui/items/stone_hatchet.png",
-			CraftingCategory.Farming => "/ui/items/water_bottle.png",
-			CraftingCategory.Clothing => "/ui/items/water_bottle.png",
+			ItemCategory.Misc => "/ui/items/water_bottle.png",
+			ItemCategory.Building => "/ui/items/water_bottle.png",
+			ItemCategory.Food => "/ui/items/water_bottle.png",
+			ItemCategory.Tools => "/ui/items/stone_hatchet.png",
+			ItemCategory.Weapons => "/ui/items/stone_hatchet.png",
+			ItemCategory.Farming => "/ui/items/water_bottle.png",
+			ItemCategory.Clothing => "/ui/items/water_bottle.png",
 			_ => "/ui/items/water_bottle.png",
 		};
 	}
 
-	public CraftingCategoryButton( CraftingCategory category )
+	public CraftingCategoryButton( ItemCategory category )
 	{
 		AddClass( "category" );
 		//
@@ -57,10 +57,15 @@ public partial class CraftingMenuPanel : Panel
 		CategoryLayout.DeleteChildren();
 		CategoryButtons.Clear();
 
-		foreach ( CraftingCategory category in Enum.GetValues( typeof( CraftingCategory ) ) )
+		foreach ( ItemCategory category in Enum.GetValues( typeof( ItemCategory ) ) )
 		{
 			var button = new CraftingCategoryButton( category );
 			button.Parent = CategoryLayout;
+		}
+
+		foreach ( var item in ItemAsset.All )
+		{
+			var category = item.Category;
 		}
 	}
 }

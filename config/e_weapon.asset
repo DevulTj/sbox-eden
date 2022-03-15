@@ -24,6 +24,16 @@
 	weaponclassname(string) : "Weapon Class Name" :  : ""
 	itemname(string) { group = "Meta" } : "Item Name" :  : ""
 	itemdescription(string) { group = "Meta" } : "Item Description" :  : ""
+	category(choices) { group = "Meta" } : "Category" : 0 : "" =
+	[
+		0 : "Misc"
+		1 : "Building"
+		2 : "Food"
+		3 : "Tools"
+		4 : "Weapons"
+		5 : "Farming"
+		6 : "Clothing"
+	]
 	stacksize(integer) { group = "Meta" } : "Stack Size" : 1 : ""
 	iconpath(string) { group = "Meta" editor = "AssetBrowse(png)" } : "Icon Path" :  : ""
 	worldmodelpath(resource:vmdl) { group = "World" } : "World Model Path" :  : ""
