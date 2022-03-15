@@ -26,6 +26,12 @@ public partial class Craft : BaseNetworkable
 	public Craft()
 	{
 	}
+
+	public Craft( Craft otherCraft )
+	{
+		Asset = otherCraft.Asset;
+		Quantity = otherCraft.Quantity;
+	}
 }
 
 public partial class CraftingQueue : BaseNetworkable
@@ -62,6 +68,9 @@ public partial class CraftingQueue : BaseNetworkable
 
 		CraftStarted = 0;
 		CraftFinished = duration;
+
+		// Copy to alleviate network reference bullshit
+		CurrentCraft = new Craft( craft );
 
 		// Wait for a while
 		await GameTask.DelaySeconds( duration );
