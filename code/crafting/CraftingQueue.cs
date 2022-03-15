@@ -10,7 +10,9 @@ namespace Eden;
 public partial class Craft : BaseNetworkable
 {
 	//
+	[Net]
 	public ItemAsset Asset { get; set; }
+	[Net]
 	public int Quantity { get; set; } = 1;
 
 	//

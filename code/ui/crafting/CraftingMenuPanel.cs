@@ -1,6 +1,7 @@
 // Copyright (c) 2022 Ape Tavern, do not share, re-distribute or modify
 // without permission of its author (insert_email_here)
 
+using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
 using System;
@@ -46,12 +47,38 @@ public partial class CraftingCategoryButton : Button
 
 public partial class CraftingItemButton : Button
 {
+	public ItemAsset ItemAsset { get; set; }
+	protected Label AmountLabel { get; set; }
+
 	public CraftingItemButton( ItemAsset item )
 	{
+		ItemAsset = item;
+
 		AddClass( "item" );
 		//
 		Add.Image( item.IconPath, "icon" );
-		Add.Label( "0", "amount" );
+		AmountLabel = Add.Label( "0", "amount" );
+	}
+
+	public override void Tick()
+	{
+		base.Tick();
+
+		int count = 0;
+
+		var player = Local.Pawn as Player;
+		if ( player.IsValid() )
+		{
+			var queue = player.CraftingQueue;
+			foreach ( var queueItem in queue.Queue )
+			{
+				if ( queueItem.Asset.Id == ItemAsset.Id )
+					count += queueItem.Quantity;
+			}
+
+			AmountLabel.SetClass( "show", count > 0 );
+			AmountLabel.Text = $"{count}";
+		}
 	}
 }
 
