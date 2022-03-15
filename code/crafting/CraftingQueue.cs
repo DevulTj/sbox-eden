@@ -39,6 +39,16 @@ public partial class CraftingQueue : BaseNetworkable
 		queue.AddToQueue( player.Backpack, asset, quantity );
 	}
 
+	[ServerCmd( "eden_crafting_playercraft_cancel" )]
+	public static void PlayerCraftCancel( int index )
+	{
+		var player = ConsoleSystem.Caller as Player;
+		if ( player.IsValid() ) return;
+
+		var queue = player.CraftingQueue;
+		queue.Cancel( index );
+	}
+
 	[Net]
 	public IList<Craft> Queue { get; set; }
 	[Net]
@@ -50,11 +60,15 @@ public partial class CraftingQueue : BaseNetworkable
 
 	protected async Task CraftingRoutine( Craft craft )
 	{
+		Log.Info( $"Crafting routine started: {craft.Asset.ItemName} x{craft.Quantity}" );
+
 		CraftStarted = 0;
 		CraftFinished = craft.Asset.CraftingDuration;
 
 		// Wait for a while
 		await GameTask.DelaySeconds( craft.Asset.CraftingDuration );
+
+		Log.Info( $"Crafting finished for: {craft.Asset.ItemName} x{craft.Quantity}" );
 
 		// Bye bye!
 		Queue.RemoveAt( 0 );
@@ -73,6 +87,8 @@ public partial class CraftingQueue : BaseNetworkable
 	public void AddToQueue( Container source, ItemAsset asset, int quantity = 1 )
 	{
 		// @TODO: Take items from the container source, if they can afford it.
+
+		Log.Info( $"[{source.ID}] Adding item to queue: {asset.ItemName}, quantity: {quantity}" );
 
 		Queue.Add( new Craft( asset, quantity ) );
 
