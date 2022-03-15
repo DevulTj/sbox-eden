@@ -9,7 +9,7 @@ namespace Eden;
 public partial class ItemPanel : Panel
 {
 	// @ref
-	public Panel IconPanel { get; set; }
+	public Image IconPanel { get; set; }
 	// @text
 	public int Quantity => Slot?.Quantity ?? 0;
 
@@ -44,7 +44,7 @@ public partial class ItemPanel : Panel
 
 		Item = item;
 
-		IconPanel.Style.SetBackgroundImage( item.Asset.IconPath );
+		IconPanel.SetTexture( item.Asset.IconPath );
 		Style.BorderColor = Item.DefaultColor.WithAlpha( 0.5f );
 	}
 
