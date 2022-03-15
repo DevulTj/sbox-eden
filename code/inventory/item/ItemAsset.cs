@@ -84,7 +84,8 @@ public partial class ItemAsset : Asset
 			if ( !Categories.ContainsKey( Category ) )
 				Categories.Add( Category, new() );
 
-			Categories[Category].Add( this );
+			if ( Recipe.Items.Count > 0 )
+				Categories[Category].Add( this );
 
 			// Cache the world model immediately
 			if ( !string.IsNullOrEmpty( WorldModelPath ) )

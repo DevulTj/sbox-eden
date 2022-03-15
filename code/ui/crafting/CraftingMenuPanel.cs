@@ -18,14 +18,14 @@ public partial class CraftingCategoryButton : Button
 	{
 		return category switch
 		{
-			ItemCategory.Misc => "/ui/items/water_bottle.png",
-			ItemCategory.Building => "/ui/items/water_bottle.png",
-			ItemCategory.Food => "/ui/items/water_bottle.png",
-			ItemCategory.Tools => "/ui/items/stone_hatchet.png",
-			ItemCategory.Weapons => "/ui/items/stone_hatchet.png",
-			ItemCategory.Farming => "/ui/items/water_bottle.png",
-			ItemCategory.Clothing => "/ui/items/water_bottle.png",
-			_ => "/ui/items/water_bottle.png",
+			ItemCategory.Misc => "/ui/items/categories/misc.png",
+			ItemCategory.Building => "/ui/items/categories/building.png",
+			ItemCategory.Food => "/ui/items/categories/food.png",
+			ItemCategory.Tools => "/ui/items/categories/tools.png",
+			ItemCategory.Weapons => "/ui/items/categories/weapons.png",
+			ItemCategory.Farming => "/ui/items/categories/farming.png",
+			ItemCategory.Clothing => "/ui/items/categories/clothing.png",
+			_ => "/ui/items/categories/misc.png",
 		};
 	}
 
@@ -75,7 +75,7 @@ public partial class CraftingMenuPanel : Panel
 	{
 		ItemsLayout.DeleteChildren( true );
 
-		foreach ( var item in ItemAsset.All )
+		foreach ( var item in ItemAsset.FromCategory( category ) )
 		{
 			if ( category != item.Category )
 				continue;
