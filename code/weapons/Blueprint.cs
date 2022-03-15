@@ -51,7 +51,7 @@ partial class Blueprint : Weapon
 			DebugOverlay.Sphere( snapPoint.Position, 4f, Color.Cyan, false );
 		}
 
-		if ( !ghostEntity.IsValid )
+		if ( ghostEntity == null || !ghostEntity.IsValid )
 			return;
 
 		foreach ( var snapPoint in selectedAsset.GetSnapPoints() )
@@ -154,7 +154,7 @@ partial class Blueprint : Weapon
 		// Convert everything into local space; this prevents us from entering any funky feedback loops
 		var localOther = ghostEntity.Transform.ToLocal( nearestSnapPoint );
 		var localGhostSnapPoints = selectedAsset.GetSnapPoints();
-		var localClosestSnapPoint = localGhostSnapPoints.OrderBy( x => x.Position.Distance( localOther.Position ) ).First();
+		var localClosestSnapPoint = localGhostSnapPoints.OrderBy( x => x.Position.Distance( localOther.Position ) ).FirstOrDefault();
 
 		// Return best available snap point, offset by best ghost snap point
 		return nearestSnapPoint.WithPosition( nearestSnapPoint.Position - localClosestSnapPoint.Position );
