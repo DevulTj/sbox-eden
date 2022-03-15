@@ -90,14 +90,20 @@ partial class Blueprint : Weapon
 	public static void PlaceBuilding( int assetId, Vector3 position, Rotation rotation )
 	{
 		var asset = Asset.FromId<BuildingAsset>( assetId );
+		var player = ConsoleSystem.Caller.Pawn as Player;
+
+		if ( player == null || asset == null )
+			return;
+
+		// Server-side validation checks, make sure the player isn't doing anything funky
+		if ( !asset.CanAfford( player ) )
+			return;
 
 		var building = new BuildingEntity();
 		building.Position = position;
 		building.Rotation = rotation;
 		building.Model = asset.BuildingModel;
 		building.SetupPhysicsFromModel( PhysicsMotionType.Static );
-
-		// TODO: Server-side validation checks, make sure the player isn't doing anything funky
 	}
 
 	private static TraceResult TraceForward( Entity entity, float distance = maxBuildDistance )

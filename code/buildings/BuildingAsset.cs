@@ -4,7 +4,6 @@
 using Sandbox;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 
 namespace Eden;
 
@@ -24,13 +23,9 @@ public class BuildingAsset : Asset
 		return snapPoints;
 	}
 
-	public bool IsPlacementValid()
-	{
-		return true;
-	}
-
 	public bool CanAfford( Player player )
 	{
+		// TODO
 		return true;
 	}
 
@@ -45,7 +40,7 @@ public class BuildingAsset : Asset
 			All.Add( this );
 			Classes[BuildingName] = this;
 
-			// Cache the world model immediately
+			// Cache the building model immediately
 			if ( !string.IsNullOrEmpty( BuildingModelPath ) )
 			{
 				BuildingModel = Model.Load( BuildingModelPath );
