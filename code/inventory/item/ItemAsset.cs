@@ -14,6 +14,14 @@ public partial class ItemAsset : Asset
 {
 	public static HashSet<ItemAsset> All { get; protected set; } = new();
 	public static Dictionary<string, ItemAsset> Classes { get; protected set; } = new();
+	public static Dictionary<ItemCategory, List<ItemAsset>> Categories { get; protected set; } = new();
+
+	public static List<ItemAsset> FromCategory( ItemCategory category )
+	{
+		if ( !Categories.ContainsKey( category ) )
+			Categories.Add( category, new() );
+		return Categories[category];
+	}
 
 	public static ItemAsset FromName( string assetName )
 	{
@@ -72,6 +80,11 @@ public partial class ItemAsset : Asset
 		{
 			All.Add( this );
 			Classes[Name] = this;
+
+			if ( !Categories.ContainsKey( Category ) )
+				Categories.Add( Category, new() );
+
+			Categories[Category].Add( this );
 
 			// Cache the world model immediately
 			if ( !string.IsNullOrEmpty( WorldModelPath ) )

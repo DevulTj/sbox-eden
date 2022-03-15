@@ -10,6 +10,10 @@ namespace Eden;
 
 public partial class CraftingCategoryButton : Button
 {
+	// @text
+	public int ItemCount { get; set; } = 0;
+	public Label AmountLabel { get; set; }
+
 	public string GetCategoryImage( ItemCategory category )
 	{
 		return category switch
@@ -30,6 +34,23 @@ public partial class CraftingCategoryButton : Button
 		AddClass( "category" );
 		//
 		Add.Image( GetCategoryImage( category ), "icon" );
+		AmountLabel = Add.Label( "0", "amount" );
+	}
+
+	public void SetCount( int count )
+	{
+		ItemCount = count;
+		AmountLabel.Text = $"{ItemCount}";
+	}
+}
+
+public partial class CraftingItemButton : Button
+{
+	public CraftingItemButton( ItemAsset item )
+	{
+		AddClass( "item" );
+		//
+		Add.Image( item.IconPath, "icon" );
 		Add.Label( "0", "amount" );
 	}
 }
@@ -50,22 +71,36 @@ public partial class CraftingMenuPanel : Panel
 	{
 	}
 
+	public void SetCategory( ItemCategory category )
+	{
+		ItemsLayout.DeleteChildren( true );
+
+		foreach ( var item in ItemAsset.All )
+		{
+			if ( category != item.Category )
+				continue;
+
+			var itemButton = new CraftingItemButton( item );
+			itemButton.Parent = ItemsLayout;
+		}
+	}
+
 	protected override void PostTemplateApplied()
 	{
 		base.PostTemplateApplied();
 
-		CategoryLayout.DeleteChildren();
+		CategoryLayout.DeleteChildren( true );
 		CategoryButtons.Clear();
 
 		foreach ( ItemCategory category in Enum.GetValues( typeof( ItemCategory ) ) )
 		{
 			var button = new CraftingCategoryButton( category );
 			button.Parent = CategoryLayout;
+			button.AddEventListener( "onclick", () => SetCategory( category ) );
+
+			button.SetCount( ItemAsset.FromCategory( category ).Count );
 		}
 
-		foreach ( var item in ItemAsset.All )
-		{
-			var category = item.Category;
-		}
+		SetCategory( ItemCategory.Misc );
 	}
 }

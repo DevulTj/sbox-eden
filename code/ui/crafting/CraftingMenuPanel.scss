@@ -48,6 +48,34 @@ craftingmenupanel {
         height: 100%;
         background-image: linear-gradient(to right, rgba( black, 0.5 ), rgba( black, 0 ) );
         border-left: 2px solid rgba( white, 0.5 );
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: baseline;
+        align-content: flex-start;
+
+        .item {
+            background-color: rgba( black, 0.5 );
+
+            &:hover {
+                background-image: linear-gradient(to right, rgba( #888888, 0.5 ), rgba( #888888, 0 ) );
+                cursor: pointer;
+            }
+
+            &:active {
+                background-image: linear-gradient(to right, rgba( white, 0.5 ), rgba( #888888, 0 ) );
+            }
+
+            .icon {
+                transform: scale( 0.7 );
+            }
+
+            .amount {
+                position: absolute;
+                bottom: 4px;
+                right: 8px;
+            }
+        }
     }
 
     .inspector {
