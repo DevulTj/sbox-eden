@@ -10,5 +10,5 @@ namespace Eden;
 public partial class Player
 {
 	[Net, Local]
-	public CraftingQueue CraftingQueue { get; set; }
+	public PlayerCraftingQueue CraftingQueue { get; set; }
 }

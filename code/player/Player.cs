@@ -53,6 +53,8 @@ public partial class Player : Sandbox.Player, IContainerEntity
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
 
+		CraftingQueue = new( this );
+
 		Clothing.DressEntity( this );
 
 		ResetVitals();

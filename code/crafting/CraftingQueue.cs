@@ -36,7 +36,7 @@ public partial class CraftingQueue : BaseNetworkable
 		if ( asset is null ) return;
 
 		var queue = player.CraftingQueue;
-		queue.AddToQueue( player.Backpack, asset, quantity );
+		queue.AddToQueue( asset, quantity );
 	}
 
 	[ServerCmd( "eden_crafting_playercraft_cancel" )]
@@ -49,6 +49,11 @@ public partial class CraftingQueue : BaseNetworkable
 		queue.Cancel( index );
 	}
 
+	/// <summary>
+	/// How many items can be in the queue
+	/// </summary>
+	public virtual int MaxInQueue => 6;
+
 	[Net]
 	public IList<Craft> Queue { get; set; }
 	[Net]
@@ -57,6 +62,16 @@ public partial class CraftingQueue : BaseNetworkable
 	public TimeSince CraftStarted { get; set; }
 	[Net]
 	public TimeUntil CraftFinished { get; set; }
+
+	protected virtual void OnFinishCraft( Craft craft )
+	{
+		//
+	}
+
+	protected virtual bool CanAddToQueue( ItemAsset asset, int quantity )
+	{
+		return Queue.Count < MaxInQueue;
+	}
 
 	protected async Task CraftingRoutine( Craft craft )
 	{
@@ -69,6 +84,8 @@ public partial class CraftingQueue : BaseNetworkable
 		await GameTask.DelaySeconds( craft.Asset.CraftingDuration );
 
 		Log.Info( $"Crafting finished for: {craft.Asset.ItemName} x{craft.Quantity}" );
+
+		OnFinishCraft( craft );
 
 		// Bye bye!
 		Queue.RemoveAt( 0 );
@@ -84,11 +101,14 @@ public partial class CraftingQueue : BaseNetworkable
 		_ = CraftingRoutine( craft );
 	}
 
-	public void AddToQueue( Container source, ItemAsset asset, int quantity = 1 )
+	public void AddToQueue( ItemAsset asset, int quantity = 1 )
 	{
+		if ( !CanAddToQueue( asset, quantity ) )
+			return;
+
 		// @TODO: Take items from the container source, if they can afford it.
 
-		Log.Info( $"[{source.ID}] Adding item to queue: {asset.ItemName}, quantity: {quantity}" );
+		Log.Info( $"Adding item to queue: {asset.ItemName}, quantity: {quantity}" );
 
 		Queue.Add( new Craft( asset, quantity ) );
 
