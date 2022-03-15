@@ -36,8 +36,6 @@ public partial class Player
 				}
 			}
 
-			Log.Info( WantToGrab );
-
 			if ( !Input.Down( InputButton.Use ) )
 			{
 				StopUsing();
