@@ -55,5 +55,13 @@ public partial class EyeEntityVital : Panel
 
 			IsShowing = true;
 		}
+
+		if ( tr.Entity is BuildingEntity building )
+		{
+			CurrentEntityName = "Building";
+			CurrentEntitySubtitle = $"{building.Health}/100";
+
+			IsShowing = true;
+		}
 	}
 }
