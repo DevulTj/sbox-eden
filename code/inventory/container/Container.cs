@@ -106,9 +106,11 @@ public partial class Container : BaseNetworkable
 				Items[slot].SetItem( item );
 				Items[slot].SetQuantity( newQuantity );
 
+				quantityLeft -= newQuantity;
+
 				OnItemAdded( item, slot );
 
-				return slot;
+				lastSlot = slot;
 			}
 			else
 				return lastSlot;
