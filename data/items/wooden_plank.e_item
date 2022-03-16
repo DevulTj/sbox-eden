@@ -8,9 +8,16 @@
 		stacksize = 10
 		worldmodelpath = resource:"models/items/sticks/sticks.vmdl"
 		category = "0"
-		craftingduration = 0
+		craftingduration = 2
 		recipe = 
 		{
+			items = 
+			[
+				{
+					itemid = "wooden_stick"
+					amount = 3
+				},
+			]
 		}
 	}
 }
