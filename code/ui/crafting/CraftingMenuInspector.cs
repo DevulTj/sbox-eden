@@ -72,8 +72,11 @@ public partial class CraftingMenuInspector : Panel
 			var recipeItem = RecipeLayout.AddChild<CraftingMenuRecipeItem>();
 			var asset = ItemAsset.FromName( item.ItemId );
 			var weHave = query.Results[asset];
+			var canAfford = weHave >= item.Amount;
 
-			recipeItem.SetItem( item, weHave >= item.Amount, weHave );
+			recipeItem.SetItem( item, canAfford, weHave );
+
+			CraftButton.SetClass( "cant-afford", !canAfford );
 		}
 	}
 

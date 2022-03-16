@@ -71,6 +71,11 @@ craftingmenuinspector {
                 width: 100%;
                 text-align: right;
             }
+
+            &.cant-afford {
+                background-image: linear-gradient(to left, rgba( #871212, 0.5 ), rgba( black, 0 ) );
+                cursor: none;
+            }
         }
 
         .recipe {
