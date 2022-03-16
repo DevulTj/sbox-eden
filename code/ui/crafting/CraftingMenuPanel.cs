@@ -35,6 +35,7 @@ public partial class CraftingCategoryButton : Button
 		AddClass( "category" );
 		//
 		Add.Image( GetCategoryImage( category ), "icon" );
+		Add.Label( category.ToString(), "name" );
 		AmountLabel = Add.Label( "0", "amount" );
 	}
 
@@ -94,12 +95,15 @@ public partial class CraftingMenuPanel : Panel
 	// @ref
 	public CraftingMenuInspector Inspector { get; set; }
 
+	public ItemCategory CurrentCategory { get; set; }
+
 	public CraftingMenuPanel()
 	{
 	}
 
 	public void SetCategory( ItemCategory category )
 	{
+		CurrentCategory = category;
 		ItemsLayout.DeleteChildren( true );
 
 		foreach ( var item in ItemAsset.FromCategory( category ) )
@@ -129,6 +133,7 @@ public partial class CraftingMenuPanel : Panel
 			button.Parent = CategoryLayout;
 			button.AddEventListener( "onclick", () => SetCategory( category ) );
 
+			button.BindClass( "current", () => CurrentCategory == category );
 			button.SetCount( ItemAsset.FromCategory( category ).Count );
 		}
 
