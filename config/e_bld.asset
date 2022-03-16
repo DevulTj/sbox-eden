@@ -6,5 +6,6 @@
 	buildingname(string) { group = "Meta" } : "Building Name" :  : ""
 	buildingmodelpath(resource:vmdl) { group = "Meta" } : "Building Model Path" :  : ""
 	buildingiconpath(string) { group = "Meta" editor = "AssetBrowse(png)" } : "Building Icon Path" :  : ""
+	buildfreestanding(boolean) { group = "Meta" } : "Build Freestanding" : 0 : ""
 ]
 

@@ -5,5 +5,6 @@
 		buildingname = "Foundation"
 		buildingmodelpath = resource:"models/buildings/foundation.vmdl"
 		buildingiconpath = "ui/building/foundation.png"
+		buildfreestanding = true
 	}
 }

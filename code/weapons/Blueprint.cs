@@ -34,26 +34,7 @@ partial class Blueprint : Weapon
 			DeleteBuildWheel();
 
 		if ( Input.Pressed( InputButton.Attack1 ) )
-		{
-			var targetTransform = GetSnappedTransform();
-			PlaceBuilding( selectedAsset.Id, targetTransform.Position, targetTransform.Rotation );
-		}
-	}
-
-	[Event.Frame]
-	public void OnFrame()
-	{
-		if ( !Debug )
-			return;
-
-		if ( ghostEntity == null || !ghostEntity.IsValid )
-			return;
-
-		foreach ( var snapPoint in selectedAsset.GetLocalSnapPointTransforms() )
-		{
-			var worldSnapPoint = GetSnappedTransform().ToWorld( snapPoint );
-			DebugOverlay.Sphere( worldSnapPoint.Position, 4f, Color.Green, false );
-		}
+			PlaceBuilding();
 	}
 
 	public override void ActiveStart( Entity ent )
@@ -78,26 +59,52 @@ partial class Blueprint : Weapon
 			ghostEntity?.Delete();
 	}
 
-	/// <summary>
-	/// Place a building down
-	/// </summary>
-	[ServerCmd( "eden_building_place" )]
-	public static void PlaceBuilding( int assetId, Vector3 position, Rotation rotation )
+	private void PlaceBuilding()
 	{
+		CmdCreateBuildingManual( selectedAsset.Id, TraceForward( Owner ).EndPosition, Rotation.Identity );
+	}
+
+	private static BuildingEntity CreateBuilding( int assetId, Vector3 position, Rotation rotation )
+	{
+		Host.AssertServer();
+
 		var asset = Asset.FromId<BuildingAsset>( assetId );
 		var player = ConsoleSystem.Caller.Pawn as Player;
 
 		if ( player == null || asset == null )
-			return;
+			return default;
 
 		// Server-side validation checks, make sure the player isn't doing anything funky
 		if ( !asset.CanAfford( player ) )
-			return;
+			return default;
 
 		var building = new BuildingEntity();
 		building.Position = position;
 		building.Rotation = rotation;
 		building.UpdateFromAsset( asset );
+
+		return building;
+	}
+
+	[ServerCmd( "eden_building_create_manual" )]
+	public static void CmdCreateBuildingManual( int assetId, Vector3 position, Rotation rotation )
+	{
+		CreateBuilding( assetId, position, rotation );
+	}
+
+	[ServerCmd( "eden_building_create" )]
+	public static void CmdCreateBuilding( int assetId, int snapId, int attachedBuildingId, int attachedSnapId )
+	{
+		var snapBuilding = Entity.All.OfType<BuildingEntity>().First( x => x.NetworkIdent == attachedBuildingId );
+		var snap = snapBuilding.SnapPoints[attachedSnapId];
+
+		var building = CreateBuilding( assetId, snap.Transform.Position, snap.Transform.Rotation );
+
+		if ( building == null )
+			return;
+
+		building.SnapPoints[snapId].AttachedEntity = snapBuilding;
+		snapBuilding.SnapPoints[attachedSnapId].AttachedEntity = building;
 	}
 
 	private static TraceResult TraceForward( Entity entity, float distance = maxBuildDistance )
@@ -129,7 +136,7 @@ partial class Blueprint : Weapon
 	/// <summary>
 	/// Fetch a transform that snaps our ghost entity to a nearby building
 	/// </summary>
-	private Transform GetSnappedTransform()
+	private SnapPoint? GetBestSnapPoint()
 	{
 		var transform = new Transform( TraceForward( Owner ).EndPosition );
 
@@ -141,21 +148,12 @@ partial class Blueprint : Weapon
 		var nearbySnapPoints = GetNearbySnapPoints().Where( x => x.AttachedEntity == null || !x.AttachedEntity.IsValid );
 		var orderedSnapPoints = nearbySnapPoints.OrderBy( x => x.Transform.Position.Distance( forwardTracePosition ) );
 		if ( !orderedSnapPoints.Any() )
-			return transform;
+			return null;
 
 		// Get the best available snap point
-		var nearestSnapPoint = orderedSnapPoints.First();
+		var bestSnapPoint = orderedSnapPoints.First();
 
-		// Convert everything into local space; this prevents us from entering any funky feedback loops
-		var localOther = ghostEntity.Transform.ToLocal( nearestSnapPoint.Transform );
-		var localGhostSnapPoints = selectedAsset.GetLocalSnapPointTransforms();
-		var localClosestSnapPoint = localGhostSnapPoints.OrderBy( x => x.Position.Distance( localOther.Position ) ).FirstOrDefault();
-
-		if ( Debug )
-			DebugOverlay.Sphere( nearestSnapPoint.Transform.Position, 8f, Color.Red, false );
-
-		// Return best available snap point, offset by nearest selected building snap point
-		return nearestSnapPoint.Transform.WithPosition( nearestSnapPoint.Transform.Position - localClosestSnapPoint.Position );
+		return bestSnapPoint;
 	}
 
 	private void CreateBuildWheel()
