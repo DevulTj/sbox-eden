@@ -9,6 +9,11 @@ draggeditempanel {
     transition: transform 0.1s ease, opacity 0.03s ease;
     margin-left: 4px;
     margin-top: 4px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: stretch;
 
 
     &:intro {
@@ -17,13 +22,12 @@ draggeditempanel {
 
     .icon {
         position: absolute;
-        width: 100%;
-        height: 100%;
+        width: 80%;
+        height: 80%;
         background-size: 100%;
         background-repeat: no-repeat;
         background-position: center;
         pointer-events: none;
-        transform: scale( 0.95 );
         opacity: 0.5;
     }
 
@@ -32,24 +36,6 @@ draggeditempanel {
         left: 8px;
         top: 4px;
         text-stroke: 2px black;
-    }
-
-    &:hover {
-        transform: scale( 1.05 );
-
-        .overlay {
-            background-color: rgba( white, 0.05 );
-        }
-
-        cursor: pointer;
-    }
-
-    &:active {
-        transform: scale( 0.95 );
-
-        .overlay {
-            background-color: rgba( white, 0.2 );
-        }
     }
 
     &.empty {
