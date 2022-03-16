@@ -22,6 +22,9 @@ public partial class MainMenuPanel
 		if ( hoveredItem == null )
 			return;
 
+		if ( hoveredItem.Item is null )
+			return;
+
 		IsDragging = false;
 		StartMousePos = Mouse.Position / Screen.Size;
 		FocusedItem = hoveredItem;
