@@ -71,8 +71,12 @@
 						{
 							snap_points = 
 							[
-								"snap0",
-								"snap1",
+								{
+									attachment = "snap0"
+								},
+								{
+									attachment = "snap1"
+								},
 							]
 						}
 					},
