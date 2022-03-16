@@ -42,11 +42,24 @@ public partial class PlayerCraftingQueue : CraftingQueue
 
 	public Player Player { get; set; }
 
+	public ContainerTransaction CreateTransaction( ItemAsset asset )
+	{
+		var t = new ContainerTransaction();
+		t.AddContainer( Player.Hotbar, Player.Backpack );
+
+		foreach ( var item in asset.Recipe.Items )
+			t.AddRequirement( new ContainerTransactionItem() { ItemAsset = ItemAsset.FromName( item.ItemId ), Quantity = item.Amount } );
+
+		return t;
+	}
+
 	protected override bool CanAddToQueue( ItemAsset asset, int quantity )
 	{
 		// @TODO: take shit from the player
 		bool baseResult = base.CanAddToQueue( asset, quantity );
-		return baseResult;
+		var transaction = CreateTransaction( asset );
+
+		return baseResult && transaction.CanAfford() && transaction.Execute();
 	}
 
 	protected override void OnFinishCraft( Craft craft )
