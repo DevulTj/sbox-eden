@@ -14,8 +14,10 @@
 ]
 
 //
+// Eden.ResourceEntity
 // Eden.ResourceNodeEntity
 //
+@PointClass base(BaseProperties_apetavern_eden) tags( Physics ) model() = eden_resource : ""
 @PointClass base(BaseProperties_apetavern_eden, BasePhysicsSimulated) tags( Physics ) model() 
 metadata
 {
@@ -132,6 +134,17 @@ metadata
 ]
 
 //
+// Eden.Blueprint
+//
+@PointClass base(BaseProperties_apetavern_eden) = eden_blueprint : ""
+[
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+
+	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
+]
+
+//
+// Eden.Hands
 // Eden.WorldContainerEntity
 //
 @PointClass base(BaseProperties_apetavern_eden, BasePhysicsSimulated) tags( Physics ) model() = eden_container : ""
