@@ -59,6 +59,21 @@ public partial class WorldItemEntity : Prop, IUse
 		return true;
 	}
 
+	public override void StartTouch( Entity other )
+	{
+		base.StartTouch( other );
+
+		if ( other is WorldItemEntity itemEntity )
+		{
+			if ( itemEntity.Item.Asset == Item.Asset )
+			{
+				Quantity += itemEntity.Quantity;
+				itemEntity.Delete();
+			}
+		}
+
+	}
+
 	bool IUse.IsUsable( Entity user )
 	{
 		return true;
