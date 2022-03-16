@@ -19,6 +19,9 @@ public partial class Container : BaseNetworkable
 	public int Size { get; protected set; } = 12;
 
 	[Net]
+	public string Name { get; set; } = "";
+
+	[Net]
 	public IList<Slot> Items { get; protected set; }
 
 	/// <summary>

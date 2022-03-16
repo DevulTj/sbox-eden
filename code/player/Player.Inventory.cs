@@ -28,6 +28,19 @@ public partial class Player
 		Event.Run( GameEvent.Client.BackpackChanged, @new );
 	}
 
+	public void SetupInventory()
+	{
+		Backpack = new();
+		Backpack.SetSize( 28 );
+		Backpack.Name = "Backpack";
+
+		Hotbar = new( this );
+		Hotbar.SetSize( 7 );
+		Hotbar.Name = "Equipment";
+
+		Hotbar.Add( Item.FromAsset( "stone_hatchet" ), true );
+	}
+
 	public void HotbarSimulate()
 	{
 		int desiredSlot = -1;

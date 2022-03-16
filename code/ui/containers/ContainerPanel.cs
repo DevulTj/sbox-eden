@@ -33,7 +33,7 @@ public partial class ContainerPanel : Panel
 	public void SetContainer( Container container )
 	{
 		Container = container;
-		Title = "";
+		Title = container.Name;
 
 		if ( !Panels.ContainsKey( container.ID ) || Panels[container.ID] == null )
 			Panels[container.ID] = new();
