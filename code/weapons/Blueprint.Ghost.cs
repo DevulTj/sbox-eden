@@ -2,6 +2,7 @@
 // without permission of its author (insert_email_here)
 
 using Sandbox;
+using Sandbox.Component;
 
 namespace Eden;
 
@@ -30,7 +31,14 @@ partial class Blueprint : Weapon
 		{
 			var tracePosition = TraceForward( Owner ).EndPosition;
 			Position = tracePosition;
-			Rotation = Rotation.From( 0, Owner.EyeRotation.Yaw(), 0 );
+			Rotation = Rotation.Identity;
+			RenderColor = Color.White.WithAlpha( 0.2f );
+
+			var glow = Components.GetOrCreate<Glow>();
+			glow.Active = true;
+			glow.Color = Color.Cyan;
+			glow.RangeMax = 1024;
+			glow.RangeMin = 0;
 		}
 
 		/// <summary>
