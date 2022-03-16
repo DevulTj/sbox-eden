@@ -55,7 +55,7 @@ public partial class CraftingMenuInspector : Panel
 
 	protected void SetupRecipe()
 	{
-		RecipeLayout.DeleteChildren();
+		RecipeLayout.DeleteChildren( true );
 
 		foreach ( var item in ItemAsset.Recipe.Items )
 		{
