@@ -16,6 +16,8 @@ public partial class Player
 	[Net, Local, Change( nameof( OnHotbarChanged ) )]
 	public HotbarContainer Hotbar { get; protected set; }
 
+	public Container[] Containers => new Container[] { Backpack, Container };
+
 	protected void OnHotbarChanged( HotbarContainer old, HotbarContainer @new )
 	{
 		Log.Info( "Hotbar Container flagged as different by the server" );
