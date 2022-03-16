@@ -136,7 +136,7 @@ partial class Blueprint : Weapon
 	/// </summary>
 	private Transform GetSnappedTransform()
 	{
-		var transform = new Transform( TraceForward( Owner ).EndPosition, Rotation.From( 0, Owner.EyeRotation.Yaw(), 0 ) );
+		var transform = new Transform( TraceForward( Owner ).EndPosition );
 
 		// Where are we aiming / what are we aiming at
 		var forwardTracePosition = TraceForward( Owner ).EndPosition;
@@ -144,7 +144,7 @@ partial class Blueprint : Weapon
 
 		// Get all nearby snap points, order them by most appropriate (closest & with similar rotation angles)
 		// TODO: Ensure that the placement is valid too
-		var orderedSnapPoints = GetNearbySnapPoints().OrderBy( x => x.Position.Distance( forwardTracePosition ) + x.Rotation.Distance( forwardTraceDirection ) );
+		var orderedSnapPoints = GetNearbySnapPoints().OrderBy( x => x.Position.Distance( forwardTracePosition ) );
 		if ( !orderedSnapPoints.Any() )
 			return transform;
 
