@@ -6,6 +6,7 @@ using Sandbox.UI;
 using Sandbox.UI.Construct;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Eden;
 
@@ -16,11 +17,14 @@ public partial class CraftingMenuRecipeItem : Panel
 		AddClass( "recipe-item" );
 	}
 
-	public void SetItem( CraftingEntry entry )
+	public void SetItem( CraftingEntry entry, bool canAfford, int weHave )
 	{
 		var asset = ItemAsset.FromName( entry.ItemId );
-		Add.Label( $"{entry.Amount}", "recipe-amount" );
-		Add.Label( $"{asset.ItemName}", "recipe-name" );
+		var our = Add.Label( $"({weHave})", "recipe-our" );
+		var amount = Add.Label( $"{entry.Amount}", "recipe-amount" );
+		var name = Add.Label( $"{asset.ItemName}", "recipe-name" );
+
+		SetClass( "can-afford", canAfford );
 	}
 }
 
@@ -57,10 +61,19 @@ public partial class CraftingMenuInspector : Panel
 	{
 		RecipeLayout.DeleteChildren( true );
 
+		var query = new ContainerQuery();
+		var player = Local.Pawn as Player;
+		query.AddContainer( player.Containers );
+		query.AddItems( ItemAsset.Recipe.Items.Select( x => ItemAsset.FromName( x.ItemId ) ).ToArray() );
+		query.Execute();
+
 		foreach ( var item in ItemAsset.Recipe.Items )
 		{
 			var recipeItem = RecipeLayout.AddChild<CraftingMenuRecipeItem>();
-			recipeItem.SetItem( item );
+			var asset = ItemAsset.FromName( item.ItemId );
+			var weHave = query.Results[asset];
+
+			recipeItem.SetItem( item, weHave >= item.Amount, weHave );
 		}
 	}
 
