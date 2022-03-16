@@ -5,17 +5,17 @@ using Sandbox;
 
 namespace Eden;
 
-public partial class WorldItemEntity : Prop, IUse
+public partial class ItemEntity : Prop, IUse
 {
-	public static WorldItemEntity Instantiate( Item item, int quantity = 1 )
+	public static ItemEntity Instantiate( Item item, int quantity = 1 )
 	{
-		var entity = new WorldItemEntity();
+		var entity = new ItemEntity();
 		entity.SetItem( item, quantity );
 
 		return entity;
 	}
 
-	public static WorldItemEntity InstantiateFromPlayer( Player player, Item item, int quantity = 1 )
+	public static ItemEntity InstantiateFromPlayer( Player player, Item item, int quantity = 1 )
 	{
 		var entity = Instantiate( item, quantity );
 		entity.Position = player.EyePosition + player.EyeRotation.Forward * 85;
@@ -63,7 +63,7 @@ public partial class WorldItemEntity : Prop, IUse
 	{
 		base.StartTouch( other );
 
-		if ( other is WorldItemEntity itemEntity )
+		if ( other is ItemEntity itemEntity )
 		{
 			if ( itemEntity.Item.Asset == Item.Asset )
 			{

@@ -40,7 +40,7 @@ public partial class EyeEntityVital : Panel
 			return;
 		}
 
-		if ( tr.Entity is WorldItemEntity worldItem )
+		if ( tr.Entity is ItemEntity worldItem )
 		{
 			CurrentEntityName = worldItem.Asset.ItemName;
 			CurrentEntitySubtitle = $"x{worldItem.Quantity}";

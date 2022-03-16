@@ -67,7 +67,7 @@ public partial class ResourceEntity : Prop
 		{
 			ResourceNotifications.AddResource( To.Single( player.Client ), grantedAmount, item.Asset.ItemName );
 
-			var entity = WorldItemEntity.Instantiate( item, grantedAmount );
+			var entity = ItemEntity.Instantiate( item, grantedAmount );
 			entity.Position = Position + Vector3.Up * 10f;
 		}
 

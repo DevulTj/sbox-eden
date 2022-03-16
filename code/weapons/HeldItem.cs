@@ -65,7 +65,7 @@ partial class HeldItem : Weapon
 
 		if ( IsServer )
 		{
-			var entity = WorldItemEntity.Instantiate( Item, Quantity );
+			var entity = ItemEntity.Instantiate( Item, Quantity );
 			entity.Position = Position + Owner.EyeRotation.Forward * 10f;
 			entity.ApplyAbsoluteImpulse( Owner.EyeRotation.Forward * 1000f + Vector3.Up * 100f );
 

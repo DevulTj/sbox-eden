@@ -6,10 +6,10 @@ namespace Eden;
 
 public partial class InventoryHelpers
 {
-	public static void PickupItem( Player player, WorldItemEntity worldItem )
+	public static void PickupItem( Player player, ItemEntity item )
 	{
-		if ( GiveItem( player, worldItem.Item, worldItem.Quantity ) )
-			worldItem.Delete();
+		if ( GiveItem( player, item.Item, item.Quantity ) )
+			item.Delete();
 	}
 
 	public static bool GiveItem( Player player, Item item, int quantity = 1 )

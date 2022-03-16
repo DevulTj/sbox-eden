@@ -91,7 +91,7 @@ public partial class ContainerNetwork
 		if ( slot is null || slot.Item is null )
 			return;
 
-		var entity = WorldItemEntity.InstantiateFromPlayer( player, slot.Item, slot.Quantity );
+		var entity = ItemEntity.InstantiateFromPlayer( player, slot.Item, slot.Quantity );
 
 		// @TODO: unfuck this later
 		container.Remove( slotA );
@@ -120,7 +120,7 @@ public partial class ContainerNetwork
 		{
 			var player = ConsoleSystem.Caller.Pawn as Player;
 
-			WorldItemEntity.InstantiateFromPlayer( player, item, quantity );
+			ItemEntity.InstantiateFromPlayer( player, item, quantity );
 		}
 	}
 }

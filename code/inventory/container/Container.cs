@@ -119,7 +119,7 @@ public partial class Container : BaseNetworkable
 			}
 			else if ( Owner is not null )
 			{
-				WorldItemEntity.InstantiateFromPlayer( Owner, item, quantityLeft );
+				ItemEntity.InstantiateFromPlayer( Owner, item, quantityLeft );
 				return lastSlot;
 			}
 
