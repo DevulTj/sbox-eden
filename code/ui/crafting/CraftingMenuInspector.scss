@@ -15,7 +15,8 @@ craftingmenuinspector {
         height: 96px;
         background-image: linear-gradient(to left, rgba( black, 0.8 ), rgba( black, 0 ) );
         border-bottom: 2px solid rgba( white, 0.5 );
-        border-radius: 0 8px 0px 1000px;
+        border-left: 2px solid rgba( white, 0.5 );
+        border-radius: 0 8px 0px 8px;
 
         .name {
             align-items: center;
@@ -49,7 +50,8 @@ craftingmenuinspector {
 
         .craftbutton {
             border-top: 2px solid rgba( white, 0.5 );
-            border-radius: 1000px 0px 8px 8px;
+            border-left: 2px solid rgba( white, 0.5 );
+            border-radius: 8px 0px 8px 0px;
             background-image: linear-gradient(to left, rgba( black, 0.8 ), rgba( black, 0 ) );
             width: 256px;
             height: 50px;
@@ -102,10 +104,16 @@ craftingmenuinspector {
         }
 
         .recipe-header {
-            padding: 16px;
-            padding-bottom: 0px;
-            margin-top: 16px;
+            height: 50px;
+            align-items: center;
+            padding-right: 16px;
+            width: 100%;
+            text-align: right;
             text-stroke: 2px black;
+            border: 2px solid rgba( white, 0.5 );
+            border-right: none;
+            border-radius: 8px 0px 0px 8px;
+            background-image: linear-gradient(to left, rgba( black, 0.8 ), rgba( black, 0 ) );
         }
     }
 }

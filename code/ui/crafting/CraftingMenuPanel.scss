@@ -18,18 +18,24 @@ craftingmenupanel {
         justify-content: flex-start;
         align-items: flex-start;
         align-content: flex-start;
+        padding: 16px;
+        padding-top: 8px;
 
         .category {
-            height: 64px;
+            margin-top: 8px;
+            height: 50px;
             width: 240px;
-            border-bottom: 2px solid rgba( white, 0.5 );
-            border-right: 2px solid rgba( white, 0.5 );
-            border-radius: 0px 8px 8px 0px;
+            border: 2px solid rgba( white, 0.5 );
             transition: all 0.1s ease;
+            background-image: linear-gradient(to right, rgba( black, 0.8 ), rgba( black, 0 ) );
+            border-radius: 8px;
 
             .name {
                 height: 100%;
                 align-items: center;
+            }
+
+            &:first-child {
             }
 
             &:hover {
@@ -43,10 +49,12 @@ craftingmenupanel {
 
             &.current {
                 width: 256px;
+                height: 64px;
                 background-image: linear-gradient(to right, rgba( white, 0.5 ), rgba( #888888, 0 ) );
             }
 
             .icon {
+                aspect-ratio: 1;
                 width: 64px;
                 height: 64px;
                 transform: scale( 0.6 );
