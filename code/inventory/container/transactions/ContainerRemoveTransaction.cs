@@ -7,34 +7,12 @@ using System.Linq;
 
 namespace Eden;
 
-public class ContainerTransactionItem
-{
-	public ItemAsset ItemAsset { get; set; }
-	public int Quantity { get; set; }
-}
-
-public class TransactionCriteria
-{
-	public int Quantity { get; set; } = 0;
-
-	public bool HasBeenMet { get; set; } = false;
-
-	public TransactionCriteria()
-	{
-	}
-
-	public TransactionCriteria( int quantity )
-	{
-		Quantity = quantity;
-	}
-}
-
-public partial class ContainerTransaction
+public partial class ContainerRemoveTransaction : IContainerTransaction
 {
 	/// <summary>
 	/// The items we are looking to find.
 	/// </summary>
-	protected Dictionary<ItemAsset, TransactionCriteria> Requirements { get; set; } = new();
+	protected Dictionary<ItemAsset, ContainerTransactionData> Requirements { get; set; } = new();
 
 	/// <summary>
 	/// The containers the transaction will try to search from.
@@ -44,13 +22,13 @@ public partial class ContainerTransaction
 	/// <summary>
 	/// The items gathered.
 	/// </summary>
-	protected Dictionary<ItemAsset, TransactionCriteria> Gathered { get; set; } = new();
+	protected Dictionary<ItemAsset, ContainerTransactionData> Gathered { get; set; } = new();
 
 	protected int GatheredCount { get; set; } = 0;
 
-	protected Dictionary<ItemAsset, TransactionCriteria> CreateCriteriaHolder()
+	protected Dictionary<ItemAsset, ContainerTransactionData> CreateCriteriaHolder()
 	{
-		var holder = new Dictionary<ItemAsset, TransactionCriteria>();
+		var holder = new Dictionary<ItemAsset, ContainerTransactionData>();
 		foreach ( var keyValue in Requirements )
 			holder.Add( keyValue.Key, new() );
 
@@ -66,10 +44,10 @@ public partial class ContainerTransaction
 	{
 		// Add requirements to the list
 		requirements.ToList()
-			.ForEach( x => Requirements.Add( x.ItemAsset, new TransactionCriteria( x.Quantity ) ) );
+			.ForEach( x => Requirements.Add( x.ItemAsset, new ContainerTransactionData( x.Quantity ) ) );
 	}
 
-	public bool CanAfford()
+	public bool CanDo()
 	{
 		var holder = CreateCriteriaHolder();
 
@@ -105,8 +83,6 @@ public partial class ContainerTransaction
 
 	public bool Execute()
 	{
-		if ( !CanAfford() ) return false;
-
 		// Copy
 		Gathered = new( Requirements );
 

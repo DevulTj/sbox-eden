@@ -42,9 +42,9 @@ public partial class PlayerCraftingQueue : CraftingQueue
 
 	public Player Player { get; set; }
 
-	public ContainerTransaction CreateTransaction( ItemAsset asset )
+	public ContainerRemoveTransaction CreateTransaction( ItemAsset asset )
 	{
-		var t = new ContainerTransaction();
+		var t = new ContainerRemoveTransaction();
 		t.AddContainer( Player.Hotbar, Player.Backpack );
 
 		foreach ( var item in asset.Recipe.Items )
