@@ -92,7 +92,7 @@ public partial class CraftingMenuPanel : Panel
 	// @ref
 	public Panel ItemsLayout { get; set; }
 	// @ref
-	public Panel InspectorPanel { get; set; }
+	public CraftingMenuInspector Inspector { get; set; }
 
 	public CraftingMenuPanel()
 	{
@@ -109,8 +109,10 @@ public partial class CraftingMenuPanel : Panel
 
 			var itemButton = new CraftingItemButton( item );
 			itemButton.Parent = ItemsLayout;
+			itemButton.AddEventListener( "onclick", () => Inspector.SetItem( item ) );
 
-			itemButton.AddEventListener( "onclick", () => PlayerCraftingQueue.Craft( item.Id, 1 ) );
+			if ( Inspector.ItemAsset is null )
+				Inspector.SetItem( item );
 		}
 	}
 

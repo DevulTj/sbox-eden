@@ -1,0 +1,66 @@
+@import "/ui/Theme.scss";
+
+craftingmenuinspector {
+    width: 100%;
+    height: 100%;
+    border-right: 2px solid rgba( white, 0.5 );
+    background-image: linear-gradient(to left, rgba( black, 0.5 ), rgba( black, 0 ) );
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-end;
+    align-content: flex-start;
+
+    .inspectorheader {
+        padding: 16px;
+        height: 96px;
+        background-image: linear-gradient(to left, rgba( black, 0.5 ), rgba( black, 0 ) );
+
+        .name {
+            align-items: center;
+            padding-right: 16px;
+            font-size: 30px;
+            text-stroke: 2px black;
+        }
+
+        .icon {
+            width: 64px;
+        }
+    }
+
+    .desc {
+        padding: 16px;
+        padding-top: 0px;
+        margin-top: 16px;
+        text-stroke: 2px black;
+    }
+
+    .inspectorfooter {
+        right: 1px;
+        height: 50px;
+        position: absolute;
+        bottom: 0;
+
+        .craftbutton {
+            background-image: linear-gradient(to left, rgba( black, 0.5 ), rgba( black, 0 ) );
+            width: 256px;
+            height: 50px;
+            align-items: center;
+
+            &:hover {
+                cursor: pointer;
+                background-image: linear-gradient(to left, rgba( #888888, 0.5 ), rgba( black, 0 ) );
+            }
+
+            &:active {
+                background-image: linear-gradient(to left, rgba( #999999, 0.5 ), rgba( black, 0 ) );
+            }
+
+            label {
+                padding-right: 16px;
+                width: 100%;
+                text-align: right;
+            }
+        }
+    }
+}

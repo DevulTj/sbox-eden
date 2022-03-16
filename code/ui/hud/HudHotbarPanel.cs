@@ -12,9 +12,4 @@ public partial class HudHotbarPanel : Panel
 	public HudHotbarPanel()
 	{
 	}
-
-	protected override void PostTemplateApplied()
-	{
-		base.PostTemplateApplied();
-	}
 }

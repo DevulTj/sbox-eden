@@ -5,7 +5,7 @@
 		itemname = "Wooden Stick"
 		itemdescription = "Expelliarmus!"
 		iconpath = "ui/items/branch.png"
-		stacksize = 100
+		stacksize = 10
 		worldmodelpath = resource:"models/items/sticks/stick.vmdl"
 		category = "0"
 		craftingduration = 0

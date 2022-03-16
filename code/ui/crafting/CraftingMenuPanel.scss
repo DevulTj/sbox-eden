@@ -10,8 +10,9 @@ craftingmenupanel {
 
     .categories {
         border-left: 2px solid rgba( white, 0.5 );
-        border-right: 2px solid rgba( white, 0.5 );
         height: 100%;
+        min-width: 128px;
+        max-width: 128px;
         flex-direction: column;
         flex-wrap: nowrap;
         justify-content: flex-start;
@@ -19,7 +20,7 @@ craftingmenupanel {
         align-content: flex-start;
 
         .category {
-            background-image: linear-gradient(to right, rgba( black, 0.5 ), rgba( black, 0 ) );
+            background-color: rgba( black, 0.5 );
 
             &:hover {
                 background-image: linear-gradient(to right, rgba( #888888, 0.5 ), rgba( #888888, 0 ) );
@@ -33,7 +34,7 @@ craftingmenupanel {
             .icon {
                 width: 128px;
                 height: 128px;
-                transform: scale( 0.7 );
+                transform: scale( 0 );
             }
 
             .amount {
@@ -45,11 +46,10 @@ craftingmenupanel {
     }
 
     .items {
-        left: 48px;
-        width: 50%;
+        left: 2px;
+        width: 70%;
         height: 100%;
         background-image: linear-gradient(to right, rgba( black, 0.5 ), rgba( black, 0 ) );
-        border-left: 2px solid rgba( white, 0.5 );
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: flex-start;
@@ -72,8 +72,8 @@ craftingmenupanel {
             }
 
             .icon {
-                width: 128px;
-                height: 128px;
+                width: 96px;
+                height: 96px;
                 transform: scale( 0.7 );
             }
 
@@ -90,5 +90,6 @@ craftingmenupanel {
     }
 
     .inspector {
+        width: 30%;
     }
 }
