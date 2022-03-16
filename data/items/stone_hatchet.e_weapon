@@ -15,9 +15,14 @@
 			[
 				{
 					itemid = "wooden_plank"
-					amount = 5
+					amount = 10
+				},
+				{
+					itemid = "wooden_stick"
+					amount = 20
 				},
 			]
 		}
+		category = "0"
 	}
 }
