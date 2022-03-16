@@ -74,6 +74,8 @@
 								"snap1",
 								"snap2",
 								"snap3",
+								"snap4",
+								"snap5",
 							]
 						}
 					},
@@ -87,7 +89,7 @@
 						_class = "Attachment"
 						name = "snap0"
 						parent_bone = ""
-						relative_origin = [ 64.0, 0.0, 0.0 ]
+						relative_origin = [ 112.0, 32.0, 0.0 ]
 						relative_angles = [ 0.0, 0.0, 0.0 ]
 						weight = 1.0
 						ignore_rotation = false
@@ -96,8 +98,8 @@
 						_class = "Attachment"
 						name = "snap1"
 						parent_bone = ""
-						relative_origin = [ -64.0, 0.0, 0.0 ]
-						relative_angles = [ 0.0, 180.0, 0.0 ]
+						relative_origin = [ 112.0, 32.0, 123.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
 						weight = 1.0
 						ignore_rotation = false
 					},
@@ -105,8 +107,8 @@
 						_class = "Attachment"
 						name = "snap2"
 						parent_bone = ""
-						relative_origin = [ 0.0, 64.0, 0.0 ]
-						relative_angles = [ 0.0, 90.0, 0.0 ]
+						relative_origin = [ 112.0, 0.0, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
 						weight = 1.0
 						ignore_rotation = false
 					},
@@ -114,8 +116,26 @@
 						_class = "Attachment"
 						name = "snap3"
 						parent_bone = ""
-						relative_origin = [ 0.0, -64.0, 0.0 ]
-						relative_angles = [ 0.0, 270.0, 0.0 ]
+						relative_origin = [ 112.0, 0.0, 123.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "snap4"
+						parent_bone = ""
+						relative_origin = [ 112.0, -32.0, 0.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "snap5"
+						parent_bone = ""
+						relative_origin = [ 112.0, -32.0, 123.0 ]
+						relative_angles = [ 0.0, 0.0, 0.0 ]
 						weight = 1.0
 						ignore_rotation = false
 					},
