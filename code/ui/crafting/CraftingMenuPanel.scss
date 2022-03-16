@@ -1,0 +1,123 @@
+@import "/ui/Theme.scss";
+
+craftingmenupanel {
+    width: 70%;
+    height: 100%;
+    transition: opacity 0.2s ease;
+    margin-bottom: 80px;
+    border: 2px solid rgba( white, 0.5 );
+    border-radius: 8px;
+    background-image: linear-gradient(to right, rgba( black, 0.5 ), rgba( black, 0 ) );
+
+
+    .categories {
+        height: 100%;
+        width: 256px;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        align-content: flex-start;
+        padding: 16px;
+        padding-top: 8px;
+
+        .category {
+            margin-top: 8px;
+            height: 50px;
+            width: 240px;
+            border: 2px solid rgba( white, 0.5 );
+            transition: all 0.1s ease;
+            background-image: linear-gradient(to right, rgba( black, 0.8 ), rgba( black, 0 ) );
+            border-radius: 8px;
+
+            .name {
+                height: 100%;
+                align-items: center;
+            }
+
+            &:first-child {
+            }
+
+            &:hover {
+                background-image: linear-gradient(to right, rgba( white, 0.2 ), rgba( #888888, 0 ) );
+                cursor: pointer;
+            }
+
+            &:active {
+                background-image: linear-gradient(to right, rgba( white, 0.5 ), rgba( #888888, 0 ) );
+            }
+
+            &.current {
+                width: 256px;
+                height: 64px;
+                background-image: linear-gradient(to right, rgba( white, 0.5 ), rgba( #888888, 0 ) );
+            }
+
+            .icon {
+                aspect-ratio: 1;
+                width: 64px;
+                height: 64px;
+                transform: scale( 0.6 );
+            }
+
+            .amount {
+                position: absolute;
+                bottom: 4px;
+                right: 8px;
+            }
+        }
+    }
+
+    .items {
+        left: 48px;
+        width: 60%;
+        height: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: baseline;
+        align-content: flex-start;
+        padding: 16px;
+
+        .item {
+            background-image: linear-gradient(to right, rgba( black, 0.6 ), rgba( #888888, 0 ) );
+            border: 2px solid rgba( white, 0.4 );
+            border-radius: 8px;
+
+            &:hover {
+                background-image: linear-gradient(to right, rgba( #888888, 0.5 ), rgba( #888888, 0 ) );
+                cursor: pointer;
+            }
+
+            &:active {
+                background-image: linear-gradient(to right, rgba( white, 0.5 ), rgba( #888888, 0 ) );
+            }
+
+            transition: opacity 0.2s ease;
+
+            &:intro {
+                opacity: 0;
+            }
+
+            .icon {
+                width: 96px;
+                height: 96px;
+                transform: scale( 0.7 );
+            }
+
+            .amount {
+                position: absolute;
+                bottom: 4px;
+                right: 8px;
+
+                &.show {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    .inspector {
+        width: 40%;
+    }
+}

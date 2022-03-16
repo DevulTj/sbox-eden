@@ -5,7 +5,19 @@
 		itemname = "Wooden Plank"
 		itemdescription = "It\'s made out of wood. Shocker."
 		iconpath = "ui/items/wood_plank.png"
-		stacksize = 100
+		stacksize = 10
 		worldmodelpath = resource:"models/items/sticks/sticks.vmdl"
+		category = "0"
+		craftingduration = 2
+		recipe = 
+		{
+			items = 
+			[
+				{
+					itemid = "wooden_stick"
+					amount = 3
+				},
+			]
+		}
 	}
 }

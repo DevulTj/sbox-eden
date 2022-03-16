@@ -2,11 +2,14 @@
 
 itempanel {
     aspect-ratio: 1;
-    min-width: 128px;
-    border-radius: 2px;
+    min-width: 96px;
+    border-radius: 8px;
     transition: transform 0.1s ease;
-    background-color: rgba( white, 0.1 );
-    border: 2px solid rgba( black, 0.5 );
+    border: 2px solid rgba( white, 0.2 );
+    background-image: linear-gradient(23deg, rgba( black, 0.4 ), rgba( #888888, 0 ) );
+    margin-left: 4px;
+    margin-top: 4px;
+
 
     .icon {
         position: absolute;
@@ -16,6 +19,7 @@ itempanel {
         background-repeat: no-repeat;
         background-position: center;
         pointer-events: none;
+        transform: scale( 0.8 );
     }
 
     .quantity {
@@ -24,7 +28,7 @@ itempanel {
         text-stroke: 2px black;
     }
 
-    &:hover {
+    &.hovered-item {
         transform: scale( 1.05 );
 
         .overlay {

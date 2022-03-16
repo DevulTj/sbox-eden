@@ -9,7 +9,7 @@ namespace Eden;
 public partial class ItemPanel : Panel
 {
 	// @ref
-	public Panel IconPanel { get; set; }
+	public Image IconPanel { get; set; }
 	// @text
 	public int Quantity => Slot?.Quantity ?? 0;
 
@@ -44,8 +44,10 @@ public partial class ItemPanel : Panel
 
 		Item = item;
 
-		IconPanel.Style.SetBackgroundImage( item.Asset.IconPath );
-		Style.BorderColor = Item.DefaultColor.WithAlpha( 0.5f );
+		IconPanel.SetTexture( item.Asset.IconPath );
+
+		if ( this is not DraggedItemPanel )
+			Style.Set( "background-image", $"linear-gradient( 23deg, rgba( {Item.DefaultColor.Hex}, 0.4 ), rgba( #888888, 0 ) );" );
 	}
 
 	public override void SetProperty( string name, string value )

@@ -7,5 +7,22 @@
 		itemdescription = "That\'s all we have for the budget."
 		iconpath = "ui/items/stone_hatchet.png"
 		worldmodelpath = resource:"models/tools/hatchet/hatchet_w.vmdl"
+		stacksize = 1
+		craftingduration = 5
+		recipe = 
+		{
+			items = 
+			[
+				{
+					itemid = "wooden_plank"
+					amount = 10
+				},
+				{
+					itemid = "wooden_stick"
+					amount = 20
+				},
+			]
+		}
+		category = "3"
 	}
 }

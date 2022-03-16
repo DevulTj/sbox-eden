@@ -14,6 +14,22 @@ public partial class ItemAsset : Asset
 {
 	public static HashSet<ItemAsset> All { get; protected set; } = new();
 	public static Dictionary<string, ItemAsset> Classes { get; protected set; } = new();
+	public static Dictionary<ItemCategory, List<ItemAsset>> Categories { get; protected set; } = new();
+
+	public static List<ItemAsset> FromCategory( ItemCategory category )
+	{
+		if ( !Categories.ContainsKey( category ) )
+			Categories.Add( category, new() );
+		return Categories[category];
+	}
+
+	public static ItemAsset FromName( string assetName )
+	{
+		if ( Classes.TryGetValue( assetName, out var asset ) )
+			return asset;
+
+		return null;
+	}
 
 	public static ItemAsset Random
 	{
@@ -34,6 +50,9 @@ public partial class ItemAsset : Asset
 	[Property, Category( "Meta" )]
 	public string ItemDescription { get; set; }
 
+	[Property, Category( "Meta" )]
+	public ItemCategory Category { get; set; } = ItemCategory.Misc;
+
 	[Property, Category( "Meta" ), Range( 0, 256 )]
 	public int StackSize { get; set; } = 1;
 
@@ -42,6 +61,12 @@ public partial class ItemAsset : Asset
 
 	[Property, Category( "World" ), ResourceType( "vmdl" )]
 	public string WorldModelPath { get; set; }
+
+	[Property, Category( "Crafting" )]
+	public int CraftingDuration { get; set; }
+
+	[Property, Category( "Crafting" )]
+	public CraftingRecipe Recipe { get; set; }
 
 	public Model WorldModel { get; set; }
 
@@ -55,6 +80,12 @@ public partial class ItemAsset : Asset
 		{
 			All.Add( this );
 			Classes[Name] = this;
+
+			if ( !Categories.ContainsKey( Category ) )
+				Categories.Add( Category, new() );
+
+			if ( Recipe?.Items?.Count > 0 )
+				Categories[Category].Add( this );
 
 			// Cache the world model immediately
 			if ( !string.IsNullOrEmpty( WorldModelPath ) )

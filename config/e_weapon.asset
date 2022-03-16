@@ -1,4 +1,22 @@
 //
+// Eden.CraftingRecipe
+//
+@struct = Eden_CraftingRecipe
+[
+	items(array:struct:Eden_CraftingEntry) : "Items" :  : ""
+	output(integer) : "Output" : 1 : ""
+]
+
+//
+// Eden.CraftingEntry
+//
+@struct = Eden_CraftingEntry
+[
+	itemid(string) : "Item Id" :  : ""
+	amount(integer) : "Amount" : 0 : ""
+]
+
+//
 // Eden.WeaponItemAsset
 //
 @BaseClass = e_weapon : ""
@@ -6,8 +24,20 @@
 	weaponclassname(string) : "Weapon Class Name" :  : ""
 	itemname(string) { group = "Meta" } : "Item Name" :  : ""
 	itemdescription(string) { group = "Meta" } : "Item Description" :  : ""
+	category(choices) { group = "Meta" } : "Category" : 0 : "" =
+	[
+		0 : "Misc"
+		1 : "Building"
+		2 : "Food"
+		3 : "Tools"
+		4 : "Weapons"
+		5 : "Farming"
+		6 : "Clothing"
+	]
 	stacksize(integer) { group = "Meta" } : "Stack Size" : 1 : ""
 	iconpath(string) { group = "Meta" editor = "AssetBrowse(png)" } : "Icon Path" :  : ""
 	worldmodelpath(resource:vmdl) { group = "World" } : "World Model Path" :  : ""
+	craftingduration(integer) { group = "Crafting" } : "Crafting Duration" : 0 : ""
+	recipe(struct:Eden_CraftingRecipe) { group = "Crafting" } : "Recipe" :  : ""
 ]
 

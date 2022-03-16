@@ -14,7 +14,6 @@ resourcenotifications {
     padding: 8px;
 
     .notify {
-        backdrop-filter: blur( 10px );
         align-items: center;
         border-right: 2px solid rgba( white, 0.5 );
         background-image: linear-gradient( to right, rgba( black, 0 ), rgba( black, 0.5 ) );
@@ -29,7 +28,7 @@ resourcenotifications {
             opacity: 0;
         }
 
-        height: 60px;
+        height: 40px;
         opacity: 1;
         transition: all 0.2s ease;
         flex-direction: row-reverse;
@@ -42,7 +41,7 @@ resourcenotifications {
 
         .name {
             padding-left: 12px;
-            font-size: 24px;
+            font-size: 18px;
         }
     }
 }

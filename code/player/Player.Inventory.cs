@@ -16,6 +16,8 @@ public partial class Player
 	[Net, Local, Change( nameof( OnHotbarChanged ) )]
 	public HotbarContainer Hotbar { get; protected set; }
 
+	public Container[] Containers => new Container[] { Backpack, Container };
+
 	protected void OnHotbarChanged( HotbarContainer old, HotbarContainer @new )
 	{
 		Log.Info( "Hotbar Container flagged as different by the server" );
@@ -26,6 +28,19 @@ public partial class Player
 	{
 		Log.Info( "Backpack Container flagged as different by the server" );
 		Event.Run( GameEvent.Client.BackpackChanged, @new );
+	}
+
+	public void SetupInventory()
+	{
+		Backpack = new();
+		Backpack.SetSize( 28 );
+		Backpack.Name = "Backpack";
+
+		Hotbar = new( this );
+		Hotbar.SetSize( 7 );
+		Hotbar.Name = "Equipment";
+
+		Hotbar.Add( Item.FromAsset( "stone_hatchet" ), true );
 	}
 
 	public void HotbarSimulate()

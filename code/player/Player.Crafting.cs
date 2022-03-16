@@ -2,14 +2,13 @@
 // without permission of its author (insert_email_here)
 
 using Sandbox;
-using Sandbox.UI;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Eden;
 
-[UseTemplate]
-public partial class HudHotbarPanel : Panel
+public partial class Player
 {
-	public HudHotbarPanel()
-	{
-	}
+	[Net, Local]
+	public PlayerCraftingQueue CraftingQueue { get; set; }
 }
