@@ -27,7 +27,7 @@ public class ModelSnapPoints
 	[JsonPropertyName( "snap_points" )]
 	public SnapPointData[] SnapPoints { get; set; }
 
-	public static List<Transform> GetSnapPoints( Model model )
+	public static List<Transform> GetLocalSnapPointTransforms( Model model )
 	{
 		if ( model == null )
 			Log.Error( "Model is null" );

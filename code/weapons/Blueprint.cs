@@ -46,15 +46,10 @@ partial class Blueprint : Weapon
 		if ( !Debug )
 			return;
 
-		foreach ( var snapPoint in GetNearbySnapPoints() )
-		{
-			DebugOverlay.Sphere( snapPoint.Position, 4f, Color.Cyan, false );
-		}
-
 		if ( ghostEntity == null || !ghostEntity.IsValid )
 			return;
 
-		foreach ( var snapPoint in selectedAsset.GetSnapPoints() )
+		foreach ( var snapPoint in selectedAsset.GetLocalSnapPointTransforms() )
 		{
 			var worldSnapPoint = GetSnappedTransform().ToWorld( snapPoint );
 			DebugOverlay.Sphere( worldSnapPoint.Position, 4f, Color.Green, false );
@@ -113,19 +108,19 @@ partial class Blueprint : Weapon
 	/// <summary>
 	/// Find nearby entities, fetch their snap points
 	/// </summary>
-	private List<Transform> GetNearbySnapPoints()
+	private List<SnapPoint> GetNearbySnapPoints()
 	{
 		var trace = TraceForward( Owner );
 		var overlaps = Entity.FindInSphere( trace.EndPosition, maxBuildDistance ).OfType<BuildingEntity>();
 
-		var snapPoints = new List<Transform>();
+		var snapPoints = new List<SnapPoint>();
 
 		foreach ( var overlap in overlaps )
 		{
 			if ( !overlap.IsValid )
 				continue;
 
-			snapPoints.AddRange( ModelSnapPoints.GetSnapPoints( overlap.Model ).Select( x => overlap.Transform.ToWorld( x ) ) );
+			snapPoints.AddRange( overlap.SnapPoints );
 		}
 
 		return snapPoints;
@@ -143,7 +138,8 @@ partial class Blueprint : Weapon
 
 		// Get all nearby snap points, order them by most appropriate (closest & with similar rotation angles)
 		// TODO: Ensure that the placement is valid too
-		var orderedSnapPoints = GetNearbySnapPoints().OrderBy( x => x.Position.Distance( forwardTracePosition ) );
+		var nearbySnapPoints = GetNearbySnapPoints().Where( x => x.AttachedEntity == null || !x.AttachedEntity.IsValid );
+		var orderedSnapPoints = nearbySnapPoints.OrderBy( x => x.Transform.Position.Distance( forwardTracePosition ) );
 		if ( !orderedSnapPoints.Any() )
 			return transform;
 
@@ -151,15 +147,15 @@ partial class Blueprint : Weapon
 		var nearestSnapPoint = orderedSnapPoints.First();
 
 		// Convert everything into local space; this prevents us from entering any funky feedback loops
-		var localOther = ghostEntity.Transform.ToLocal( nearestSnapPoint );
-		var localGhostSnapPoints = selectedAsset.GetSnapPoints();
+		var localOther = ghostEntity.Transform.ToLocal( nearestSnapPoint.Transform );
+		var localGhostSnapPoints = selectedAsset.GetLocalSnapPointTransforms();
 		var localClosestSnapPoint = localGhostSnapPoints.OrderBy( x => x.Position.Distance( localOther.Position ) ).FirstOrDefault();
 
 		if ( Debug )
-			DebugOverlay.Sphere( nearestSnapPoint.Position, 8f, Color.Red, false );
+			DebugOverlay.Sphere( nearestSnapPoint.Transform.Position, 8f, Color.Red, false );
 
 		// Return best available snap point, offset by nearest selected building snap point
-		return nearestSnapPoint.WithPosition( nearestSnapPoint.Position - localClosestSnapPoint.Position );
+		return nearestSnapPoint.Transform.WithPosition( nearestSnapPoint.Transform.Position - localClosestSnapPoint.Position );
 	}
 
 	private void CreateBuildWheel()
