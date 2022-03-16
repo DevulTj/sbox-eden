@@ -137,6 +137,6 @@ public partial class CraftingMenuPanel : Panel
 			button.SetCount( ItemAsset.FromCategory( category ).Count );
 		}
 
-		SetCategory( ItemCategory.Misc );
+		SetCategory( ItemCategory.Tools );
 	}
 }
