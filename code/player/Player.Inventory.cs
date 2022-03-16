@@ -32,7 +32,7 @@ public partial class Player
 
 	public void SetupInventory()
 	{
-		Backpack = new();
+		Backpack = new( this );
 		Backpack.SetSize( 28 );
 		Backpack.Name = "Backpack";
 

@@ -36,6 +36,11 @@ public partial class Container : BaseNetworkable
 			ContainerNetwork.Register( this );
 	}
 
+	public Container( Player owner ) : this()
+	{
+		Owner = owner;
+	}
+
 	~Container()
 	{
 		if ( Host.IsServer )
@@ -112,8 +117,12 @@ public partial class Container : BaseNetworkable
 
 				lastSlot = slot;
 			}
-			else
+			else if ( Owner is not null )
+			{
+				WorldItemEntity.InstantiateFromPlayer( Owner, item, quantityLeft );
 				return lastSlot;
+			}
+
 		}
 
 		return lastSlot;
