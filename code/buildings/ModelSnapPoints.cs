@@ -18,8 +18,14 @@ namespace Eden;
 [ModelDoc.GameData( "eden_snap_points", AllowMultiple = true )]
 public class ModelSnapPoints
 {
-	[JsonPropertyName( "snap_points" ), FGDType( "model_attachment" )]
-	public string[] SnapPoints { get; set; }
+	public struct SnapPointData
+	{
+		[FGDType( "model_attachment" )]
+		public string Attachment { get; set; }
+	}
+
+	[JsonPropertyName( "snap_points" )]
+	public SnapPointData[] SnapPoints { get; set; }
 
 	public static List<Transform> GetSnapPoints( Model model )
 	{
@@ -38,8 +44,8 @@ public class ModelSnapPoints
 
 		var snapPointNode = snapPointNodes[0];
 		var snapPoints = snapPointNode.SnapPoints;
-		var snapTransforms = snapPoints.Select( attachment => model.GetAttachment( attachment ) );
-		snapTransforms.ToList().ForEach( snapPoint => list.Add( snapPoint ?? default ) );
+		var snapTransforms = snapPoints.Select( s => model.GetAttachment( s.Attachment ) );
+		snapTransforms.ToList().ForEach( s => list.Add( s ?? default ) );
 
 		return list;
 	}
