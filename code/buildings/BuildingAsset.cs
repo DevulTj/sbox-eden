@@ -21,11 +21,7 @@ public class BuildingAsset : Asset
 	[Property, Category( "Meta" ), ResourceType( "png" )]
 	public string BuildingIconPath { get; set; }
 
-	public List<Transform> GetSnapPoints()
-	{
-		var snapPoints = ModelSnapPoints.GetSnapPoints( BuildingModel );
-		return snapPoints;
-	}
+	public List<Transform> GetLocalSnapPointTransforms() => ModelSnapPoints.GetLocalSnapPointTransforms( BuildingModel );
 
 	public bool CanAfford( Player player )
 	{
