@@ -19,6 +19,8 @@ public partial class VitalEntry : Panel
 	public float BoundValue { get; set; }
 	public float BoundMaxValue { get; set; } = 100f;
 
+	public string FormattedValue { get; set; }
+
 	public VitalEntry()
 	{
 		AddClass( "vital" );
@@ -31,7 +33,7 @@ public partial class VitalEntry : Panel
 
 	protected virtual string GetLabelText()
 	{
-		return $"{BoundValue}";
+		return $"{FormattedValue}";
 	}
 
 	public override void Tick()
@@ -39,7 +41,6 @@ public partial class VitalEntry : Panel
 		base.Tick();
 
 		Label.Text = GetLabelText();
-
 
 		Bar.Style.Width = Length.Percent( BoundValue / BoundMaxValue * 100f );
 	}

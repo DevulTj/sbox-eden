@@ -18,14 +18,22 @@ public partial class Player
 		{
 			Name = "Hunger",
 			Value = 250,
-			MaxValue = 500
+			MaxValue = 500,
 		} );
 
 		Vitals.Add( new()
 		{
 			Name = "Thirst",
 			Value = 150,
-			MaxValue = 300
+			MaxValue = 300,
+		} );
+
+		Vitals.Add( new WetnessVital()
+		{
+			Name = "Wetness",
+			Value = 0f,
+			MaxValue = 100f,
+			DrainSpeed = 300f
 		} );
 	}
 
@@ -37,7 +45,7 @@ public partial class Player
 
 	protected void TickVitals()
 	{
-		Vitals.ToList().ForEach( x => x.Tick() );
+		Vitals.ToList().ForEach( x => x.Tick( this ) );
 	}
 
 	public Vital GetVital( string name )

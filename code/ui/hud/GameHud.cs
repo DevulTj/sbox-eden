@@ -21,10 +21,11 @@ public partial class GameHud : HudEntity<RootPanel>
 
 		// List of elements used by the game
 		RootPanel.AddChild<PlayerVitals>();
-		RootPanel.AddChild<InventoryPanel>();
+		RootPanel.AddChild<MainMenuPanel>();
 		RootPanel.AddChild<HudHotbarPanel>();
 		RootPanel.AddChild<WipText>();
 		RootPanel.AddChild<EyeEntityVital>();
+		RootPanel.AddChild<ResourceNotifications>();
 
 		RootPanel.AddChild<VoiceList>();
 		RootPanel.AddChild<ChatBox>();

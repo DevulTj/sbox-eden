@@ -18,22 +18,29 @@ public partial class Vital : BaseNetworkable
 	public float DrainSpeed { get; set; } = 10f;
 
 	// Tick interval (seconds)
-	public int TickSpeed = 1;
+	public virtual float TickSpeed => 1f;
 
 	public TimeSince LastTick = 0;
+
+	public virtual string ValueFormat => $"{Value:f0}";
 
 	public void Reset()
 	{
 		Value = MaxValue;
 	}
 
-	public void Tick()
+	protected virtual void OnVitalTick( Player player )
+	{
+		Value -= DrainSpeed * Time.Delta;
+		// Clamp
+		Value = Value.Clamp( 0, MaxValue );
+	}
+
+	public void Tick( Player player )
 	{
 		if ( LastTick > TickSpeed )
 		{
-			Value -= DrainSpeed * Time.Delta;
-			// Clamp
-			Value = Value.Clamp( 0, MaxValue );
+			OnVitalTick( player );
 			LastTick = 0;
 		}
 	}

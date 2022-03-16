@@ -1,0 +1,48 @@
+
+@import "/ui/Theme.scss";
+
+resourcenotifications {
+    position: absolute;
+    right: 16px;
+    bottom: 256px;
+    width: 386px;
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-end;
+    align-content: stretch;
+    padding: 8px;
+
+    .notify {
+        backdrop-filter: blur( 10px );
+        align-items: center;
+        border-right: 2px solid rgba( white, 0.5 );
+        background-image: linear-gradient( to right, rgba( black, 0 ), rgba( black, 0.5 ) );
+
+        &:intro {
+            height: 0;
+            opacity: 0;
+        }
+
+        &:outro {
+            height: 0;
+            opacity: 0;
+        }
+
+        height: 60px;
+        opacity: 1;
+        transition: all 0.2s ease;
+        flex-direction: row-reverse;
+
+        .amount {
+            font-size: 28px;
+            padding-left: 40px;
+            padding-right: 12px;
+        }
+
+        .name {
+            padding-left: 12px;
+            font-size: 24px;
+        }
+    }
+}

@@ -11,6 +11,8 @@ public partial class Player : Sandbox.Player, IContainerEntity
 {
 	public Clothing.Container Clothing = new();
 
+	protected DamageInfo LastDamageInfo { get; set; }
+
 	public Player()
 	{
 		//
@@ -72,10 +74,49 @@ public partial class Player : Sandbox.Player, IContainerEntity
 		SimulateActiveChild( cl, ActiveChild );
 		HotbarSimulate();
 		TickVitals();
+
+		if ( Input.Released( InputButton.View ) )
+		{
+			if ( CameraMode is FirstPersonCamera )
+			{
+				CameraMode = new ThirdPersonCamera();
+			}
+			else
+			{
+				CameraMode = new FirstPersonCamera();
+			}
+		}
 	}
 
-	public override void FrameSimulate( Client cl )
+	public override void TakeDamage( DamageInfo info )
 	{
-		base.FrameSimulate( cl );
+		// @TODO: damage system
+		if ( GetHitboxGroup( info.HitboxIndex ) == 1 )
+		{
+			info.Damage *= 2.0f;
+		}
+
+		LastDamageInfo = info;
+
+		base.TakeDamage( info );
+	}
+
+	public override void OnKilled()
+	{
+		base.OnKilled();
+
+		BecomeRagdollOnClient( Velocity, LastDamageInfo.Flags, LastDamageInfo.Position, LastDamageInfo.Force, GetHitboxBone( LastDamageInfo.HitboxIndex ) );
+
+		Controller = null;
+
+		EnableAllCollisions = false;
+		EnableDrawing = false;
+
+		CameraMode = new SpectateRagdollCamera();
+
+		foreach ( var child in Children )
+		{
+			child.EnableDrawing = false;
+		}
 	}
 }

@@ -25,5 +25,6 @@ public partial class ThirstVital : VitalEntry
 
 		BoundValue = vital.Value.CeilToInt();
 		BoundMaxValue = vital.MaxValue.CeilToInt();
+		FormattedValue = vital.ValueFormat;
 	}
 }

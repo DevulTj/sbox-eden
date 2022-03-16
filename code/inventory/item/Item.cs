@@ -10,18 +10,6 @@ namespace Eden;
 public partial class Item
 {
 	/// <summary>
-	/// Tells if an item is the same as another
-	/// </summary>
-	/// <param name="other"></param>
-	/// <returns>true if <type><paramref name="other"/></type> has the same asset as our item, otherwise false</returns>
-	public bool IsSame( Item other )
-	{
-		if ( other is null ) return false;
-
-		return other.Asset == Asset;
-	}
-
-	/// <summary>
 	/// Creates an item based off an Item Asset.
 	/// </summary>
 	/// <param name="asset"></param>
@@ -49,11 +37,11 @@ public partial class Item
 	public override string ToString() => Asset?.ItemName ?? "Item";
 	public virtual ItemType Type => ItemType.Item;
 	public virtual Color DefaultColor => Asset?.DefaultColor ?? Color.White;
-	public virtual bool CanStack => Asset.StackSize > 1;
+	public virtual bool CanStack => MaxStack > 1;
+	public virtual int MaxStack => Asset?.StackSize ?? 1;
 
-	// @networked
+	// @net
 	public ItemAsset Asset { get; set; }
-	public int MaxStack => Asset.StackSize;
 
 	public virtual void Write( NetWrite write )
 	{
@@ -63,5 +51,17 @@ public partial class Item
 	public virtual void Read( NetRead read )
 	{
 		Asset = read.ReadClass<ItemAsset>();
+	}
+
+	/// <summary>
+	/// Tells if an item is the same as another
+	/// </summary>
+	/// <param name="other"></param>
+	/// <returns>true if <type><paramref name="other"/></type> has the same asset as our item, otherwise false</returns>
+	public bool IsSame( Item other )
+	{
+		if ( other is null ) return false;
+
+		return other.Asset == Asset;
 	}
 }

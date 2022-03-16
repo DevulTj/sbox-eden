@@ -6,6 +6,6 @@
 		itemdescription = "It\'s made out of wood. Shocker."
 		iconpath = "ui/items/wood_plank.png"
 		stacksize = 100
-		worldmodelpath = resource:""
+		worldmodelpath = resource:"models/items/sticks/sticks.vmdl"
 	}
 }

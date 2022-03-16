@@ -13,10 +13,13 @@ public partial class Container : BaseNetworkable
 	public override string ToString() => $"[{Size}]( {string.Join( ", ", Items )} )";
 
 	[Net]
+	public Player Owner { get; set; }
+
+	[Net]
 	public int Size { get; protected set; } = 12;
 
 	[Net]
-	public IList<Slot> Items { get; set; }
+	public IList<Slot> Items { get; protected set; }
 
 	/// <summary>
 	/// Used to interact with the Container over the network
@@ -27,17 +30,13 @@ public partial class Container : BaseNetworkable
 	public Container()
 	{
 		if ( Host.IsServer )
-		{
 			ContainerNetwork.Register( this );
-		}
 	}
 
 	~Container()
 	{
 		if ( Host.IsServer )
-		{
 			ContainerNetwork.Dispose( this );
-		}
 	}
 
 	public void SetSize( int size )
@@ -67,6 +66,8 @@ public partial class Container : BaseNetworkable
 
 	public int Add( Item item, int quantity = 1 )
 	{
+		if ( item is null ) return -1;
+
 		int quantityLeft = quantity;
 		int maxStack = item.MaxStack;
 
@@ -78,6 +79,9 @@ public partial class Container : BaseNetworkable
 
 			if ( slot.Item is not null && slot.Quantity <= maxStack )
 			{
+				bool sameType = slot.Item.IsSame( item );
+				if ( !sameType ) continue;
+
 				var availableSpace = maxStack - slot.Quantity;
 				var amountToAdd = Math.Min( availableSpace, quantity );
 
@@ -104,9 +108,7 @@ public partial class Container : BaseNetworkable
 				return slot;
 			}
 			else
-			{
 				return lastSlot;
-			}
 		}
 
 		return lastSlot;
@@ -170,6 +172,14 @@ public partial class Container : BaseNetworkable
 			return null;
 
 		return Items[slotA];
+	}
+
+	public virtual bool HasAccess( Player player )
+	{
+		if ( Owner.IsValid() )
+			return Owner == player;
+
+		return true;
 	}
 
 	protected virtual void OnItemMoved( int slotA, int slotB, Container destination = null )

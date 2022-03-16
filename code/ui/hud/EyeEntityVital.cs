@@ -47,5 +47,13 @@ public partial class EyeEntityVital : Panel
 
 			IsShowing = true;
 		}
+
+		if ( tr.Entity is ResourceEntity resource )
+		{
+			CurrentEntityName = resource.Type.GetName();
+			CurrentEntitySubtitle = $"{resource.ResourceAmount}/{resource.MaxResourceAmount}";
+
+			IsShowing = true;
+		}
 	}
 }

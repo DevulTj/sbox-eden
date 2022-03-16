@@ -29,6 +29,7 @@ public partial class WorldItemEntity : Prop, IUse
 	[Net]
 	public int Quantity { get; set; } = 1;
 
+	// @net
 	public Item Item { get; set; }
 
 	public override void Spawn()
@@ -53,7 +54,7 @@ public partial class WorldItemEntity : Prop, IUse
 		var player = user as Player;
 		if ( player is null ) return false;
 
-		ContainerNetwork.PickupItem( player, this );
+		InventoryHelpers.PickupItem( player, this );
 
 		return true;
 	}
