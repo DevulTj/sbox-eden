@@ -13,5 +13,7 @@ public class BuildingEntity : ModelEntity
 
 		Model = asset.BuildingModel;
 		SetupPhysicsFromModel( PhysicsMotionType.Static );
+
+		Health = 100;
 	}
 }

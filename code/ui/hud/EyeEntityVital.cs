@@ -60,6 +60,14 @@ public partial class EyeEntityVital : Panel
 			SetClass( "resource", true );
 		}
 
+		if ( tr.Entity is BuildingEntity building )
+		{
+			CurrentEntityName = "Building";
+			CurrentEntitySubtitle = $"{building.Health}/100";
+
+			IsShowing = true;
+		}
+		
 		SetClass( "usable", tr.Entity is IUse usable && usable.IsUsable( player ) );
 	}
 }
