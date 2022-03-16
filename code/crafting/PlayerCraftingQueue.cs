@@ -59,7 +59,7 @@ public partial class PlayerCraftingQueue : CraftingQueue
 		bool baseResult = base.CanAddToQueue( asset, quantity );
 		var transaction = CreateTransaction( asset );
 
-		return baseResult && transaction.CanAfford() && transaction.Execute();
+		return baseResult && transaction.CanDo() && transaction.Execute();
 	}
 
 	protected override void OnFinishCraft( Craft craft )
