@@ -36,7 +36,7 @@ public partial class Item
 
 	public override string ToString() => Asset?.ItemName ?? "Item";
 	public virtual ItemType Type => ItemType.Item;
-	public virtual Color DefaultColor => Asset?.DefaultColor ?? Color.White;
+	public virtual Color DefaultColor => Asset?.DefaultColor ?? new Color( 100, 100, 100 );
 	public virtual bool CanStack => MaxStack > 1;
 	public virtual int MaxStack => Asset?.StackSize ?? 1;
 

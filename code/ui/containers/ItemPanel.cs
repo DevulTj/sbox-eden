@@ -45,7 +45,7 @@ public partial class ItemPanel : Panel
 		Item = item;
 
 		IconPanel.SetTexture( item.Asset.IconPath );
-		Style.BorderColor = Item.DefaultColor.WithAlpha( 0.5f );
+		Style.Set( "background-image", $"linear-gradient( 23deg, rgba( {Item.DefaultColor.Hex}, 0.4 ), rgba( #888888, 0 ) );" );
 	}
 
 	public override void SetProperty( string name, string value )
