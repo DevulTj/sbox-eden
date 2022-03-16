@@ -138,7 +138,6 @@ partial class Blueprint : Weapon
 	{
 		var transform = new Transform( TraceForward( Owner ).EndPosition );
 
-		// Where are we aiming / what are we aiming at
 		var forwardTracePosition = TraceForward( Owner ).EndPosition;
 		var forwardTraceDirection = Owner.EyeRotation;
 
@@ -156,7 +155,10 @@ partial class Blueprint : Weapon
 		var localGhostSnapPoints = selectedAsset.GetSnapPoints();
 		var localClosestSnapPoint = localGhostSnapPoints.OrderBy( x => x.Position.Distance( localOther.Position ) ).FirstOrDefault();
 
-		// Return best available snap point, offset by best ghost snap point
+		if ( Debug )
+			DebugOverlay.Sphere( nearestSnapPoint.Position, 8f, Color.Red, false );
+
+		// Return best available snap point, offset by nearest selected building snap point
 		return nearestSnapPoint.WithPosition( nearestSnapPoint.Position - localClosestSnapPoint.Position );
 	}
 

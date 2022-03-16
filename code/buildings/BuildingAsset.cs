@@ -11,11 +11,15 @@ namespace Eden;
 public class BuildingAsset : Asset
 {
 	public static HashSet<BuildingAsset> All { get; protected set; } = new();
-	public static Dictionary<string, BuildingAsset> Classes { get; protected set; } = new();
 
-	[Property, Category( "Meta" )] public string BuildingName { get; set; }
-	[Property, Category( "Meta" ), ResourceType( "vmdl" )] public string BuildingModelPath { get; set; }
-	[Property, Category( "Meta" ), ResourceType( "png" )] public string BuildingIconPath { get; set; }
+	[Property, Category( "Meta" )]
+	public string BuildingName { get; set; }
+
+	[Property, Category( "Meta" ), ResourceType( "vmdl" )]
+	public string BuildingModelPath { get; set; }
+
+	[Property, Category( "Meta" ), ResourceType( "png" )]
+	public string BuildingIconPath { get; set; }
 
 	public List<Transform> GetSnapPoints()
 	{
@@ -24,6 +28,12 @@ public class BuildingAsset : Asset
 	}
 
 	public bool CanAfford( Player player )
+	{
+		// TODO
+		return true;
+	}
+
+	public bool CheckValidPlacement( Vector3 position, Rotation rotation )
 	{
 		// TODO
 		return true;
@@ -38,7 +48,6 @@ public class BuildingAsset : Asset
 		if ( !All.Contains( this ) )
 		{
 			All.Add( this );
-			Classes[BuildingName] = this;
 
 			// Cache the building model immediately
 			if ( !string.IsNullOrEmpty( BuildingModelPath ) )
