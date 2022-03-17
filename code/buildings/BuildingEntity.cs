@@ -19,6 +19,11 @@ public partial class BuildingEntity : ModelEntity
 				DebugOverlay.Sphere( snapPoint.Transform.Position, 2f, Color.Cyan, false );
 			else
 				DebugOverlay.Sphere( snapPoint.Transform.Position, 3f, Color.Blue, false );
+
+			if ( snapPoint.AttachedEntity != null && snapPoint.AttachedEntity.IsValid )
+			{
+				DebugOverlay.Text( snapPoint.Transform.Position, snapPoint.AttachedEntity.Name );
+			}
 		}
 	}
 
