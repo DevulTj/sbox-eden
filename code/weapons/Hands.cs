@@ -74,8 +74,6 @@ partial class Hands : Weapon
 		};
 
 		base.CreateViewModel();
-
-		//ViewModelEntity.SetAnimGraph( "models/first_person/first_person_arms_punching.vanmgrph" );
 	}
 
 	private bool MeleeAttack()
@@ -83,7 +81,7 @@ partial class Hands : Weapon
 		var forward = Owner.EyeRotation.Forward;
 		forward = forward.Normal;
 
-		bool hit = false;
+		var hit = false;
 
 		foreach ( var tr in TraceBullet( Owner.EyePosition, Owner.EyePosition + forward * 80, 20.0f ) )
 		{
@@ -115,9 +113,7 @@ partial class Hands : Weapon
 		Host.AssertClient();
 
 		if ( IsLocalPawn )
-		{
 			_ = new Sandbox.ScreenShake.Perlin();
-		}
 
 		ViewModelEntity?.SetAnimParameter( "attack", true );
 		ViewModelEntity?.SetAnimParameter( "attack_has_hit", false );
@@ -130,9 +126,7 @@ partial class Hands : Weapon
 		Host.AssertClient();
 
 		if ( IsLocalPawn )
-		{
 			_ = new Sandbox.ScreenShake.Perlin( 1.0f, 1.0f, 3.0f );
-		}
 
 		ViewModelEntity?.SetAnimParameter( "attack", true );
 		ViewModelEntity?.SetAnimParameter( "attack_has_hit", true );

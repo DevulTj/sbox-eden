@@ -11,7 +11,7 @@ namespace Eden;
 public partial class ResourceNodeEntity : Prop
 {
 	// @TODO: need a better way to do this, I don't like it
-	public static Dictionary<ResourceType, string> ResourceMap = new()
+	protected static readonly Dictionary<ResourceType, string> ResourceMap = new()
 	{
 		{ ResourceType.Wood, "wooden_plank" },
 		{ ResourceType.Stone, "stone" },
@@ -26,7 +26,7 @@ public partial class ResourceNodeEntity : Prop
 	[Net]
 	public int MaxResourceAmount { get; set; } = 10;
 
-	public static Model BaseModel { get; set; } = Model.Load( "models/resources/resource_blockout.vmdl" );
+	protected static Model BaseModel { get; set; } = Model.Load( "models/resources/resource_blockout.vmdl" );
 
 	public override void Spawn()
 	{
@@ -41,16 +41,14 @@ public partial class ResourceNodeEntity : Prop
 		base.TakeDamage( info );
 
 		var weapon = info.Weapon as MeleeWeapon;
-		var player = info.Attacker as Player;
 
-		if ( player is null )
+		if ( info.Attacker is not Player player )
 			return;
 
 		if ( weapon is null )
 			return;
 
 		var resourceYield = weapon.GetResourceYield( Type );
-
 		if ( resourceYield < 1 )
 			return;
 
@@ -75,7 +73,7 @@ public partial class ResourceNodeEntity : Prop
 			Explode();
 	}
 
-	public void Explode()
+	protected virtual void Explode()
 	{
 		// @todo: stuff
 		Delete();

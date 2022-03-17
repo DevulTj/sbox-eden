@@ -14,7 +14,7 @@
 ]
 
 //
-// Eden.ResourceEntity
+// Eden.ResourceNodeEntity
 //
 @PointClass base(BaseProperties_apetavern_eden) tags( Physics ) model() = eden_resource : ""
 [

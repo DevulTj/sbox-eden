@@ -84,7 +84,6 @@ partial class HeldItem : Weapon
 
 	protected override void OnPlayerUse()
 	{
-		// ViewModelEntity?.SetAnimParameter( "grab", true );
 	}
 
 	public override void OnCarryStart( Entity carrier )
@@ -96,7 +95,6 @@ partial class HeldItem : Weapon
 
 	public override void OnCarryDrop( Entity dropper )
 	{
-		//
 	}
 
 	public override void SimulateAnimator( PawnAnimator anim )
@@ -123,12 +121,12 @@ partial class HeldItem : Weapon
 		base.Simulate( owner );
 
 		var player = Owner as Player;
-		if ( player.IsValid() )
-		{
-			var boneId = player.GetBoneIndex( "hand_R" );
-			var bone = player.GetBoneTransform( boneId, true );
+		if ( !player.IsValid() )
+			return;
 
-			Position = bone.Position;
-		}
+		var boneId = player.GetBoneIndex( "hand_R" );
+		var bone = player.GetBoneTransform( boneId, true );
+
+		Position = bone.Position;
 	}
 }

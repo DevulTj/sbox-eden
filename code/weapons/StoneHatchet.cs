@@ -29,7 +29,6 @@ partial class StoneHatchet : MeleeWeapon
 
 	public override void OnCarryDrop( Entity dropper )
 	{
-		//
 	}
 
 	public override void SimulateAnimator( PawnAnimator anim )

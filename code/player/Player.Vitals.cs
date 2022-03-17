@@ -17,21 +17,21 @@ public partial class Player
 		Vitals.Add( new()
 		{
 			Name = "Hunger",
-			Value = 250,
+			DefaultValue = 250,
 			MaxValue = 500,
 		} );
 
 		Vitals.Add( new()
 		{
 			Name = "Thirst",
-			Value = 150,
+			DefaultValue = 150,
 			MaxValue = 300,
 		} );
 
 		Vitals.Add( new WetnessVital()
 		{
 			Name = "Wetness",
-			Value = 0f,
+			DefaultValue = 0f,
 			MaxValue = 100f,
 			DrainSpeed = 300f
 		} );

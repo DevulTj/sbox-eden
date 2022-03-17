@@ -15,7 +15,6 @@ public partial class Player : Sandbox.Player, IContainerEntity
 
 	public Player()
 	{
-		//
 	}
 
 	public Player( Client cl ) : base()
@@ -66,6 +65,7 @@ public partial class Player : Sandbox.Player, IContainerEntity
 		HotbarSimulate();
 		TickVitals();
 
+		// @TODO: remove me
 		if ( Input.Released( InputButton.View ) )
 		{
 			if ( CameraMode is FirstPersonCamera )
@@ -99,15 +99,11 @@ public partial class Player : Sandbox.Player, IContainerEntity
 		BecomeRagdollOnClient( Velocity, LastDamageInfo.Flags, LastDamageInfo.Position, LastDamageInfo.Force, GetHitboxBone( LastDamageInfo.HitboxIndex ) );
 
 		Controller = null;
-
 		EnableAllCollisions = false;
 		EnableDrawing = false;
-
 		CameraMode = new SpectateRagdollCamera();
 
 		foreach ( var child in Children )
-		{
 			child.EnableDrawing = false;
-		}
 	}
 }

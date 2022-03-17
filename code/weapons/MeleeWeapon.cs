@@ -72,7 +72,7 @@ partial class MeleeWeapon : Weapon
 		var forward = Owner.EyeRotation.Forward;
 		forward = forward.Normal;
 
-		bool hit = false;
+		var hit = false;
 
 		foreach ( var tr in TraceBullet( Owner.EyePosition, Owner.EyePosition + forward * PrimaryAttackRange, AttackRadius ) )
 		{
@@ -111,9 +111,7 @@ partial class MeleeWeapon : Weapon
 		ViewModelEntity?.SetAnimParameter( "hit", true );
 
 		if ( IsLocalPawn )
-		{
 			_ = new Sandbox.ScreenShake.Perlin();
-		}
 	}
 
 	[ClientRpc]
@@ -129,8 +127,6 @@ partial class MeleeWeapon : Weapon
 		ViewModelEntity?.SetAnimParameter( "hit", true );
 
 		if ( IsLocalPawn )
-		{
 			_ = new Sandbox.ScreenShake.Perlin( 1.0f, 1.0f, 3.0f );
-		}
 	}
 }

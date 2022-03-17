@@ -14,6 +14,8 @@ public partial class Vital : BaseNetworkable
 	[Net]
 	public float MaxValue { get; set; } = 100f;
 
+	public float DefaultValue { get; set; } = 100f;
+
 	// Server only variables for vitals
 	public float DrainSpeed { get; set; } = 10f;
 
@@ -26,7 +28,7 @@ public partial class Vital : BaseNetworkable
 
 	public void Reset()
 	{
-		Value = MaxValue;
+		Value = DefaultValue;
 	}
 
 	protected virtual void OnVitalTick( Player player )
