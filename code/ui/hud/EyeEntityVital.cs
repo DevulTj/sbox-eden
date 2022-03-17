@@ -48,7 +48,7 @@ public partial class EyeEntityVital : Panel
 			IsShowing = true;
 		}
 
-		if ( tr.Entity is ResourceEntity resource )
+		if ( tr.Entity is ResourceNodeEntity resource )
 		{
 			CurrentEntityName = resource.Type.GetName();
 			CurrentEntitySubtitle = $"{resource.ResourceAmount}/{resource.MaxResourceAmount}";

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Eden;
 
 [Library( "eden_resource", Spawnable = true )]
-public partial class ResourceEntity : Prop
+public partial class ResourceNodeEntity : Prop
 {
 	// @TODO: need a better way to do this, I don't like it
 	public static Dictionary<ResourceType, string> ResourceMap = new()
