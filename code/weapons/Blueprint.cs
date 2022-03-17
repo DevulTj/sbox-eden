@@ -63,10 +63,35 @@ partial class Blueprint : Weapon
 
 	private List<SnapReference> FindNearbySnapPoints()
 	{
-		return new();
+		var tracePosition = TraceForward( Owner ).EndPosition;
+		var nearbyBuildings = Entity.FindInSphere( tracePosition, 128f ).OfType<BuildingEntity>();
+
+		var snapReferenceList = new List<SnapReference>();
+
+		foreach ( var building in nearbyBuildings )
+		{
+			snapReferenceList.AddRange(
+				building.SnapPoints.Select( ( _, index ) => new SnapReference( building, index ) )
+			);
+		}
+
+		return snapReferenceList;
 	}
 
-	private void FindBestSnapPoints()
+	private SnapReference? FindBestSnapPoint()
 	{
+		var nearbySnapPoints = FindNearbySnapPoints();
+		var tracePosition = TraceForward( Owner ).EndPosition;
+
+		// Get all nearby snap points, order them by most appropriate (closest & with similar rotation angles)
+		var validSnapPoints = nearbySnapPoints.Where( x => x.SnapPoint.AttachedEntity == null || !x.SnapPoint.AttachedEntity.IsValid );
+		var orderedSnapPoints = nearbySnapPoints.OrderBy( x => x.SnapPoint.Transform.Position.Distance( tracePosition ) );
+
+		if ( !orderedSnapPoints.Any() )
+			return null;
+
+		// Get the best available snap point
+		var bestSnapPoint = orderedSnapPoints.First();
+		return bestSnapPoint;
 	}
 }
