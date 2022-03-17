@@ -103,7 +103,7 @@ public partial class Container : BaseNetworkable
 		// Now let's go through empty slots
 		while ( quantityLeft > 0 )
 		{
-			var newQuantity = quantity.Clamp( 1, maxStack );
+			var newQuantity = quantityLeft.Clamp( 1, maxStack );
 			var slot = FindEmptySlot();
 
 			if ( slot != -1 )
