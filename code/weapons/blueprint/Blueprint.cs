@@ -55,7 +55,12 @@ partial class Blueprint : Weapon
 
 	private void PlaceBuilding()
 	{
-		CmdCreateBuildingManual( selectedAsset.Id, TraceForward( Owner ).EndPosition, Rotation.Identity );
+		var bestSnapPoint = FindBestSnapPoint();
+
+		if ( bestSnapPoint == null )
+			CmdCreateBuildingManual( selectedAsset.Id, TraceForward( Owner ).EndPosition, Rotation.Identity );
+		else
+			CmdCreateBuilding( selectedAsset.Id, 0, bestSnapPoint.Value.Entity.NetworkIdent, bestSnapPoint.Value.SnapIndex );
 	}
 
 	private static TraceResult TraceForward( Entity entity, float distance = maxBuildDistance ) =>

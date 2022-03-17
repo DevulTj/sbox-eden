@@ -33,12 +33,16 @@ partial class Blueprint
 	[ServerCmd( "eden_building_create_manual" )]
 	public static void CmdCreateBuildingManual( int assetId, Vector3 position, Rotation rotation )
 	{
+		Log.Trace( "eden_building_create_manual" );
+
 		CreateBuilding( assetId, position, rotation );
 	}
 
 	[ServerCmd( "eden_building_create" )]
 	public static void CmdCreateBuilding( int assetId, int snapId, int attachedBuildingId, int attachedSnapId )
 	{
+		Log.Trace( "eden_building_create" );
+
 		var snapBuilding = Entity.All.OfType<BuildingEntity>().First( x => x.NetworkIdent == attachedBuildingId );
 		var snap = snapBuilding.SnapPoints[attachedSnapId];
 
