@@ -50,8 +50,11 @@ partial class Blueprint : Weapon
 			if ( SceneObject == null || Blueprint == null )
 				return;
 
-			//var snappedTransform = Blueprint.GetSnappedTransform();
-			//SceneObject.Transform = snappedTransform;
+			//var snappedTransform = Blueprint.FindBestSnapPoints();
+			//if ( snappedTransform == null )
+			//	return;
+
+			//SceneObject.Transform = snappedTransform.Transform;
 		}
 	}
 }
