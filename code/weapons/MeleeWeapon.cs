@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Eden;
 
-partial class MeleeWeapon : Weapon
+public partial class MeleeWeapon : Weapon
 {
 	public virtual float PrimaryAttackRange => 160f;
 	public virtual float AttackRadius => 20f;

@@ -17,6 +17,8 @@ public partial class ResourceNodeEntity : Prop
 		{ ResourceType.Stone, "stone" },
 	};
 
+	protected static Model BaseModel { get; set; } = Model.Load( "models/resources/resource_blockout.vmdl" );
+
 	[Net]
 	public ResourceType Type { get; set; } = ResourceType.Wood;
 
@@ -26,8 +28,6 @@ public partial class ResourceNodeEntity : Prop
 	[Net]
 	public int MaxResourceAmount { get; set; } = 10;
 
-	protected static Model BaseModel { get; set; } = Model.Load( "models/resources/resource_blockout.vmdl" );
-
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -36,16 +36,12 @@ public partial class ResourceNodeEntity : Prop
 		MoveType = MoveType.None;
 	}
 
-	public override void TakeDamage( DamageInfo info )
+	protected void Gather( Player player, MeleeWeapon weapon )
 	{
-		base.TakeDamage( info );
-
-		var weapon = info.Weapon as MeleeWeapon;
-
-		if ( info.Attacker is not Player player )
+		if ( !player.IsValid() )
 			return;
 
-		if ( weapon is null )
+		if ( !weapon.IsValid() )
 			return;
 
 		var resourceYield = weapon.GetResourceYield( Type );
@@ -71,6 +67,13 @@ public partial class ResourceNodeEntity : Prop
 
 		if ( ResourceAmount <= 0 )
 			Explode();
+	}
+
+	public override void TakeDamage( DamageInfo info )
+	{
+		base.TakeDamage( info );
+
+		Gather( info.Attacker as Player, info.Weapon as MeleeWeapon );
 	}
 
 	protected virtual void Explode()
