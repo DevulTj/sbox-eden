@@ -117,22 +117,29 @@ public partial class ResourceManager
 			}
 			else
 			{
-				CreateResource( tr.EndPosition );
+				CreateResource( tr.EndPosition, tr.Normal );
 			}
 		}
 	}
 
-	protected void CreateResource( Vector3 point )
+	protected void OnResourceDestroyed( ResourceEntity entity )
+	{
+		Resources.Remove( entity );
+	}
+
+	protected void CreateResource( Vector3 point, Vector3 normal )
 	{
 		var entity = new ResourceEntity();
 		entity.Position = point;
+		entity.Rotation = Rotation.LookAt( normal );
+		entity.OnDestroyed += OnResourceDestroyed;
+
 		Resources.Add( entity );
 	}
 
 	protected void DestroyResource( ResourceEntity resource, int listIndex )
 	{
 		resource.Delete();
-		Resources.RemoveAt( listIndex );
 	}
 
 	protected void CheckDecay()
