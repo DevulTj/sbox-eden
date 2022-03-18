@@ -2,38 +2,24 @@
 // without permission of its author (insert_email_here)
 
 using Sandbox;
-using System;
-using System.Linq;
 
 namespace Eden;
 
 [Library( "eden_hands", Title = "Hands", Spawnable = false )]
-partial class Hands : Weapon
+partial class Hands : MeleeWeapon
 {
 	public override string ViewModelPath => "models/arms/toon_arms.vmdl";
 	public override float PrimaryRate => 2.0f;
 	public override float SecondaryRate => 2.0f;
-
-	public override bool CanReload()
-	{
-		return false;
-	}
-
-	public override void CreateHudElements()
-	{
-		Crosshair.SetCrosshair( new HandsCrosshair() );
-	}
+	public override float PrimaryAttackRange => 60f;
+	public override float BaseDamage => 10f;
 
 	private void Attack( bool leftHand )
 	{
 		if ( MeleeAttack() )
-		{
-			OnMeleeHit( leftHand );
-		}
+			RpcOnMeleeHit( leftHand );
 		else
-		{
-			OnMeleeMiss( leftHand );
-		}
+			RpcOnMeleeMiss( leftHand );
 
 		( Owner as AnimEntity )?.SetAnimParameter( "b_attack", true );
 	}
@@ -43,18 +29,19 @@ partial class Hands : Weapon
 		Attack( true );
 	}
 
-	protected override void OnPlayerUse()
-	{
-		ViewModelEntity?.SetAnimParameter( "grab", true );
-	}
-
 	public override void AttackSecondary()
 	{
 		Attack( false );
 	}
 
-	public override void OnCarryDrop( Entity dropper )
+	public override bool CanPrimaryAttack()
 	{
+		return base.CanPrimaryAttack() && TimeSinceSecondaryAttack > ( 1 / SecondaryRate );
+	}
+
+	public override bool CanSecondaryAttack()
+	{
+		return base.CanSecondaryAttack() && TimeSincePrimaryAttack > ( 1 / PrimaryRate );
 	}
 
 	public override void SimulateAnimator( PawnAnimator anim )
@@ -76,60 +63,21 @@ partial class Hands : Weapon
 		base.CreateViewModel();
 	}
 
-	private bool MeleeAttack()
+	[ClientRpc]
+	protected void RpcOnMeleeMiss( bool leftHand )
 	{
-		var forward = Owner.EyeRotation.Forward;
-		forward = forward.Normal;
+		OnMeleeMiss();
 
-		var hit = false;
-
-		foreach ( var tr in TraceBullet( Owner.EyePosition, Owner.EyePosition + forward * 80, 20.0f ) )
-		{
-			if ( !tr.Entity.IsValid() ) continue;
-
-			tr.Surface.DoBulletImpact( tr );
-
-			hit = true;
-
-			if ( !IsServer ) continue;
-
-			using ( Prediction.Off() )
-			{
-				var damageInfo = DamageInfo.FromBullet( tr.EndPosition, forward * 100, 25 )
-					.UsingTraceResult( tr )
-					.WithAttacker( Owner )
-					.WithWeapon( this );
-
-				tr.Entity.TakeDamage( damageInfo );
-			}
-		}
-
-		return hit;
+		var attackAnimName = leftHand ? "attack_l" : "attack_r";
+		ViewModelEntity?.SetAnimParameter( attackAnimName, true );
 	}
 
 	[ClientRpc]
-	private void OnMeleeMiss( bool leftHand )
+	protected void RpcOnMeleeHit( bool leftHand )
 	{
-		Host.AssertClient();
+		OnMeleeHit();
 
-		if ( IsLocalPawn )
-			_ = new Sandbox.ScreenShake.Perlin();
-
-		ViewModelEntity?.SetAnimParameter( "attack", true );
-		ViewModelEntity?.SetAnimParameter( "attack_has_hit", false );
-		ViewModelEntity?.SetAnimParameter( "holdtype_attack", leftHand ? 2 : 1 );
-	}
-
-	[ClientRpc]
-	private void OnMeleeHit( bool leftHand )
-	{
-		Host.AssertClient();
-
-		if ( IsLocalPawn )
-			_ = new Sandbox.ScreenShake.Perlin( 1.0f, 1.0f, 3.0f );
-
-		ViewModelEntity?.SetAnimParameter( "attack", true );
-		ViewModelEntity?.SetAnimParameter( "attack_has_hit", true );
-		ViewModelEntity?.SetAnimParameter( "holdtype_attack", leftHand ? 2 : 1 );
+		var attackAnimName = leftHand ? "attack_l" : "attack_r";
+		ViewModelEntity?.SetAnimParameter( attackAnimName, true );
 	}
 }
