@@ -66,18 +66,16 @@ partial class Hands : MeleeWeapon
 	[ClientRpc]
 	protected void RpcOnMeleeMiss( bool leftHand )
 	{
-		OnMeleeMiss();
+		ViewModelEntity?.SetAnimParameter( leftHand ? "attack_l" : "attack_r", true );
 
-		var attackAnimName = leftHand ? "attack_l" : "attack_r";
-		ViewModelEntity?.SetAnimParameter( attackAnimName, true );
+		OnMeleeMiss();
 	}
 
 	[ClientRpc]
 	protected void RpcOnMeleeHit( bool leftHand )
 	{
-		OnMeleeHit();
+		ViewModelEntity?.SetAnimParameter( leftHand ? "attack_l" : "attack_r", true );
 
-		var attackAnimName = leftHand ? "attack_l" : "attack_r";
-		ViewModelEntity?.SetAnimParameter( attackAnimName, true );
+		OnMeleeHit();
 	}
 }
