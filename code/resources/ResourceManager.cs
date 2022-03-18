@@ -18,6 +18,11 @@ public partial class ResourceManager
 	protected List<ResourceEntity> Resources { get; set; } = new();
 
 	/// <summary>
+	/// Max amount of concurrently existing resources per game.
+	/// </summary>
+	protected virtual int MaxResources => 100;
+
+	/// <summary>
 	/// How often the resource manager refreshes
 	/// </summary>
 	protected virtual int RefreshTimeSeconds => 5;
@@ -99,33 +104,35 @@ public partial class ResourceManager
 		for ( int i = 0; i < amount; i++ )
 		{
 			var point = GeneratePoint( coordinate, radius );
-
-			Log.Info( $"Point: {point}" );
-
 			point.z = entity.Position.z + 1000f;
-
 
 			var tr = Trace.Ray( point, point + Vector3.Down * 4096f )
 				.WorldOnly()
 				.Run();
 
-			bool success = tr.Hit;
-
+			bool success = tr.Hit && Resources.Count < MaxResources;
 			if ( !success )
 			{
-				// @TODO: what do?
-				DebugOverlay.Sphere( tr.EndPosition, 16, Color.Red, false, RefreshTimeSeconds );
+				//
 			}
 			else
 			{
-				DebugOverlay.Sphere( tr.EndPosition, 16, Color.Green, false, RefreshTimeSeconds );
+				CreateResource( tr.EndPosition );
 			}
 		}
 	}
 
 	protected void CreateResource( Vector3 point )
 	{
-		//
+		var entity = new ResourceEntity();
+		entity.Position = point;
+		Resources.Add( entity );
+	}
+
+	protected void DestroyResource( ResourceEntity resource, int listIndex )
+	{
+		resource.Delete();
+		Resources.RemoveAt( listIndex );
 	}
 
 	protected void CheckDecay()
@@ -138,8 +145,7 @@ public partial class ResourceManager
 
 			if ( entity.LastRefresh > IndividualDecayTime )
 			{
-				entity.Delete();
-				Resources.RemoveAt( i );
+				DestroyResource( entity, i );
 			}
 		}
 	}
