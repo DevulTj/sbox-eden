@@ -9,4 +9,14 @@ namespace Eden;
 public partial class ResourceEntity : ModelEntity
 {
 	public TimeSince LastRefresh { get; set; }
+
+	protected static Model BaseModel { get; set; } = Model.Load( "models/resources/resource_blockout.vmdl" );
+
+	public override void Spawn()
+	{
+		base.Spawn();
+
+		Model = BaseModel;
+		MoveType = MoveType.None;
+	}
 }

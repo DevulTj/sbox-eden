@@ -22,7 +22,16 @@ public partial class Game : Sandbox.Game
 		{
 			var hud = new GameHud();
 			hud.Parent = this;
+
+			ResourceManager = new();
 		}
+	}
+
+	public override void PostLevelLoaded()
+	{
+		base.PostLevelLoaded();
+
+		ResourceManager.Initialize();
 	}
 
 	/// <summary>
@@ -45,5 +54,15 @@ public partial class Game : Sandbox.Game
 		var tx = randomSpawnPoint.Transform;
 		tx.Position = tx.Position + Vector3.Up * 50.0f;
 		player.Transform = tx;
+
+		ResourceManager.AddEntity( player );
+	}
+
+	public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
+	{
+		if ( cl.Pawn.IsValid() )
+			ResourceManager.RemoveEntity( cl.Pawn );
+
+		base.ClientDisconnect( cl, reason );
 	}
 }

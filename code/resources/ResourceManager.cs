@@ -2,6 +2,7 @@
 // without permission of its author (insert_email_here)
 
 using Sandbox;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -46,8 +47,24 @@ public partial class ResourceManager
 		CurrentTask = Refresh();
 	}
 
+	public void AddEntity( Entity entity )
+	{
+		Log.Info( $"ResourceManager: Added entity -> {entity}" );
+
+		TrackedEntities.Add( entity );
+	}
+
+	public void RemoveEntity( Entity entity )
+	{
+		Log.Info( $"ResourceManager: Removed entity -> {entity}" );
+
+		TrackedEntities.Remove( entity );
+	}
+
 	protected void RefreshEntity( Entity entity )
 	{
+		Log.Info( $"ResourceManager: Refreshing entity -> {entity}" );
+
 		var list = Entity.FindInSphere( entity.Position, RefreshRange )
 			.OfType<ResourceEntity>()
 			.ToList();
@@ -56,6 +73,54 @@ public partial class ResourceManager
 		{
 			x.LastRefresh = 0;
 		} );
+
+		GeneratePoints( entity, entity.Position, 1500, 4, 16 );
+	}
+
+	protected Vector3 GeneratePoint( Vector2 origin, float radius )
+	{
+		var x = Rand.Float() - 0.5f;
+		var y = Rand.Float() - 0.5f;
+
+		var magnitude = MathF.Sqrt( x * x + y * y );
+
+		x /= magnitude;
+		y /= magnitude;
+
+		var d = Rand.Float( radius );
+
+		return origin += new Vector2( x * d, y * d );
+	}
+
+	protected void GeneratePoints( Entity entity, Vector2 coordinate, float radius, int minAmount, int maxAmount )
+	{
+		var amount = Rand.Int( minAmount, maxAmount );
+
+		for ( int i = 0; i < amount; i++ )
+		{
+			var point = GeneratePoint( coordinate, radius );
+
+			Log.Info( $"Point: {point}" );
+
+			point.z = entity.Position.z + 1000f;
+
+
+			var tr = Trace.Ray( point, point + Vector3.Down * 4096f )
+				.WorldOnly()
+				.Run();
+
+			bool success = tr.Hit;
+
+			if ( !success )
+			{
+				// @TODO: what do?
+				DebugOverlay.Sphere( tr.EndPosition, 16, Color.Red, false, RefreshTimeSeconds );
+			}
+			else
+			{
+				DebugOverlay.Sphere( tr.EndPosition, 16, Color.Green, false, RefreshTimeSeconds );
+			}
+		}
 	}
 
 	protected void CreateResource( Vector3 point )
@@ -81,6 +146,8 @@ public partial class ResourceManager
 
 	protected async Task Refresh()
 	{
+		Log.Info( "ResourceManager: Refresh" );
+
 		TrackedEntities.ForEach( entity => RefreshEntity( entity ) );
 
 		if ( CheckedDecayingEntities >= CheckDecayTime )
