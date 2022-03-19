@@ -3,7 +3,7 @@
 //
 @struct = Eden_ResourceItemQuantity
 [
-	itemasset(string) : "Item Asset" :  : ""
+	itemasset(string) { editor = "AssetBrowse(e_item)" } : "Item Asset" :  : ""
 	totalquantity(string) : "Total Quantity" :  : ""
 ]
 
