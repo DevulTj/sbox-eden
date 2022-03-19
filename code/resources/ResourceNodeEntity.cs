@@ -60,9 +60,7 @@ public partial class ResourceNodeEntity : Prop
 		var gatherableResource = AvailableItems.FirstOrDefault();
 		var quantityToTake = gatherableResource.InitialAmount / 5 * weaponResourceYield;
 
-		Log.Info( gatherableResource.AmountRemaining );
 		gatherableResource.AmountRemaining -= quantityToTake;
-		Log.Info( gatherableResource.AmountRemaining );
 
 		var item = Item.FromAsset( gatherableResource.ItemAssetName );
 
