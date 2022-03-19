@@ -3,7 +3,7 @@
 
 namespace Eden;
 
-public struct ResourceItemQuantity
+public class ResourceItemQuantity
 {
 	public string ItemAssetName { get; set; }
 	public int TotalQuantity { get; set; }
