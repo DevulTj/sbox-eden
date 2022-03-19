@@ -38,7 +38,7 @@ public partial class ResourceNodeEntity : Prop, IUse
 
 		Model = ResourceAsset.WorldModel is not null ? ResourceAsset.WorldModel : ResourceAsset.FallbackWorldModel;
 
-		AvailableItems.AddRange( ResourceAsset.ItemsToGather );
+		ResourceAsset.ItemsToGather.ForEach( x => AvailableItems.Add( new( x ) ) );
 
 		return this;
 	}

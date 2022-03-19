@@ -8,4 +8,15 @@ public class ResourceItemQuantity
 	public string ItemAssetName { get; set; }
 	public int InitialAmount { get; set; }
 	public int AmountRemaining;
+
+	public ResourceItemQuantity()
+	{
+	}
+
+	public ResourceItemQuantity( ResourceItemQuantity other )
+	{
+		ItemAssetName = other.ItemAssetName;
+		InitialAmount = other.InitialAmount;
+		AmountRemaining = other.AmountRemaining;
+	}
 }
