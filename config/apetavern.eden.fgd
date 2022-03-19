@@ -14,16 +14,6 @@
 ]
 
 //
-// Eden.ResourceEntity
-//
-@PointClass base(BaseProperties_apetavern_eden) = eden_resource_single : ""
-[
-	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
-
-	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
-]
-
-//
 // Eden.ResourceNodeEntity
 //
 @PointClass base(BaseProperties_apetavern_eden) tags( Physics ) model() 
