@@ -79,7 +79,7 @@ public partial class ResourceManager
 			x.LastRefresh = 0;
 		} );
 
-		GeneratePoints( entity, entity.Position, 800, 1600, 4, 16 );
+		GeneratePoints( entity, entity.Position, 600, 1350, 4, 16 );
 	}
 
 	protected Vector3 GeneratePoint( Vector2 origin, float radius )
