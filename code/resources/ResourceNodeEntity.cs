@@ -10,7 +10,7 @@ namespace Eden;
 
 [Library( "eden_resource", Spawnable = true )]
 [Hammer.EntityTool( "Resource", "Eden", "A spawn for resources." )]
-public partial class ResourceNodeEntity : Prop
+public partial class ResourceNodeEntity : Prop, IUse
 {
 	[Property]
 	public ResourceType ResourceType { get; set; }
@@ -25,7 +25,6 @@ public partial class ResourceNodeEntity : Prop
 	{
 		base.Spawn();
 
-		Model = ResourceAsset.FallbackWorldModel;
 		MoveType = MoveType.None;
 	}
 
@@ -35,6 +34,8 @@ public partial class ResourceNodeEntity : Prop
 
 		if ( ResourceAsset is null )
 			Delete();
+
+		Model = ResourceAsset.WorldModel is not null ? ResourceAsset.WorldModel : ResourceAsset.FallbackWorldModel;
 
 		AvailableItems.AddRange( ResourceAsset.ItemsToGather );
 
@@ -57,26 +58,34 @@ public partial class ResourceNodeEntity : Prop
 			return;
 		}
 
+		if ( ResourceAsset.Collectable )
+			return;
+
 		var gatherableResource = AvailableItems.FirstOrDefault();
-		var quantityToTake = gatherableResource.InitialAmount / 5 * weaponResourceYield;
+		var quantityToTake = gatherableResource.InitialAmount / ( ResourceAsset.RequiredHitsPerItem < 1 ? 1 : ResourceAsset.RequiredHitsPerItem ) * weaponResourceYield;
 
 		gatherableResource.AmountRemaining -= quantityToTake;
 
-		var item = Item.FromAsset( gatherableResource.ItemAssetName );
-
-		if ( !InventoryHelpers.GiveItem( player, item, quantityToTake ) )
-		{
-			ResourceNotifications.AddResource( To.Single( player.Client ), quantityToTake, item.Asset.ItemName );
-
-			var entity = ItemEntity.Instantiate( item, quantityToTake );
-			entity.Position = Position + Vector3.Up * 10f;
-		}
+		GiveItem( player, gatherableResource.ItemAssetName, quantityToTake );
 
 		if ( gatherableResource.AmountRemaining <= 0 )
 			AvailableItems.Remove( gatherableResource );
 
 		if ( !AvailableItems.Any() )
-			Explode();
+			Destroy();
+	}
+
+	private void GiveItem( Player player, string itemAssetName, int quantity )
+	{
+		var item = Item.FromAsset( itemAssetName );
+
+		if ( !InventoryHelpers.GiveItem( player, item, quantity ) )
+		{
+			ResourceNotifications.AddResource( To.Single( player.Client ), quantity, item.Asset.ItemName );
+
+			var entity = ItemEntity.Instantiate( item, quantity );
+			entity.Position = Position + Vector3.Up * 10f;
+		}
 	}
 
 	public override void TakeDamage( DamageInfo info )
@@ -93,9 +102,24 @@ public partial class ResourceNodeEntity : Prop
 		OnDestroyed?.Invoke( this );
 	}
 
-	protected virtual void Explode()
+	protected virtual void Destroy()
 	{
 		// @todo: stuff
 		Delete();
+	}
+
+	public bool OnUse( Entity user )
+	{
+		foreach ( var item in AvailableItems )
+			GiveItem( user as Player, item.ItemAssetName, item.AmountRemaining );
+
+		Destroy();
+
+		return false;
+	}
+
+	public bool IsUsable( Entity user )
+	{
+		return ResourceAsset.Collectable;
 	}
 }
