@@ -2,37 +2,37 @@
 // without permission of its author (insert_email_here)
 
 using Sandbox;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Eden;
 
 [Library( "eden_resource", Spawnable = true )]
+[Hammer.EntityTool( "Resource", "Eden", "A spawn for resources." )]
 public partial class ResourceNodeEntity : Prop
 {
-	// @TODO: need a better way to do this, I don't like it
-	protected static readonly Dictionary<ResourceType, string> ResourceMap = new()
-	{
-		{ ResourceType.Wood, "wooden_plank" },
-		{ ResourceType.Stone, "stone" },
-	};
-
-	protected static Model BaseModel { get; set; } = Model.Load( "models/resources/resource_blockout.vmdl" );
+	[Property]
+	public ResourceType ResourceType { get; set; }
 
 	[Net]
-	public ResourceType Type { get; set; } = ResourceType.Wood;
+	public ResourceAsset ResourceAsset { get; set; }
 
-	[Net]
-	public int ResourceAmount { get; set; } = 10;
-
-	[Net]
-	public int MaxResourceAmount { get; set; } = 10;
+	public List<ResourceItemQuantity> AvailableItems { get; set; } = new();
 
 	public override void Spawn()
 	{
 		base.Spawn();
 
-		Model = BaseModel;
+		Model = ResourceAsset.FallbackWorldModel;
+
+		// Shitty hack, couldn't get specifying the asset directly through hammer to work properly. 
+		ResourceAsset = ResourceAsset.All.FirstOrDefault( x => x.ResourceType == ResourceType );
+
+		if ( ResourceAsset is null )
+			Delete();
+
+		AvailableItems.AddRange( ResourceAsset.ItemsToGather );
+
 		MoveType = MoveType.None;
 	}
 
@@ -44,28 +44,34 @@ public partial class ResourceNodeEntity : Prop
 		if ( !weapon.IsValid() )
 			return;
 
-		var resourceYield = weapon.GetResourceYield( Type );
-		if ( resourceYield < 1 )
-			return;
+		var weaponResourceYield = weapon.GetResourceYield( ResourceAsset.ResourceType );
 
-		var assetName = ResourceMap[Type];
-		var item = Item.FromAsset( assetName );
-
-		ResourceAmount -= resourceYield;
-
-		var grantedAmount = resourceYield;
-		if ( ResourceAmount < 0 )
-			grantedAmount += ResourceAmount;
-
-		if ( !InventoryHelpers.GiveItem( player, item, resourceYield ) )
+		if ( weaponResourceYield < 1 )
 		{
-			ResourceNotifications.AddResource( To.Single( player.Client ), grantedAmount, item.Asset.ItemName );
+			// TODO: Deal heavy damage to weapon
+			return;
+		}
 
-			var entity = ItemEntity.Instantiate( item, grantedAmount );
+		var gatherableResource = AvailableItems.FirstOrDefault();
+		var assetEquivalent = ResourceAsset.ItemsToGather.FirstOrDefault( x => x.ItemAssetName == gatherableResource.ItemAssetName );
+
+		var quantityToTake = assetEquivalent.TotalQuantity / 5 * weaponResourceYield;
+		gatherableResource.TotalQuantity -= quantityToTake;
+
+		var item = Item.FromAsset( assetEquivalent.ItemAssetName );
+
+		if ( !InventoryHelpers.GiveItem( player, item, quantityToTake ) )
+		{
+			ResourceNotifications.AddResource( To.Single( player.Client ), quantityToTake, item.Asset.ItemName );
+
+			var entity = ItemEntity.Instantiate( item, quantityToTake );
 			entity.Position = Position + Vector3.Up * 10f;
 		}
 
-		if ( ResourceAmount <= 0 )
+		if ( gatherableResource.TotalQuantity <= 0 )
+			AvailableItems.Remove( gatherableResource );
+
+		if ( !AvailableItems.Any() )
 			Explode();
 	}
 
