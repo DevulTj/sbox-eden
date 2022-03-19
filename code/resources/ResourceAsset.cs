@@ -44,6 +44,9 @@ public partial class ResourceAsset : Asset
 				WorldModel = Model.Load( WorldModelPath );
 			}
 
+			foreach ( var item in ItemsToGather )
+				item.AmountRemaining = item.InitialAmount;
+
 			Log.Info( $"Eden: Loading resource asset: {ResourceName}" );
 		}
 	}
