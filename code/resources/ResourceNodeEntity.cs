@@ -2,6 +2,7 @@
 // without permission of its author (insert_email_here)
 
 using Sandbox;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,24 +17,28 @@ public partial class ResourceNodeEntity : Prop
 
 	[Net]
 	public ResourceAsset ResourceAsset { get; set; }
-
 	public List<ResourceItemQuantity> AvailableItems { get; set; } = new();
+	public event Action<ResourceNodeEntity> OnDestroyed;
+	public TimeSince LastRefresh { get; set; }
 
 	public override void Spawn()
 	{
 		base.Spawn();
 
 		Model = ResourceAsset.FallbackWorldModel;
+		MoveType = MoveType.None;
+	}
 
-		// Shitty hack, couldn't get specifying the asset directly through hammer to work properly. 
-		ResourceAsset = ResourceAsset.All.FirstOrDefault( x => x.ResourceType == ResourceType );
+	public ResourceNodeEntity SetResourceAs( ResourceType type )
+	{
+		ResourceAsset = ResourceAsset.All.FirstOrDefault( x => x.ResourceType == type );
 
 		if ( ResourceAsset is null )
 			Delete();
 
 		AvailableItems.AddRange( ResourceAsset.ItemsToGather );
 
-		MoveType = MoveType.None;
+		return this;
 	}
 
 	protected void Gather( Player player, MeleeWeapon weapon )
@@ -53,12 +58,13 @@ public partial class ResourceNodeEntity : Prop
 		}
 
 		var gatherableResource = AvailableItems.FirstOrDefault();
-		var assetEquivalent = ResourceAsset.ItemsToGather.FirstOrDefault( x => x.ItemAssetName == gatherableResource.ItemAssetName );
+		var quantityToTake = gatherableResource.InitialAmount / 5 * weaponResourceYield;
 
-		var quantityToTake = assetEquivalent.TotalQuantity / 5 * weaponResourceYield;
-		gatherableResource.TotalQuantity -= quantityToTake;
+		Log.Info( gatherableResource.AmountRemaining );
+		gatherableResource.AmountRemaining -= quantityToTake;
+		Log.Info( gatherableResource.AmountRemaining );
 
-		var item = Item.FromAsset( assetEquivalent.ItemAssetName );
+		var item = Item.FromAsset( gatherableResource.ItemAssetName );
 
 		if ( !InventoryHelpers.GiveItem( player, item, quantityToTake ) )
 		{
@@ -68,7 +74,7 @@ public partial class ResourceNodeEntity : Prop
 			entity.Position = Position + Vector3.Up * 10f;
 		}
 
-		if ( gatherableResource.TotalQuantity <= 0 )
+		if ( gatherableResource.AmountRemaining <= 0 )
 			AvailableItems.Remove( gatherableResource );
 
 		if ( !AvailableItems.Any() )
@@ -80,6 +86,13 @@ public partial class ResourceNodeEntity : Prop
 		base.TakeDamage( info );
 
 		Gather( info.Attacker as Player, info.Weapon as MeleeWeapon );
+	}
+
+	protected override void OnDestroy()
+	{
+		base.OnDestroy();
+
+		OnDestroyed?.Invoke( this );
 	}
 
 	protected virtual void Explode()
