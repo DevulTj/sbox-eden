@@ -2,21 +2,17 @@
 {
 	data = 
 	{
-		resourcename = "Tree"
-		worldmodelpath = resource:"models/resources/resource_tree.vmdl"
+		resourcename = "Stick"
+		worldmodelpath = resource:"models/items/sticks/stick_small.vmdl"
 		resourcetype = "0"
 		itemstogather = 
 		[
 			{
 				itemassetname = "wooden_stick"
-				initialamount = 100
-			},
-			{
-				itemassetname = "wooden_plank"
-				initialamount = 5
+				initialamount = 2
 			},
 		]
-		requiredhitsperitem = 5
-		collectable = false
+		requiredhitsperitem = 0
+		collectable = true
 	}
 }
