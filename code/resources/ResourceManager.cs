@@ -15,7 +15,7 @@ public partial class ResourceManager
 	/// Container for a list of entities we are tracking
 	/// </summary>
 	protected List<Entity> TrackedEntities { get; set; } = new();
-	protected List<ResourceEntity> Resources { get; set; } = new();
+	protected List<ResourceNodeEntity> Resources { get; set; } = new();
 
 	/// <summary>
 	/// Max amount of concurrently existing resources per game.
@@ -122,14 +122,15 @@ public partial class ResourceManager
 		}
 	}
 
-	protected void OnResourceDestroyed( ResourceEntity entity )
+	protected void OnResourceDestroyed( ResourceNodeEntity entity )
 	{
 		Resources.Remove( entity );
 	}
 
 	protected void CreateResource( Vector3 point, Vector3 normal )
 	{
-		var entity = new ResourceEntity();
+		var entity = new ResourceNodeEntity();
+		entity.SetResourceAs( ResourceType.Wood );
 		entity.Position = point;
 		entity.Rotation = Rotation.LookAt( normal );
 		entity.OnDestroyed += OnResourceDestroyed;
@@ -137,7 +138,7 @@ public partial class ResourceManager
 		Resources.Add( entity );
 	}
 
-	protected void DestroyResource( ResourceEntity resource, int listIndex )
+	protected void DestroyResource( ResourceNodeEntity resource, int listIndex )
 	{
 		resource.Delete();
 	}
@@ -148,7 +149,7 @@ public partial class ResourceManager
 
 		for ( int i = Resources.Count - 1; i >= 0; i-- )
 		{
-			ResourceEntity entity = Resources[i];
+			ResourceNodeEntity entity = Resources[i];
 
 			if ( entity.LastRefresh > IndividualDecayTime )
 			{
