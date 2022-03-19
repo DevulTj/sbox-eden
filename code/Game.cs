@@ -16,6 +16,8 @@ namespace Eden;
 /// </summary>
 public partial class Game : Sandbox.Game
 {
+	public ClimateAudioManager ClimateAudioManager { get; protected set; }
+
 	public Game()
 	{
 		if ( IsServer )
@@ -32,6 +34,9 @@ public partial class Game : Sandbox.Game
 		base.PostLevelLoaded();
 
 		ResourceManager.Initialize();
+
+		if ( IsServer )
+			ClimateAudioManager = new();
 	}
 
 	/// <summary>
