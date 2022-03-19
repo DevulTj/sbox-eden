@@ -93,3 +93,49 @@ metadata
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 ]
 
+//
+// Eden.DayNight.DayNightAmbience
+//
+@PointClass base(BaseProperties_apetavern_eden) iconsprite( "editor/snd_daynight.vmat" ) 
+metadata
+{
+	entity_tool_name = "Ambience"
+	entity_tool_group = "Day and Night"
+}
+= daynight_ambience : "An audio controller for when a looping sound should play at each point in the day"
+[
+	dawnambience(sound) : "Dawn Ambient Sound" :  : ""
+	dayambience(sound) : "Day Ambient Sound" :  : ""
+	duskambience(sound) : "Dusk Ambient Sound" :  : ""
+	nightambience(sound) : "Night Ambient Sound" :  : ""
+]
+
+//
+// Eden.DayNight.DayNightController
+//
+@PointClass base(BaseProperties_apetavern_eden) iconsprite( "editor/daynight_controller.vmat" ) 
+metadata
+{
+	entity_tool_name = "Controller"
+	entity_tool_group = "Day and Night"
+}
+= daynight_controller : "A way to set the colour based on the time of day, it will smoothly blend between each colour when the time has changed. Also enables the day night cycle using a \"light_environment\""
+[
+	dawncolor(color255) : "Dawn Color" :  : ""
+	dawnskycolor(color255) : "Dawn Sky Color" :  : ""
+	daycolor(color255) : "Day Color" :  : ""
+	dayskycolor(color255) : "Day Sky Color" :  : ""
+	duskcolor(color255) : "Dusk Color" :  : ""
+	duskskycolor(color255) : "Dusk Sky Color" :  : ""
+	nightcolor(color255) : "Night Color" :  : ""
+	nightskycolor(color255) : "Night Sky Color" :  : ""
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+
+	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
+
+	output OnBecomeNight(void) : ""
+	output OnBecomeDusk(void) : ""
+	output OnBecomeDawn(void) : ""
+	output OnBecomeDay(void) : ""
+]
+

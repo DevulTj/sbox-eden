@@ -17,6 +17,7 @@ namespace Eden;
 public partial class Game : Sandbox.Game
 {
 	public ClimateAudioManager ClimateAudioManager { get; protected set; }
+	public DayNight.DayNightSystem DayNightSystem { get; protected set; }
 
 	public Game()
 	{
@@ -26,6 +27,7 @@ public partial class Game : Sandbox.Game
 			hud.Parent = this;
 
 			ResourceManager = new();
+			DayNightSystem = new();
 		}
 	}
 
