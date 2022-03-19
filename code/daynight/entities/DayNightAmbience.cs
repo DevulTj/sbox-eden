@@ -71,7 +71,7 @@ public partial class DayNightAmbience : Entity
 
 	public override void Spawn()
 	{
-		DayNightManager.OnSectionChanged += HandleSectionChanged;
+		DayNightSystem.Instance.OnSectionChanged += HandleSectionChanged;
 		SoundTransition = new Transition();
 
 		base.Spawn();

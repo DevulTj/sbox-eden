@@ -112,7 +112,7 @@ public partial class DayNightController : ModelEntity
 		_colorGradient = new DayNightGradient( DawnColor, DayColor, DuskColor, NightColor );
 		_skyColorGradient = new DayNightGradient( DawnSkyColor, DaySkyColor, DuskSkyColor, NightSkyColor );
 
-		DayNightManager.OnSectionChanged += HandleTimeSectionChanged;
+		DayNightSystem.Instance.OnSectionChanged += HandleTimeSectionChanged;
 
 		base.Spawn();
 	}
@@ -135,11 +135,11 @@ public partial class DayNightController : ModelEntity
 		var environment = Environment;
 		if ( !environment.IsValid() ) return;
 
-		var sunAngle = DayNightManager.TimeOfDay / 24f * 360f;
+		var sunAngle = DayNightSystem.Instance.TimeOfDay / 24f * 360f;
 		var radius = 10000f;
 
-		environment.Color = _colorGradient.Evaluate( 1f / 24f * DayNightManager.TimeOfDay );
-		environment.SkyColor = _skyColorGradient.Evaluate( 1f / 24f * DayNightManager.TimeOfDay );
+		environment.Color = _colorGradient.Evaluate( 1f / 24f * DayNightSystem.Instance.TimeOfDay );
+		environment.SkyColor = _skyColorGradient.Evaluate( 1f / 24f * DayNightSystem.Instance.TimeOfDay );
 
 		environment.Position = Vector3.Zero + Rotation.From( 0, 0, sunAngle + 60f ) * ( radius * Vector3.Right );
 		environment.Position += Rotation.From( 0, sunAngle, 0 ) * ( radius * Vector3.Forward );
