@@ -19,7 +19,8 @@
 		0 : "Wood"
 		1 : "Stone"
 	]
-	yieldperhit(integer) { group = "Gathering" } : "Yield Per Hit" : 0 : ""
+	collectable(boolean) { group = "Gathering" } : "Collectable" : 0 : ""
+	requiredhitsperitem(integer) { group = "Gathering" } : "Required Hits Per Item" : 0 : ""
 	itemstogather(array:struct:Eden_ResourceItemQuantity) { group = "Gathering" } : "Items To Gather" :  : ""
 ]
 
