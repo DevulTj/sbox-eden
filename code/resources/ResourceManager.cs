@@ -26,6 +26,7 @@ public partial class ResourceManager
 	/// How often the resource manager refreshes
 	/// </summary>
 	protected virtual int RefreshTimeSeconds => 5;
+
 	/// <summary>
 	/// The range away from each tracked entity.
 	/// </summary>
@@ -35,12 +36,34 @@ public partial class ResourceManager
 	/// Check decay every 60 seconds, as it's expensive
 	/// </summary>
 	protected virtual float CheckDecayTime => 60f;
+
 	/// <summary>
 	/// How long until an individual resource will decay from being isolated.
 	/// </summary>
 	protected virtual float IndividualDecayTime => 120f;
-	protected TimeSince CheckedDecayingEntities { get; set; } = 0;
 
+	/// <summary>
+	/// When we can't place something, we'll try to offset the location by a
+	/// random amount in this range.
+	/// </summary>
+	protected virtual int AttemptOffsetMaximum => 400;
+
+	/// <summary>
+	/// How far up we will trace from a tracked entity
+	/// </summary>
+	protected virtual float SkyOffset => 2048f;
+
+	/// <summary>
+	/// How far down we will trace to the ground, from the sky
+	/// </summary>
+	protected virtual float GroundOffset => SkyOffset * 4f;
+
+	/// <summary>
+	/// How many extra traces we will run if we can't find a suitable location the first time.
+	/// </summary>
+	protected virtual int MaxTraceAttempts => 10;
+
+	private TimeSince CheckedDecayingEntities { get; set; } = 0;
 	private bool Initialized { get; set; } = false;
 	private Task CurrentTask { get; set; }
 
@@ -95,6 +118,40 @@ public partial class ResourceManager
 		return origin += new Vector2( x * radius, y * radius );
 	}
 
+	protected virtual bool IsValidHit( TraceResult tr )
+	{
+		return tr.Hit && tr.Entity is WorldEntity;
+	}
+
+	protected TraceResult TryTrace( Vector3 point )
+	{
+		// try a few times with some variation
+		int attemptsLeft = MaxTraceAttempts;
+
+		while ( attemptsLeft > 0 )
+		{
+			var endPoint = point + Vector3.Down * GroundOffset;
+			var tr = Trace.Ray( point, endPoint )
+				.WorldAndEntities()
+				.HitLayer( CollisionLayer.Water, true )
+				.Run();
+
+			// This is cool!
+			bool inWater = Map.Physics.IsPointWater( tr.EndPosition );
+
+			if ( !inWater && IsValidHit( tr ) )
+				return tr;
+
+			// Pick a random point to test next
+			point += Vector3.Right * Rand.Int( -AttemptOffsetMaximum, AttemptOffsetMaximum );
+			point += Vector3.Forward * Rand.Int( -AttemptOffsetMaximum, AttemptOffsetMaximum );
+
+			attemptsLeft--;
+		}
+
+		return new TraceResult();
+	}
+
 	protected void GeneratePoints( Entity entity, Vector2 coordinate, float minRadius, float maxRadius, int minAmount, int maxAmount )
 	{
 		var amount = Rand.Int( minAmount, maxAmount );
@@ -102,11 +159,9 @@ public partial class ResourceManager
 		for ( int i = 0; i < amount; i++ )
 		{
 			var point = GeneratePoint( coordinate, Rand.Float( minRadius, maxRadius ) );
-			point.z = entity.Position.z + 1000f;
+			point.z = entity.Position.z + 2048f;
 
-			var tr = Trace.Ray( point, point + Vector3.Down * 4096f )
-				.WorldOnly()
-				.Run();
+			var tr = TryTrace( point );
 
 			bool success = tr.Hit && Resources.Count < MaxResources;
 			if ( !success )
