@@ -22,7 +22,10 @@ public partial class ResourceAsset : Asset
 	public ResourceType ResourceType { get; set; }
 
 	[Property, Category( "Gathering" )]
-	public int YieldPerHit { get; set; }
+	public bool Collectable { get; set; }
+
+	[Property, Category( "Gathering" )]
+	public int RequiredHitsPerItem { get; set; }
 
 	[Property, Category( "Gathering" )]
 	public List<ResourceItemQuantity> ItemsToGather { get; set; }
