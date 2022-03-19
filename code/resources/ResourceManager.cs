@@ -79,7 +79,7 @@ public partial class ResourceManager
 			x.LastRefresh = 0;
 		} );
 
-		GeneratePoints( entity, entity.Position, 1500, 4, 16 );
+		GeneratePoints( entity, entity.Position, 800, 1600, 4, 16 );
 	}
 
 	protected Vector3 GeneratePoint( Vector2 origin, float radius )
@@ -97,13 +97,13 @@ public partial class ResourceManager
 		return origin += new Vector2( x * d, y * d );
 	}
 
-	protected void GeneratePoints( Entity entity, Vector2 coordinate, float radius, int minAmount, int maxAmount )
+	protected void GeneratePoints( Entity entity, Vector2 coordinate, float minRadius, float maxRadius, int minAmount, int maxAmount )
 	{
 		var amount = Rand.Int( minAmount, maxAmount );
 
 		for ( int i = 0; i < amount; i++ )
 		{
-			var point = GeneratePoint( coordinate, radius );
+			var point = GeneratePoint( coordinate, Rand.Float( minRadius, maxRadius ) );
 			point.z = entity.Position.z + 1000f;
 
 			var tr = Trace.Ray( point, point + Vector3.Down * 4096f )
