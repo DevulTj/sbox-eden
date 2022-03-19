@@ -1,0 +1,25 @@
+//
+// Eden.ResourceItemQuantity
+//
+@struct = Eden_ResourceItemQuantity
+[
+	itemassetname(string) : "Item Asset Name" :  : ""
+	totalquantity(integer) : "Total Quantity" : 0 : ""
+]
+
+//
+// Eden.ResourceAsset
+//
+@BaseClass = e_res : ""
+[
+	resourcename(string) { group = "Meta" } : "Resource Name" :  : ""
+	worldmodelpath(resource:vmdl) { group = "World" } : "World Model Path" :  : ""
+	resourcetype(choices) { group = "Gathering" } : "Resource Type" : 0 : "" =
+	[
+		0 : "Wood"
+		1 : "Stone"
+	]
+	yieldperhit(integer) { group = "Gathering" } : "Yield Per Hit" : 0 : ""
+	itemstogather(array:struct:Eden_ResourceItemQuantity) { group = "Gathering" } : "Items To Gather" :  : ""
+]
+
