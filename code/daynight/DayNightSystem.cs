@@ -6,11 +6,11 @@ public partial class DayNightSystem : Entity
 {
 	public static DayNightSystem Instance { get; protected set; }
 
-	public delegate void SectionChanged( TimeSection section );
-	public event SectionChanged OnSectionChanged;
+	public delegate void TimeStageChanged( TimeStage stage );
+	public event TimeStageChanged OnTimeStageChanged;
 
 	[Net, Predicted]
-	public TimeSection Section { get; protected set; }
+	public TimeStage TimeStage { get; protected set; }
 
 	[Net, Predicted]
 	public float TimeOfDay { get; set; } = 9f;
@@ -29,16 +29,16 @@ public partial class DayNightSystem : Entity
 		Transmit = TransmitType.Always;
 	}
 
-	public static TimeSection ToSection( float time )
+	public static TimeStage TimeToStage( float time )
 	{
 		if ( time > 5f && time <= 9f )
-			return TimeSection.Dawn;
+			return TimeStage.Dawn;
 		if ( time > 9f && time <= 18f )
-			return TimeSection.Day;
+			return TimeStage.Day;
 		if ( time > 18f && time <= 21f )
-			return TimeSection.Dusk;
+			return TimeStage.Dusk;
 
-		return TimeSection.Night;
+		return TimeStage.Night;
 	}
 
 	// Shared Tick
@@ -50,11 +50,11 @@ public partial class DayNightSystem : Entity
 		if ( TimeOfDay >= 24f )
 			TimeOfDay = 0f;
 
-		var currentSection = ToSection( TimeOfDay );
-		if ( currentSection != Section )
+		var stage = TimeToStage( TimeOfDay );
+		if ( stage != TimeStage )
 		{
-			Section = currentSection;
-			OnSectionChanged?.Invoke( currentSection );
+			TimeStage = stage;
+			OnTimeStageChanged?.Invoke( stage );
 		}
 	}
 }

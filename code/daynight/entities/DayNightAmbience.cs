@@ -71,28 +71,28 @@ public partial class DayNightAmbience : Entity
 
 	public override void Spawn()
 	{
-		DayNightSystem.Instance.OnSectionChanged += HandleSectionChanged;
+		DayNightSystem.Instance.OnTimeStageChanged += OnTimeStageChanged;
 		SoundTransition = new Transition();
 
 		base.Spawn();
 	}
 
-	private void HandleSectionChanged( TimeSection section )
+	private void OnTimeStageChanged( TimeStage stage )
 	{
 		Host.AssertServer();
 
-		switch ( section )
+		switch ( stage )
 		{
-			case TimeSection.Dawn:
+			case TimeStage.Dawn:
 				TransitionTo( DawnAmbience );
 				break;
-			case TimeSection.Day:
+			case TimeStage.Day:
 				TransitionTo( DayAmbience );
 				break;
-			case TimeSection.Dusk:
+			case TimeStage.Dusk:
 				TransitionTo( DuskAmbience );
 				break;
-			case TimeSection.Night:
+			case TimeStage.Night:
 				TransitionTo( NightAmbience );
 				break;
 		}

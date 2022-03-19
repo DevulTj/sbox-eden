@@ -112,20 +112,20 @@ public partial class DayNightController : ModelEntity
 		_colorGradient = new DayNightGradient( DawnColor, DayColor, DuskColor, NightColor );
 		_skyColorGradient = new DayNightGradient( DawnSkyColor, DaySkyColor, DuskSkyColor, NightSkyColor );
 
-		DayNightSystem.Instance.OnSectionChanged += HandleTimeSectionChanged;
+		DayNightSystem.Instance.OnTimeStageChanged += OnTimeStageChanged;
 
 		base.Spawn();
 	}
 
-	private void HandleTimeSectionChanged( TimeSection section )
+	private void OnTimeStageChanged( TimeStage stage )
 	{
-		if ( section == TimeSection.Dawn )
+		if ( stage == TimeStage.Dawn )
 			OnBecomeDawn.Fire( this );
-		else if ( section == TimeSection.Day )
+		else if ( stage == TimeStage.Day )
 			OnBecomeDay.Fire( this );
-		else if ( section == TimeSection.Dusk )
+		else if ( stage == TimeStage.Dusk )
 			OnBecomeDusk.Fire( this );
-		else if ( section == TimeSection.Night )
+		else if ( stage == TimeStage.Night )
 			OnBecomeNight.Fire( this );
 	}
 

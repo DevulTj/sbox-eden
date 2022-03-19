@@ -1,6 +1,6 @@
 ﻿namespace Eden.DayNight;
 
-public enum TimeSection
+public enum TimeStage
 {
 	Dawn,
 	Day,
