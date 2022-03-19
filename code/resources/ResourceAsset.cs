@@ -28,7 +28,7 @@ public partial class ResourceAsset : Asset
 	public List<ResourceItemQuantity> ItemsToGather { get; set; }
 
 	public Model WorldModel { get; set; }
-	public static Model FallbackWorldModel = Model.Load( "models/sbox_props/bin/rubbish_bag.vmdl" );
+	public static Model FallbackWorldModel = Model.Load( "models/resources/resource_blockout.vmdl" );
 
 	protected override void PostLoad()
 	{
