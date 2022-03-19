@@ -8,7 +8,8 @@
   "AssetsPath": "",
   "ResourcePaths": [
     "/ui/*",
-    "/data/items/*"
+    "/data/items/*",
+    "/data/resources/*"
   ],
   "HasCode": true,
   "CodePath": "/code/",
