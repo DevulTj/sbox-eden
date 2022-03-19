@@ -39,9 +39,9 @@
 						collision_interact_as = ""
 						collision_interact_with = ""
 						collision_interact_exclude = ""
-						radius = 7.009077
-						point0 = [ 0.0, 0.0, 24.0 ]
-						point1 = [ 0.0, 0.0, -24.0 ]
+						radius = 10.0
+						point0 = [ 0.0, 24.0, 0.0 ]
+						point1 = [ 0.0, -24.0, 0.0 ]
 					},
 					{
 						_class = "PhysicsShapeCylinder"
@@ -51,33 +51,9 @@
 						collision_interact_as = ""
 						collision_interact_with = ""
 						collision_interact_exclude = ""
-						radius = 7.009077
-						point0 = [ 0.0, 4.0, 24.0 ]
-						point1 = [ 0.0, 4.0, -24.0 ]
-					},
-					{
-						_class = "PhysicsShapeCylinder"
-						parent_bone = ""
-						surface_prop = "default"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
-						radius = 5.0
-						point0 = [ -4.0, 4.0, 24.0 ]
-						point1 = [ -4.0, 4.0, -24.0 ]
-					},
-					{
-						_class = "PhysicsShapeCylinder"
-						parent_bone = ""
-						surface_prop = "default"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
-						radius = 5.0
-						point0 = [ 4.0, 0.0, 24.0 ]
-						point1 = [ 4.0, 0.0, -24.0 ]
+						radius = 4.0
+						point0 = [ 5.0, 24.0, 4.0 ]
+						point1 = [ 7.0, -24.0, 0.0 ]
 					},
 				]
 			},
@@ -89,7 +65,7 @@
 						_class = "RenderMeshFile"
 						filename = "models/items/sticks/sticks.fbx"
 						import_translation = [ 0.0, 0.0, 0.0 ]
-						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 90.0 ]
 						import_scale = 1.0
 						align_origin_x_type = "None"
 						align_origin_y_type = "None"
