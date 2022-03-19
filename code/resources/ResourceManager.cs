@@ -71,7 +71,7 @@ public partial class ResourceManager
 		Log.Info( $"ResourceManager: Refreshing entity -> {entity}" );
 
 		var list = Entity.FindInSphere( entity.Position, RefreshRange )
-			.OfType<ResourceEntity>()
+			.OfType<ResourceNodeEntity>()
 			.ToList();
 
 		list.ForEach( x =>
