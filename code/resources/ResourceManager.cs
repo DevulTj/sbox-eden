@@ -92,9 +92,7 @@ public partial class ResourceManager
 		x /= magnitude;
 		y /= magnitude;
 
-		var d = Rand.Float( radius );
-
-		return origin += new Vector2( x * d, y * d );
+		return origin += new Vector2( x * radius, y * radius );
 	}
 
 	protected void GeneratePoints( Entity entity, Vector2 coordinate, float minRadius, float maxRadius, int minAmount, int maxAmount )
