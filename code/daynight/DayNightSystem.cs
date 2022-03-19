@@ -15,7 +15,8 @@ public partial class DayNightSystem : Entity
 	[Net, Predicted]
 	public float TimeOfDay { get; set; } = 9f;
 
-	public float Speed { get; set; } = 0.2f;
+	[ConVar.Replicated( "eden_daynight_speed", Help = "How fast the day night cylce is" )]
+	public static float DayNightSpeed { get; set; } = 0.2f;
 
 	public DayNightSystem()
 	{
@@ -44,7 +45,7 @@ public partial class DayNightSystem : Entity
 	[Event.Tick]
 	protected void Tick()
 	{
-		TimeOfDay += Speed * Time.Delta;
+		TimeOfDay += DayNightSpeed * Time.Delta;
 
 		if ( TimeOfDay >= 24f )
 			TimeOfDay = 0f;
