@@ -130,7 +130,11 @@ public partial class ResourceManager
 	protected void CreateResource( Vector3 point, Vector3 normal )
 	{
 		var entity = new ResourceNodeEntity();
-		entity.SetResourceAs( ResourceType.Wood );
+
+		// TODO: Be more selective about what assets are spawned where, we're some way away yet.
+		var resource = ResourceAsset.All.ElementAt( Rand.Int( ResourceAsset.All.Count - 1 ) );
+		entity.SetResourceAs( resource );
+
 		entity.Position = point;
 
 		// TODO: Handle this better, this will only work for entities that you want to lay down flat on the terrain.
