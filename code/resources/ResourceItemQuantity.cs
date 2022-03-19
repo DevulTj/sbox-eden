@@ -6,5 +6,6 @@ namespace Eden;
 public class ResourceItemQuantity
 {
 	public string ItemAssetName { get; set; }
-	public int TotalQuantity { get; set; }
+	public int InitialAmount { get; set; }
+	public int AmountRemaining;
 }
