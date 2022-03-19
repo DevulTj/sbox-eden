@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace Eden;
 
-[Library( "e_resource" ), AutoGenerate]
+[Library( "e_res" ), AutoGenerate]
 public partial class ResourceAsset : Asset
 {
 	public static HashSet<ResourceAsset> All { get; protected set; } = new();
