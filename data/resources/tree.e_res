@@ -2,19 +2,19 @@
 {
 	data = 
 	{
-		resourcename = "Wood"
-		worldmodelpath = resource:"models/items/sticks/sticks.vmdl"
+		resourcename = "Tree"
+		worldmodelpath = resource:"models/resources/resource_tree.vmdl"
 		resourcetype = "0"
 		yieldperhit = 10
 		itemstogather = 
 		[
 			{
-				totalquantity = 100
 				itemassetname = "wooden_stick"
+				initialamount = 100
 			},
 			{
 				itemassetname = "wooden_plank"
-				totalquantity = 5
+				initialamount = 5
 			},
 		]
 	}
