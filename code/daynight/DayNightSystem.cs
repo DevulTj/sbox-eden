@@ -17,9 +17,6 @@ public partial class DayNightSystem : Entity
 
 	public float Speed { get; set; } = 0.2f;
 
-	protected RealTimeUntil NextUpdate { get; set; }
-	protected bool Initialized { get; set; }
-
 	public DayNightSystem()
 	{
 		Instance = this;
@@ -28,7 +25,6 @@ public partial class DayNightSystem : Entity
 	public override void Spawn()
 	{
 		base.Spawn();
-
 		Transmit = TransmitType.Always;
 	}
 
@@ -36,10 +32,8 @@ public partial class DayNightSystem : Entity
 	{
 		if ( time > 5f && time <= 9f )
 			return TimeSection.Dawn;
-
 		if ( time > 9f && time <= 18f )
 			return TimeSection.Day;
-
 		if ( time > 18f && time <= 21f )
 			return TimeSection.Dusk;
 
@@ -53,35 +47,13 @@ public partial class DayNightSystem : Entity
 		TimeOfDay += Speed * Time.Delta;
 
 		if ( TimeOfDay >= 24f )
-		{
 			TimeOfDay = 0f;
-		}
 
 		var currentSection = ToSection( TimeOfDay );
-
 		if ( currentSection != Section )
 		{
 			Section = currentSection;
 			OnSectionChanged?.Invoke( currentSection );
 		}
-
-		//if ( NextUpdate )
-		//{
-		//	//ChangeSectionForClient( To.Everyone, Section );
-		//	//NextUpdate = 1f;
-		//}
 	}
-
-	//[ClientRpc]
-	//public static void ChangeSectionForClient( TimeSection section )
-	//{
-	//	Host.AssertClient();
-
-	//	if ( !Initialized || Section != section )
-	//	{
-	//		Section = section;
-	//		Initialized = true;
-	//		OnSectionChanged?.Invoke( section );
-	//	}
-	//}
 }

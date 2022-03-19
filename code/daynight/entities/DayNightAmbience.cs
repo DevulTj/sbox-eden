@@ -81,21 +81,20 @@ public partial class DayNightAmbience : Entity
 	{
 		Host.AssertServer();
 
-		if ( section == TimeSection.Dawn )
+		switch ( section )
 		{
-			TransitionTo( DawnAmbience );
-		}
-		else if ( section == TimeSection.Day )
-		{
-			TransitionTo( DayAmbience );
-		}
-		else if ( section == TimeSection.Dusk )
-		{
-			TransitionTo( DuskAmbience );
-		}
-		else if ( section == TimeSection.Night )
-		{
-			TransitionTo( NightAmbience );
+			case TimeSection.Dawn:
+				TransitionTo( DawnAmbience );
+				break;
+			case TimeSection.Day:
+				TransitionTo( DayAmbience );
+				break;
+			case TimeSection.Dusk:
+				TransitionTo( DuskAmbience );
+				break;
+			case TimeSection.Night:
+				TransitionTo( NightAmbience );
+				break;
 		}
 	}
 
