@@ -4,7 +4,7 @@
 @struct = Eden_ResourceItemQuantity
 [
 	itemassetname(string) : "Item Asset Name" :  : ""
-	totalquantity(integer) : "Total Quantity" : 0 : ""
+	initialamount(integer) : "Initial Amount" : 0 : ""
 ]
 
 //
