@@ -5,6 +5,6 @@ namespace Eden;
 
 public struct ResourceItemQuantity
 {
-	public ItemAsset ItemAsset { get; set; }
+	public string ItemAssetName { get; set; }
 	public int TotalQuantity { get; set; }
 }
