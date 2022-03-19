@@ -17,6 +17,7 @@ public partial class ResourceNodeEntity : Prop, IUse
 
 	[Net]
 	public ResourceAsset ResourceAsset { get; set; }
+
 	public List<ResourceItemQuantity> AvailableItems { get; set; } = new();
 	public event Action<ResourceNodeEntity> OnDestroyed;
 	public TimeSince LastRefresh { get; set; }
@@ -28,12 +29,12 @@ public partial class ResourceNodeEntity : Prop, IUse
 		MoveType = MoveType.None;
 	}
 
-	public ResourceNodeEntity SetResourceAs( ResourceType type )
+	public ResourceNodeEntity SetResourceAs( ResourceAsset resourceAsset )
 	{
-		ResourceAsset = ResourceAsset.All.FirstOrDefault( x => x.ResourceType == type );
+		ResourceAsset = resourceAsset;
 
 		if ( ResourceAsset is null )
-			Delete();
+			Destroy();
 
 		Model = ResourceAsset.WorldModel is not null ? ResourceAsset.WorldModel : ResourceAsset.FallbackWorldModel;
 
