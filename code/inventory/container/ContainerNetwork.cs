@@ -93,8 +93,13 @@ public partial class ContainerNetwork
 
 		if ( slot.Item.DoAction( player, id, slot ) )
 		{
-			container.Remove( slotA );
-			UpdatePlayer( To.Single( player.Client ), guidString );
+			slot.SetQuantity( slot.Quantity - 1 );
+
+			if ( slot.Quantity < 1 )
+			{
+				container.Remove( slotA );
+				UpdatePlayer( To.Single( player.Client ), guidString );
+			}
 		}
 	}
 
