@@ -49,10 +49,12 @@ public partial class MainMenuPanel
 	{
 		IsDragging = false;
 
+		var item = FocusedItem;
+		FocusedItem = null;
+
 		if ( Dummy == null )
 			return;
 
-		var item = FocusedItem;
 		if ( item != null )
 		{
 			var destination = FindHoveredItem();
