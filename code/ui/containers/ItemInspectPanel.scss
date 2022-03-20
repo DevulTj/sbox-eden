@@ -1,11 +1,13 @@
 @import "/ui/Theme.scss";
 
 iteminspectpanel {
-    width: 40%;
+    width: 30%;
     height: 25%;
-    border-bottom: 2px solid rgba( white, 0.5 );
-    background-image: linear-gradient(to bottom, rgba( black, 0.5 ), rgba( black, 0 ) );
+    border: 2px solid rgba( white, 0.2 );
+    border-radius: 8px;
+    background-image: linear-gradient( 23deg, rgba( black, 0.5 ), rgba( black, 0 ) );
     opacity: 0;
+    margin-bottom: 10px;
 
     &.visible {
         opacity: 1;
@@ -36,7 +38,7 @@ iteminspectpanel {
         bottom: 0;
         position: absolute;
         width: 25%;
-        padding: 16px;
+        padding-right: 0;
         flex-direction: column;
         flex-wrap: nowrap;
         justify-content: flex-end;
@@ -44,8 +46,15 @@ iteminspectpanel {
         align-content: center;
 
         .action {
-            border-right: 2px solid rgba( white, 0.5 );
-            padding: 8px;
+            &:nth-child( even ) {
+                border-top: 2px solid rgba( white, 0.2 );
+            }
+
+            &:last-child {
+                border-radius: 0px 0px 8px 0px;
+            }
+
+            padding: 10px;
             width: 100%;
             flex-direction: row;
             flex-wrap: wrap;
@@ -67,7 +76,7 @@ iteminspectpanel {
             .name {
                 width: 100%;
                 text-align: right;
-                font-size: 24px;
+                font-size: 20px;
             }
         }
     }
