@@ -14,11 +14,12 @@ public partial class ConsumableItem : Item
 	public override HashSet<ItemActionType> ItemActions => new()
 	{
 		ItemActionType.Consume,
+		ItemActionType.Split,
 		ItemActionType.Drop
 	};
 
 	[ItemActionCheck( ItemActionType.Consume )]
-	public bool CanConsume( Player player )
+	public bool CanConsume( Player player, Slot slotRef )
 	{
 		return true;
 	}

@@ -42,6 +42,7 @@ public partial class Item
 	public virtual int MaxStack => Asset?.StackSize ?? 1;
 	public virtual HashSet<ItemActionType> ItemActions => new()
 	{
+		ItemActionType.Split,
 		ItemActionType.Drop
 	};
 
@@ -90,7 +91,7 @@ public partial class Item
 		ActionAttributeMethod<ItemActionExecAttribute>( player, type, slotRef );
 
 	[ItemActionCheck( ItemActionType.Drop )]
-	public bool CanDrop( Player player )
+	public bool CanDrop( Player player, Slot slotRef )
 	{
 		return true;
 	}
@@ -100,5 +101,19 @@ public partial class Item
 	{
 		var entity = ItemEntity.InstantiateFromPlayer( player, this, slotRef.Quantity );
 		return entity.IsValid();
+	}
+
+	[ItemActionCheck( ItemActionType.Split )]
+	public bool CanSplit( Player player, Slot slotRef )
+	{
+		return slotRef.Quantity > 1;
+	}
+
+	[ItemActionExec( ItemActionType.Split, "Split" )]
+	public bool Split( Player player, Slot slotRef )
+	{
+		//var entity = ItemEntity.InstantiateFromPlayer( player, this, slotRef.Quantity );
+		//return entity.IsValid();
+		return false;
 	}
 }

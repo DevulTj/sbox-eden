@@ -1,6 +1,7 @@
 // Copyright (c) 2022 Ape Tavern, do not share, re-distribute or modify
 // without permission of its author (insert_email_here)
 
+using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
 using System;
@@ -58,12 +59,16 @@ public partial class ItemInspectPanel : Panel
 
 		ActionsLayout.DeleteChildren( true );
 
+		var player = Local.Pawn as Player;
 		var item = itemPanel.Item;
 		var container = itemPanel.ContainerPanel.Container;
 		var slotIndex = itemPanel.ContainerPanel.GetSlotIndex( itemPanel );
 
 		foreach ( var type in item.ItemActions )
 		{
+			if ( !item.CanDoAction( player, type, itemPanel.Slot ) )
+				continue;
+
 			var actionButton = new ItemActionButton( type );
 			actionButton.Parent = ActionsLayout;
 			actionButton.AddEventListener( "onclick", () =>

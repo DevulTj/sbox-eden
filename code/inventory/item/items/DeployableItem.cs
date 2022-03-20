@@ -14,11 +14,12 @@ public partial class DeployableItem : Item
 	public override HashSet<ItemActionType> ItemActions => new()
 	{
 		ItemActionType.Deploy,
+		ItemActionType.Split,
 		ItemActionType.Drop
 	};
 
 	[ItemActionCheck( ItemActionType.Deploy )]
-	public bool CanDeploy( Player player )
+	public bool CanDeploy( Player player, Slot slotRef )
 	{
 		return true;
 	}

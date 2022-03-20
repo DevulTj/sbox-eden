@@ -8,5 +8,6 @@ public enum ItemActionType
 	Invalid,
 	Deploy,
 	Consume,
-	Drop
+	Drop,
+	Split
 }
