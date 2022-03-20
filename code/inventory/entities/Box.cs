@@ -14,7 +14,7 @@ public partial class Box : WorldContainerEntity
 
 		SetModel( "models/citizen_props/cardboardbox01.vmdl" );
 
-		Container.SetSize( 7 );
+		Container.SetSize( 10 );
 		Container.Name = "Small Box";
 	}
 }
