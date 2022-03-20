@@ -25,7 +25,14 @@ public partial class DeployItemAction : ItemAction
 		var entity = Library.Create<Entity>( itemAsset.EntityClassName );
 		if ( entity.IsValid() )
 		{
-			entity.Position = player.EyePosition + player.EyeRotation.Forward * 85;
+			var tr = Trace.Ray( player.EyePosition, player.EyePosition + player.EyeRotation.Forward * 85 )
+				.WorldAndEntities()
+				.Ignore( player )
+				.Radius( 4 )
+				.Run();
+
+			entity.Position = tr.EndPosition;
+
 			return 1;
 		}
 
