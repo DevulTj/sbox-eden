@@ -18,7 +18,13 @@ public partial class ItemEntity : Prop, IUse
 	public static ItemEntity Create( Player player, Item item, int quantity = 1 )
 	{
 		var entity = Create( item, quantity );
-		entity.Position = player.EyePosition + player.EyeRotation.Forward * 85;
+		var tr = Trace.Ray( player.EyePosition, player.EyePosition + player.EyeRotation.Forward * 85 )
+			.WorldAndEntities()
+			.Ignore( player )
+			.Radius( 4 )
+			.Run();
+
+		entity.Position = tr.EndPosition;
 
 		return entity;
 	}
