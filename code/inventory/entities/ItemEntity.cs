@@ -7,7 +7,7 @@ namespace Eden;
 
 public partial class ItemEntity : Prop, IUse
 {
-	public static ItemEntity Instantiate( Item item, int quantity = 1 )
+	public static ItemEntity Create( Item item, int quantity = 1 )
 	{
 		var entity = new ItemEntity();
 		entity.SetItem( item, quantity );
@@ -15,9 +15,9 @@ public partial class ItemEntity : Prop, IUse
 		return entity;
 	}
 
-	public static ItemEntity InstantiateFromPlayer( Player player, Item item, int quantity = 1 )
+	public static ItemEntity Create( Player player, Item item, int quantity = 1 )
 	{
-		var entity = Instantiate( item, quantity );
+		var entity = Create( item, quantity );
 		entity.Position = player.EyePosition + player.EyeRotation.Forward * 85;
 
 		return entity;

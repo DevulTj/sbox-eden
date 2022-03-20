@@ -117,7 +117,7 @@ public partial class ContainerNetwork
 		{
 			var player = ConsoleSystem.Caller.Pawn as Player;
 
-			ItemEntity.InstantiateFromPlayer( player, item, quantity );
+			ItemEntity.Create( player, item, quantity );
 		}
 	}
 }

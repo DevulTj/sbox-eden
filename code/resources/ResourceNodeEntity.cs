@@ -12,115 +12,115 @@ namespace Eden;
 [Hammer.EntityTool( "Resource", "Eden", "A spawn for resources." )]
 public partial class ResourceNodeEntity : Prop, IUse
 {
-	[Property]
-	public ResourceType ResourceType { get; set; }
+    [Property]
+    public ResourceType ResourceType { get; set; }
 
-	[Net]
-	public ResourceAsset ResourceAsset { get; set; }
+    [Net]
+    public ResourceAsset ResourceAsset { get; set; }
 
-	public List<ResourceItemQuantity> AvailableItems { get; set; } = new();
-	public event Action<ResourceNodeEntity> OnDestroyed;
-	public TimeSince LastRefresh { get; set; }
+    public List<ResourceItemQuantity> AvailableItems { get; set; } = new();
+    public event Action<ResourceNodeEntity> OnDestroyed;
+    public TimeSince LastRefresh { get; set; }
 
-	public override void Spawn()
-	{
-		base.Spawn();
+    public override void Spawn()
+    {
+        base.Spawn();
 
-		MoveType = MoveType.None;
-	}
+        MoveType = MoveType.None;
+    }
 
-	public ResourceNodeEntity SetResourceAs( ResourceAsset resourceAsset )
-	{
-		ResourceAsset = resourceAsset;
+    public ResourceNodeEntity SetResourceAs( ResourceAsset resourceAsset )
+    {
+        ResourceAsset = resourceAsset;
 
-		if ( ResourceAsset is null )
-			Destroy();
+        if ( ResourceAsset is null )
+            Destroy();
 
-		Model = ResourceAsset.WorldModel is not null ? ResourceAsset.WorldModel : ResourceAsset.FallbackWorldModel;
+        Model = ResourceAsset.WorldModel is not null ? ResourceAsset.WorldModel : ResourceAsset.FallbackWorldModel;
 
-		ResourceAsset.ItemsToGather.ForEach( x => AvailableItems.Add( new( x ) ) );
+        ResourceAsset.ItemsToGather.ForEach( x => AvailableItems.Add( new( x ) ) );
 
-		return this;
-	}
+        return this;
+    }
 
-	protected void Gather( Player player, MeleeWeapon weapon )
-	{
-		if ( !player.IsValid() )
-			return;
+    protected void Gather( Player player, MeleeWeapon weapon )
+    {
+        if ( !player.IsValid() )
+            return;
 
-		if ( !weapon.IsValid() )
-			return;
+        if ( !weapon.IsValid() )
+            return;
 
-		var weaponResourceYield = weapon.GetResourceYield( ResourceAsset.ResourceType );
+        var weaponResourceYield = weapon.GetResourceYield( ResourceAsset.ResourceType );
 
-		if ( weaponResourceYield < 1 )
-		{
-			// TODO: Deal heavy damage to weapon
-			return;
-		}
+        if ( weaponResourceYield < 1 )
+        {
+            // TODO: Deal heavy damage to weapon
+            return;
+        }
 
-		if ( ResourceAsset.Collectable )
-			return;
+        if ( ResourceAsset.Collectable )
+            return;
 
-		var gatherableResource = AvailableItems.FirstOrDefault();
-		var quantityToTake = gatherableResource.InitialAmount / ( ResourceAsset.RequiredHitsPerItem < 1 ? 1 : ResourceAsset.RequiredHitsPerItem ) * weaponResourceYield;
+        var gatherableResource = AvailableItems.FirstOrDefault();
+        var quantityToTake = gatherableResource.InitialAmount / ( ResourceAsset.RequiredHitsPerItem < 1 ? 1 : ResourceAsset.RequiredHitsPerItem ) * weaponResourceYield;
 
-		gatherableResource.AmountRemaining -= quantityToTake;
+        gatherableResource.AmountRemaining -= quantityToTake;
 
-		GiveItem( player, gatherableResource.ItemAssetName, quantityToTake );
+        GiveItem( player, gatherableResource.ItemAssetName, quantityToTake );
 
-		if ( gatherableResource.AmountRemaining <= 0 )
-			AvailableItems.Remove( gatherableResource );
+        if ( gatherableResource.AmountRemaining <= 0 )
+            AvailableItems.Remove( gatherableResource );
 
-		if ( !AvailableItems.Any() )
-			Destroy();
-	}
+        if ( !AvailableItems.Any() )
+            Destroy();
+    }
 
-	private void GiveItem( Player player, string itemAssetName, int quantity )
-	{
-		var item = Item.FromAsset( itemAssetName );
+    private void GiveItem( Player player, string itemAssetName, int quantity )
+    {
+        var item = Item.FromAsset( itemAssetName );
 
-		if ( !InventoryHelpers.GiveItem( player, item, quantity ) )
-		{
-			ResourceNotifications.AddResource( To.Single( player.Client ), quantity, item.Asset.ItemName );
+        if ( !InventoryHelpers.GiveItem( player, item, quantity ) )
+        {
+            ResourceNotifications.AddResource( To.Single( player.Client ), quantity, item.Asset.ItemName );
 
-			var entity = ItemEntity.Instantiate( item, quantity );
-			entity.Position = Position + Vector3.Up * 10f;
-		}
-	}
+            var entity = ItemEntity.Create( item, quantity );
+            entity.Position = Position + Vector3.Up * 10f;
+        }
+    }
 
-	public override void TakeDamage( DamageInfo info )
-	{
-		base.TakeDamage( info );
+    public override void TakeDamage( DamageInfo info )
+    {
+        base.TakeDamage( info );
 
-		Gather( info.Attacker as Player, info.Weapon as MeleeWeapon );
-	}
+        Gather( info.Attacker as Player, info.Weapon as MeleeWeapon );
+    }
 
-	protected override void OnDestroy()
-	{
-		base.OnDestroy();
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
 
-		OnDestroyed?.Invoke( this );
-	}
+        OnDestroyed?.Invoke( this );
+    }
 
-	protected virtual void Destroy()
-	{
-		// @todo: stuff
-		Delete();
-	}
+    protected virtual void Destroy()
+    {
+        // @todo: stuff
+        Delete();
+    }
 
-	public bool OnUse( Entity user )
-	{
-		foreach ( var item in AvailableItems )
-			GiveItem( user as Player, item.ItemAssetName, item.AmountRemaining );
+    public bool OnUse( Entity user )
+    {
+        foreach ( var item in AvailableItems )
+            GiveItem( user as Player, item.ItemAssetName, item.AmountRemaining );
 
-		Destroy();
+        Destroy();
 
-		return false;
-	}
+        return false;
+    }
 
-	public bool IsUsable( Entity user )
-	{
-		return ResourceAsset.Collectable;
-	}
+    public bool IsUsable( Entity user )
+    {
+        return ResourceAsset.Collectable;
+    }
 }

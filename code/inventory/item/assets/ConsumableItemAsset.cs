@@ -18,4 +18,7 @@ public partial class ConsumableItemAsset : ItemAsset
 
 	[Property, Category( "Consumable" ), Range( 0, 300 )]
 	public int Thirst { get; set; } = 0;
+
+	[Property, Category( "Consumable" ), Range( 0, 100 )]
+	public int Health { get; set; } = 0;
 }

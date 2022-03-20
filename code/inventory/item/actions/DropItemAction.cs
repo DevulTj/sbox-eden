@@ -16,7 +16,7 @@ public partial class DropItemAction : ItemAction
 	}
 	public override bool Execute( Player player, Slot slot )
 	{
-		var entity = ItemEntity.InstantiateFromPlayer( player, slot.Item, slot.Quantity );
+		var entity = ItemEntity.Create( player, slot.Item, slot.Quantity );
 		return entity.IsValid();
 	}
 }
