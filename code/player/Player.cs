@@ -13,6 +13,9 @@ public partial class Player : Sandbox.Player, IContainerEntity
 
 	protected DamageInfo LastDamageInfo { get; set; }
 
+	[Net]
+	public float MaxHealth { get; protected set; } = 100f;
+
 	public Player()
 	{
 	}
