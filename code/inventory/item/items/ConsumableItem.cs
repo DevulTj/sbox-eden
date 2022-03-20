@@ -11,24 +11,11 @@ namespace Eden;
 public partial class ConsumableItem : Item
 {
 	public override ItemType Type => ItemType.Consumable;
-	public override HashSet<ItemActionType> ItemActions => new()
-	{
-		ItemActionType.Consume,
-		ItemActionType.Split,
-		ItemActionType.Drop
-	};
 
-	[ItemActionCheck( ItemActionType.Consume )]
-	public bool CanConsume( Player player, Slot slotRef )
+	public override void GatherActions( ref List<ItemAction> actions )
 	{
-		return true;
-	}
+		actions.Add( new ConsumeItemAction() );
 
-	[ItemActionExec( ItemActionType.Consume, "Consume" )]
-	public bool Consume( Player player, Slot slotRef )
-	{
-		Log.Info( "running consume" );
-
-		return true;
+		base.GatherActions( ref actions );
 	}
 }

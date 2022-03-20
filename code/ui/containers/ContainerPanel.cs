@@ -82,6 +82,6 @@ public partial class ContainerPanel : Panel
 
 	public void HandleDrop( ItemPanel itemPanel )
 	{
-		ContainerNetwork.DoItemAction( Container.ID.ToString(), GetSlotIndex( itemPanel ), (int)ItemActionType.Drop );
+		ContainerNetwork.DoItemAction( Container.ID.ToString(), GetSlotIndex( itemPanel ), ItemAction.Drop );
 	}
 }

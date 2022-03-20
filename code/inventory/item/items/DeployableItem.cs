@@ -11,23 +11,4 @@ namespace Eden;
 public partial class DeployableItem : Item
 {
 	public override ItemType Type => ItemType.Deployable;
-	public override HashSet<ItemActionType> ItemActions => new()
-	{
-		ItemActionType.Deploy,
-		ItemActionType.Split,
-		ItemActionType.Drop
-	};
-
-	[ItemActionCheck( ItemActionType.Deploy )]
-	public bool CanDeploy( Player player, Slot slotRef )
-	{
-		return true;
-	}
-
-	[ItemActionExec( ItemActionType.Deploy, "Deploy" )]
-	public bool Deploy( Player player, Slot slotRef )
-	{
-		Log.Info( "running deploy" );
-		return true;
-	}
 }

@@ -75,7 +75,7 @@ public partial class ContainerNetwork
 	}
 
 	[ServerCmd( "eden_container_itemaction" )]
-	public static void DoItemAction( string guidString, int slotA, int action )
+	public static void DoItemAction( string guidString, int slotA, string id )
 	{
 		var player = ConsoleSystem.Caller.Pawn as Player;
 		var guid = Guid.Parse( guidString );
@@ -91,7 +91,7 @@ public partial class ContainerNetwork
 		if ( slot is null || slot.Item is null )
 			return;
 
-		if ( slot.Item.DoAction( player, (ItemActionType)action, slot ) )
+		if ( slot.Item.DoAction( player, id, slot ) )
 		{
 			container.Remove( slotA );
 			UpdatePlayer( To.Single( player.Client ), guidString );

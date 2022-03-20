@@ -40,11 +40,6 @@ public partial class Item
 	public virtual Color DefaultColor => Asset?.DefaultColor ?? new Color( 100, 100, 100 );
 	public virtual bool CanStack => MaxStack > 1;
 	public virtual int MaxStack => Asset?.StackSize ?? 1;
-	public virtual HashSet<ItemActionType> ItemActions => new()
-	{
-		ItemActionType.Split,
-		ItemActionType.Drop
-	};
 
 	// @net
 	public ItemAsset Asset { get; set; }
@@ -71,49 +66,34 @@ public partial class Item
 		return other.Asset == Asset;
 	}
 
-	private bool ActionAttributeMethod<T>( Player player, ItemActionType type, Slot slotRef ) where T : ItemActionBaseAttribute
+	public bool CanDoAction( Player player, string id, Slot slot )
 	{
-		if ( !ItemActions.Contains( type ) )
+		List<ItemAction> actions = new();
+		GatherActions( ref actions );
+
+		if ( actions.Count < 1 )
 			return false;
 
-		var attribute = Library.GetAttributes<T>()
-			.FirstOrDefault( x => x.Type == type );
+		var itemAction = actions.FirstOrDefault( x => x.ID == id );
 
-		if ( attribute is null ) return false;
-
-		return (bool)attribute.Invoke( this, player, slotRef );
+		return itemAction?.CanDo( player, slot ) ?? false;
 	}
 
-	public bool CanDoAction( Player player, ItemActionType type, Slot slotRef ) =>
-		ActionAttributeMethod<ItemActionCheckAttribute>( player, type, slotRef );
-
-	public bool DoAction( Player player, ItemActionType type, Slot slotRef ) =>
-		ActionAttributeMethod<ItemActionExecAttribute>( player, type, slotRef );
-
-	[ItemActionCheck( ItemActionType.Drop )]
-	public bool CanDrop( Player player, Slot slotRef )
+	public bool DoAction( Player player, string id, Slot slot )
 	{
-		return true;
+		List<ItemAction> actions = new();
+		GatherActions( ref actions );
+
+		if ( actions.Count < 1 )
+			return false;
+
+		var itemAction = actions.FirstOrDefault( x => x.ID == id );
+
+		return itemAction?.Execute( player, slot ) ?? false;
 	}
 
-	[ItemActionExec( ItemActionType.Drop, "Drop" )]
-	public bool Drop( Player player, Slot slotRef )
+	public virtual void GatherActions( ref List<ItemAction> actions )
 	{
-		var entity = ItemEntity.InstantiateFromPlayer( player, this, slotRef.Quantity );
-		return entity.IsValid();
-	}
-
-	[ItemActionCheck( ItemActionType.Split )]
-	public bool CanSplit( Player player, Slot slotRef )
-	{
-		return slotRef.Quantity > 1;
-	}
-
-	[ItemActionExec( ItemActionType.Split, "Split" )]
-	public bool Split( Player player, Slot slotRef )
-	{
-		//var entity = ItemEntity.InstantiateFromPlayer( player, this, slotRef.Quantity );
-		//return entity.IsValid();
-		return false;
+		actions.Add( new DropItemAction() );
 	}
 }

@@ -12,10 +12,10 @@ namespace Eden;
 
 public partial class ItemActionButton : Button
 {
-	public ItemActionButton( ItemActionType type )
+	public ItemActionButton( ItemAction type )
 	{
 		AddClass( "action" );
-		Add.Label( type.ToString(), "name" );
+		Add.Label( type.DisplayName, "name" );
 	}
 }
 
@@ -64,16 +64,19 @@ public partial class ItemInspectPanel : Panel
 		var container = itemPanel.ContainerPanel.Container;
 		var slotIndex = itemPanel.ContainerPanel.GetSlotIndex( itemPanel );
 
-		foreach ( var type in item.ItemActions )
+		var itemActions = new List<ItemAction>();
+		item.GatherActions( ref itemActions );
+
+		foreach ( var type in itemActions )
 		{
-			if ( !item.CanDoAction( player, type, itemPanel.Slot ) )
+			if ( !item.CanDoAction( player, type.ID, itemPanel.Slot ) )
 				continue;
 
 			var actionButton = new ItemActionButton( type );
 			actionButton.Parent = ActionsLayout;
 			actionButton.AddEventListener( "onclick", () =>
 			{
-				ContainerNetwork.DoItemAction( container.ID.ToString(), slotIndex, (int)type );
+				ContainerNetwork.DoItemAction( container.ID.ToString(), slotIndex, type.ID );
 				Clear();
 			} );
 		}
