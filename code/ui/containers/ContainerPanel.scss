@@ -1,25 +1,21 @@
 @import "/ui/Theme.scss";
 
 containerpanel, .containerpanel {
-    width: 40%;
+    width: 37%;
     border-radius: 2px;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
 
     .layout {
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        align-content: center;
+        justify-content: flex-start;
+        align-items: flex-start;
+        align-content: flex-start;
     }
 
     .title {
-        left: 40px;
-        width: 100%;
+        top: -24px;
+        position: absolute;
+        left: 8px;
         text-stroke: 2px black;
         font-size: 20px;
     }
