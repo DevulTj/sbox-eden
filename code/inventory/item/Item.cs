@@ -64,4 +64,26 @@ public partial class Item
 
 		return other.Asset == Asset;
 	}
+
+	public bool DoAction( Player player, ItemActionType type )
+	{
+		var attribute = Library.GetAttributes<ItemActionExecAttribute>()
+			.FirstOrDefault( x => x.Type == type );
+
+		if ( attribute is null ) return false;
+
+		return (bool)attribute.Invoke( this, player );
+	}
+
+	[ItemActionCheck( ItemActionType.Drop )]
+	public bool CanDrop( Player player )
+	{
+		return true;
+	}
+
+	[ItemActionExec( ItemActionType.Drop )]
+	public bool Drop( Player player )
+	{
+		return true;
+	}
 }

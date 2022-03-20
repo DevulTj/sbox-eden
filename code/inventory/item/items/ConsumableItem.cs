@@ -10,4 +10,16 @@ namespace Eden;
 public partial class ConsumableItem : Item
 {
 	public override ItemType Type => ItemType.Consumable;
+
+	[ItemActionCheck( ItemActionType.Consume )]
+	public bool CanConsume( Player player )
+	{
+		return true;
+	}
+
+	[ItemActionExec( ItemActionType.Consume )]
+	public bool Consume( Player player )
+	{
+		return true;
+	}
 }

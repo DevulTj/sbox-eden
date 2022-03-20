@@ -10,4 +10,16 @@ namespace Eden;
 public partial class DeployableItem : Item
 {
 	public override ItemType Type => ItemType.Deployable;
+
+	[ItemActionCheck( ItemActionType.Deploy )]
+	public bool CanDeploy( Player player )
+	{
+		return true;
+	}
+
+	[ItemActionExec( ItemActionType.Deploy )]
+	public bool Deploy( Player player )
+	{
+		return true;
+	}
 }
