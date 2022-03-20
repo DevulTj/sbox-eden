@@ -63,9 +63,7 @@ public partial class ItemInspectPanel : Panel
 		var item = itemPanel.Item;
 		var container = itemPanel.ContainerPanel.Container;
 		var slotIndex = itemPanel.ContainerPanel.GetSlotIndex( itemPanel );
-
-		var itemActions = new List<ItemAction>();
-		item.GatherActions( ref itemActions );
+		var itemActions = item.GetActions();
 
 		foreach ( var type in itemActions )
 		{

@@ -68,9 +68,7 @@ public partial class Item
 
 	public bool CanDoAction( Player player, string id, Slot slot )
 	{
-		List<ItemAction> actions = new();
-		GatherActions( ref actions );
-
+		var actions = GetActions();
 		if ( actions.Count < 1 )
 			return false;
 
@@ -81,9 +79,7 @@ public partial class Item
 
 	public bool DoAction( Player player, string id, Slot slot )
 	{
-		List<ItemAction> actions = new();
-		GatherActions( ref actions );
-
+		var actions = GetActions();
 		if ( actions.Count < 1 )
 			return false;
 
@@ -92,7 +88,15 @@ public partial class Item
 		return itemAction?.Execute( player, slot ) ?? false;
 	}
 
-	public virtual void GatherActions( ref List<ItemAction> actions )
+	public List<ItemAction> GetActions()
+	{
+		var actions = new List<ItemAction>();
+		GatherActions( ref actions );
+
+		return actions;
+	}
+
+	protected virtual void GatherActions( ref List<ItemAction> actions )
 	{
 		actions.Add( new DropItemAction() );
 	}

@@ -12,7 +12,7 @@ public partial class ConsumableItem : Item
 {
 	public override ItemType Type => ItemType.Consumable;
 
-	public override void GatherActions( ref List<ItemAction> actions )
+	protected override void GatherActions( ref List<ItemAction> actions )
 	{
 		actions.Add( new ConsumeItemAction() );
 
