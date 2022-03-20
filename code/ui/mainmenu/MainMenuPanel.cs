@@ -93,7 +93,10 @@ public partial class MainMenuPanel : Panel
 	public void BuildInput( InputBuilder input )
 	{
 		if ( input.Pressed( InputButton.Score ) )
+		{
 			IsOpen = !IsOpen;
+			Event.Run( IsOpen ? GameEvent.Client.MainMenuOpened : GameEvent.Client.MainMenuClosed );
+		}
 
 		if ( !IsOpen ) return;
 
