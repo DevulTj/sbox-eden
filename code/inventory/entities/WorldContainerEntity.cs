@@ -5,10 +5,19 @@ using Sandbox;
 
 namespace Eden;
 
+[Library( "eden_container" )]
 public partial class WorldContainerEntity : Prop, IContainerEntity
 {
-	[Net, Local]
+	[Net]
 	protected Container _Container { get; set; }
 	// @IContainerEntity
 	public Container Container { get => _Container; set => _Container = value; }
+
+	public override void Spawn()
+	{
+		base.Spawn();
+
+		Container = new();
+		Container.Name = "Container";
+	}
 }

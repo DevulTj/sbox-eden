@@ -11,4 +11,11 @@ namespace Eden;
 public partial class DeployableItem : Item
 {
 	public override ItemType Type => ItemType.Deployable;
+
+	protected override void GatherActions( ref List<ItemAction> actions )
+	{
+		actions.Add( new DeployItemAction() );
+
+		base.GatherActions( ref actions );
+	}
 }
