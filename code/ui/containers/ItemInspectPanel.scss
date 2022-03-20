@@ -1,0 +1,74 @@
+@import "/ui/Theme.scss";
+
+iteminspectpanel {
+    width: 40%;
+    height: 25%;
+    border-bottom: 2px solid rgba( white, 0.5 );
+    background-image: linear-gradient(to bottom, rgba( black, 0.5 ), rgba( black, 0 ) );
+    opacity: 0;
+
+    &.visible {
+        opacity: 1;
+    }
+
+    .icon {
+        margin: 8px;
+        position: absolute;
+        max-width: 64px;
+        max-height: 64px;
+    }
+
+    .title {
+        margin-left: 90px;
+        margin-top: 20px;
+        position: absolute;
+        font-size: 32px;
+    }
+
+    .desc {
+        margin-left: 20px;
+        position: absolute;
+        margin-top: 80px;
+    }
+
+    .actions {
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        width: 25%;
+        padding: 16px;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+        align-items: stretch;
+        align-content: center;
+
+        .action {
+            border-right: 2px solid rgba( white, 0.5 );
+            padding: 8px;
+            width: 100%;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            align-items: center;
+            align-content: center;
+            background-image: linear-gradient(to left, rgba( black, 0.5 ), rgba( black, 0 ) );
+
+            &:hover {
+                cursor: pointer;
+                background-image: linear-gradient(to left, rgba( #888888, 0.5 ), rgba( black, 0 ) );
+            }
+
+            &:active {
+                cursor: pointer;
+                background-image: linear-gradient(to left, rgba( #999999, 0.5 ), rgba( black, 0 ) );
+            }
+
+            .name {
+                width: 100%;
+                text-align: right;
+                font-size: 24px;
+            }
+        }
+    }
+}

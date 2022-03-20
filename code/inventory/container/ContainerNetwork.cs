@@ -74,33 +74,6 @@ public partial class ContainerNetwork
 		UpdatePlayer( To.Single( player.Client ), destinationGuidString );
 	}
 
-	[ServerCmd( "eden_container_drop" )]
-	public static void ContainerDrop( string guidString, int slotA )
-	{
-		var player = ConsoleSystem.Caller.Pawn as Player;
-		var guid = Guid.Parse( guidString );
-		var container = Get( guid );
-
-		if ( container is null )
-			return;
-
-		if ( !container.HasAccess( player ) )
-			return;
-
-		var slot = container.GetSlot( slotA );
-		if ( slot is null || slot.Item is null )
-			return;
-
-		var entity = ItemEntity.InstantiateFromPlayer( player, slot.Item, slot.Quantity );
-
-		// @TODO: unfuck this later
-		container.Remove( slotA );
-
-		Log.Info( $"{entity} was spawned as a result of dropping an item" );
-
-		UpdatePlayer( To.Single( player.Client ), guidString );
-	}
-
 	[ServerCmd( "eden_container_itemaction" )]
 	public static void DoItemAction( string guidString, int slotA, int action )
 	{
@@ -118,7 +91,7 @@ public partial class ContainerNetwork
 		if ( slot is null || slot.Item is null )
 			return;
 
-		if ( slot.Item.DoAction( player, (ItemActionType)action ) )
+		if ( slot.Item.DoAction( player, (ItemActionType)action, slot ) )
 		{
 			container.Remove( slotA );
 			UpdatePlayer( To.Single( player.Client ), guidString );

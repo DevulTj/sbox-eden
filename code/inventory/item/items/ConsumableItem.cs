@@ -3,6 +3,7 @@
 
 using Sandbox;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Eden;
@@ -10,6 +11,11 @@ namespace Eden;
 public partial class ConsumableItem : Item
 {
 	public override ItemType Type => ItemType.Consumable;
+	public override HashSet<ItemActionType> ItemActions => new()
+	{
+		ItemActionType.Consume,
+		ItemActionType.Drop
+	};
 
 	[ItemActionCheck( ItemActionType.Consume )]
 	public bool CanConsume( Player player )

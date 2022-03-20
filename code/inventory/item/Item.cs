@@ -70,7 +70,7 @@ public partial class Item
 		return other.Asset == Asset;
 	}
 
-	private bool ActionAttributeMethod<T>( Player player, ItemActionType type ) where T : ItemActionBaseAttribute
+	private bool ActionAttributeMethod<T>( Player player, ItemActionType type, Slot slotRef ) where T : ItemActionBaseAttribute
 	{
 		if ( !ItemActions.Contains( type ) )
 			return false;
@@ -80,14 +80,14 @@ public partial class Item
 
 		if ( attribute is null ) return false;
 
-		return (bool)attribute.Invoke( this, player );
+		return (bool)attribute.Invoke( this, player, slotRef );
 	}
 
-	public bool CanDoAction( Player player, ItemActionType type ) =>
-		ActionAttributeMethod<ItemActionCheckAttribute>( player, type );
+	public bool CanDoAction( Player player, ItemActionType type, Slot slotRef ) =>
+		ActionAttributeMethod<ItemActionCheckAttribute>( player, type, slotRef );
 
-	public bool DoAction( Player player, ItemActionType type ) =>
-		ActionAttributeMethod<ItemActionExecAttribute>( player, type );
+	public bool DoAction( Player player, ItemActionType type, Slot slotRef ) =>
+		ActionAttributeMethod<ItemActionExecAttribute>( player, type, slotRef );
 
 	[ItemActionCheck( ItemActionType.Drop )]
 	public bool CanDrop( Player player )
@@ -96,10 +96,9 @@ public partial class Item
 	}
 
 	[ItemActionExec( ItemActionType.Drop, "Drop" )]
-	public bool Drop( Player player )
+	public bool Drop( Player player, Slot slotRef )
 	{
-		Log.Info( "running drop" );
-
-		return true;
+		var entity = ItemEntity.InstantiateFromPlayer( player, this, slotRef.Quantity );
+		return entity.IsValid();
 	}
 }

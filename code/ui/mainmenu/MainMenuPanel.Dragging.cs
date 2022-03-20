@@ -108,7 +108,16 @@ public partial class MainMenuPanel
 		base.OnMouseUp( e );
 
 		if ( e.Button == "mouseleft" )
+		{
+			var mousePos = Mouse.Position / Screen.Size;
+
+			if ( mousePos.Distance( StartMousePos ) < .005 )
+			{
+				ItemInspectPanel.Instance?.SetItem( FocusedItem );
+			}
+
 			StopDragging();
+		}
 		else if ( e.Button == "mouseright" )
 		{
 			var hoveredItem = FindHoveredItem();
