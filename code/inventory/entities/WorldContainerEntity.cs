@@ -33,6 +33,9 @@ public partial class WorldContainerEntity : Prop, IContainerEntity, IUse
 	public void FocusContainer()
 	{
 		WorldContainerPanel.Instance?.SetContainer( Container );
+
+		MainMenuPanel.Instance.SetOpen();
+		MainMenuPanel.Instance.SetPageByName( "Inventory" );
 	}
 
 	bool IUse.IsUsable( Entity user )
