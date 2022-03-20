@@ -15,7 +15,7 @@ public enum ItemType
 
 static class ItemTypeExtensions
 {
-	public static Item Instantiate( this ItemType itemType )
+	public static Item Create( this ItemType itemType )
 	{
 		return itemType switch
 		{
@@ -23,7 +23,7 @@ static class ItemTypeExtensions
 			ItemType.Consumable => new ConsumableItem(),
 			ItemType.Deployable => new DeployableItem(),
 			ItemType.Weapon => new WeaponItem(),
-			_ => throw new Exception( "Invalid item type specified in ItemType.Instantiate" ),
+			_ => throw new Exception( "Invalid item type specified in ItemType.Create" ),
 		};
 	}
 }

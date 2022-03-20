@@ -14,6 +14,7 @@ public partial class DropItemAction : ItemAction
 	{
 		return true;
 	}
+
 	public override bool Execute( Player player, Slot slot )
 	{
 		var entity = ItemEntity.Create( player, slot.Item, slot.Quantity );

@@ -17,7 +17,7 @@ public partial class Item
 	/// <returns></returns>
 	public static Item FromAsset( ItemAsset asset )
 	{
-		var item = asset.Type.Instantiate();
+		var item = asset.Type.Create();
 		item.Asset = asset;
 		return item;
 	}
