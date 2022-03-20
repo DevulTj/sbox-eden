@@ -65,15 +65,21 @@ public partial class Item
 		return other.Asset == Asset;
 	}
 
-	public bool DoAction( Player player, ItemActionType type )
+	private bool ActionAttributeMethod<T>( Player player, ItemActionType type ) where T : ItemActionBaseAttribute
 	{
-		var attribute = Library.GetAttributes<ItemActionExecAttribute>()
+		var attribute = Library.GetAttributes<T>()
 			.FirstOrDefault( x => x.Type == type );
 
 		if ( attribute is null ) return false;
 
 		return (bool)attribute.Invoke( this, player );
 	}
+
+	public bool CanDoAction( Player player, ItemActionType type ) =>
+		ActionAttributeMethod<ItemActionCheckAttribute>( player, type );
+
+	public bool DoAction( Player player, ItemActionType type ) =>
+		ActionAttributeMethod<ItemActionExecAttribute>( player, type );
 
 	[ItemActionCheck( ItemActionType.Drop )]
 	public bool CanDrop( Player player )

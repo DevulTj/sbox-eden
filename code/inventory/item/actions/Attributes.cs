@@ -5,20 +5,21 @@ using Sandbox;
 
 namespace Eden;
 
-public partial class ItemActionExecAttribute : LibraryMethod
+public abstract class ItemActionBaseAttribute : LibraryMethod
 {
 	public ItemActionType Type { get; set; } = ItemActionType.Invalid;
+}
 
+public class ItemActionExecAttribute : ItemActionBaseAttribute
+{
 	public ItemActionExecAttribute( ItemActionType type )
 	{
 		Type = type;
 	}
 }
 
-public partial class ItemActionCheckAttribute : LibraryMethod
+public class ItemActionCheckAttribute : ItemActionBaseAttribute
 {
-	public ItemActionType Type { get; set; } = ItemActionType.Invalid;
-
 	public ItemActionCheckAttribute( ItemActionType type )
 	{
 		Type = type;
