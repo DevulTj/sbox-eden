@@ -26,8 +26,6 @@ public partial class ItemInspectPanel : Panel
 	public ItemInspectPanel()
 	{
 		Instance = this;
-
-		BindClass( "visible", () => Item is not null );
 	}
 
 	// @ref
@@ -38,9 +36,6 @@ public partial class ItemInspectPanel : Panel
 	public Image ItemIcon { get; set; }
 	// @ref
 	public Panel ActionsLayout { get; set; }
-
-
-	public Item Item { get; set; }
 
 	public void Clear()
 	{
@@ -57,8 +52,6 @@ public partial class ItemInspectPanel : Panel
 
 		AddClass( "visible" );
 
-		Item = itemPanel.Item;
-
 		ItemIcon.SetTexture( itemPanel.Item.Asset.IconPath );
 		ItemNameLabel.Text = itemPanel.Item.Asset.ItemName;
 		ItemDescLabel.Text = itemPanel.Item.Asset.ItemDescription;
@@ -74,8 +67,10 @@ public partial class ItemInspectPanel : Panel
 			var actionButton = new ItemActionButton( type );
 			actionButton.Parent = ActionsLayout;
 			actionButton.AddEventListener( "onclick", () =>
-				ContainerNetwork.DoItemAction( container.ID.ToString(), slotIndex, (int)type )
-			);
+			{
+				ContainerNetwork.DoItemAction( container.ID.ToString(), slotIndex, (int)type );
+				Clear();
+			} );
 		}
 	}
 }

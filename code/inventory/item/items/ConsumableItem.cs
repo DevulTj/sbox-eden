@@ -24,7 +24,7 @@ public partial class ConsumableItem : Item
 	}
 
 	[ItemActionExec( ItemActionType.Consume, "Consume" )]
-	public bool Consume( Player player )
+	public bool Consume( Player player, Slot slotRef )
 	{
 		Log.Info( "running consume" );
 

@@ -24,7 +24,7 @@ public partial class DeployableItem : Item
 	}
 
 	[ItemActionExec( ItemActionType.Deploy, "Deploy" )]
-	public bool Deploy( Player player )
+	public bool Deploy( Player player, Slot slotRef )
 	{
 		Log.Info( "running deploy" );
 		return true;
