@@ -3,6 +3,7 @@
 
 using Sandbox;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Eden;
@@ -39,6 +40,10 @@ public partial class Item
 	public virtual Color DefaultColor => Asset?.DefaultColor ?? new Color( 100, 100, 100 );
 	public virtual bool CanStack => MaxStack > 1;
 	public virtual int MaxStack => Asset?.StackSize ?? 1;
+	public virtual HashSet<ItemActionType> ItemActions => new()
+	{
+		ItemActionType.Drop
+	};
 
 	// @net
 	public ItemAsset Asset { get; set; }
@@ -67,6 +72,9 @@ public partial class Item
 
 	private bool ActionAttributeMethod<T>( Player player, ItemActionType type ) where T : ItemActionBaseAttribute
 	{
+		if ( !ItemActions.Contains( type ) )
+			return false;
+
 		var attribute = Library.GetAttributes<T>()
 			.FirstOrDefault( x => x.Type == type );
 
@@ -87,9 +95,11 @@ public partial class Item
 		return true;
 	}
 
-	[ItemActionExec( ItemActionType.Drop )]
+	[ItemActionExec( ItemActionType.Drop, "Drop" )]
 	public bool Drop( Player player )
 	{
+		Log.Info( "running drop" );
+
 		return true;
 	}
 }

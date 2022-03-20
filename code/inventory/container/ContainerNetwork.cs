@@ -101,6 +101,30 @@ public partial class ContainerNetwork
 		UpdatePlayer( To.Single( player.Client ), guidString );
 	}
 
+	[ServerCmd( "eden_container_itemaction" )]
+	public static void DoItemAction( string guidString, int slotA, int action )
+	{
+		var player = ConsoleSystem.Caller.Pawn as Player;
+		var guid = Guid.Parse( guidString );
+		var container = Get( guid );
+
+		if ( container is null )
+			return;
+
+		if ( !container.HasAccess( player ) )
+			return;
+
+		var slot = container.GetSlot( slotA );
+		if ( slot is null || slot.Item is null )
+			return;
+
+		if ( slot.Item.DoAction( player, (ItemActionType)action ) )
+		{
+			container.Remove( slotA );
+			UpdatePlayer( To.Single( player.Client ), guidString );
+		}
+	}
+
 	[ClientRpc]
 	public static void UpdatePlayer( string guid )
 	{

@@ -12,9 +12,10 @@ public abstract class ItemActionBaseAttribute : LibraryMethod
 
 public class ItemActionExecAttribute : ItemActionBaseAttribute
 {
-	public ItemActionExecAttribute( ItemActionType type )
+	public ItemActionExecAttribute( ItemActionType type, string displayName )
 	{
 		Type = type;
+		Title = displayName;
 	}
 }
 

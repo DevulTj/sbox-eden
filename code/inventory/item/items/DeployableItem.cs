@@ -3,6 +3,7 @@
 
 using Sandbox;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Eden;
@@ -10,6 +11,11 @@ namespace Eden;
 public partial class DeployableItem : Item
 {
 	public override ItemType Type => ItemType.Deployable;
+	public override HashSet<ItemActionType> ItemActions => new()
+	{
+		ItemActionType.Deploy,
+		ItemActionType.Drop
+	};
 
 	[ItemActionCheck( ItemActionType.Deploy )]
 	public bool CanDeploy( Player player )
@@ -17,9 +23,10 @@ public partial class DeployableItem : Item
 		return true;
 	}
 
-	[ItemActionExec( ItemActionType.Deploy )]
+	[ItemActionExec( ItemActionType.Deploy, "Deploy" )]
 	public bool Deploy( Player player )
 	{
+		Log.Info( "running deploy" );
 		return true;
 	}
 }

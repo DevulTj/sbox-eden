@@ -17,9 +17,11 @@ public partial class ConsumableItem : Item
 		return true;
 	}
 
-	[ItemActionExec( ItemActionType.Consume )]
+	[ItemActionExec( ItemActionType.Consume, "Consume" )]
 	public bool Consume( Player player )
 	{
+		Log.Info( "running consume" );
+
 		return true;
 	}
 }
