@@ -3,11 +3,17 @@
 	data = 
 	{
 		hunger = 30
-		thirst = 0
+		thirst = 5
 		itemname = "Fish"
 		itemdescription = "Edible. Barely."
 		iconpath = "ui/items/fish.png"
 		stacksize = 10
 		worldmodelpath = resource:""
+		health = 10
+		category = "0"
+		craftingduration = 0
+		recipe = 
+		{
+		}
 	}
 }
