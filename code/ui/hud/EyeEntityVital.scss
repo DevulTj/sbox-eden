@@ -40,4 +40,14 @@ eyeentityvital {
             display: none;
         }
     }
+
+    .hint {
+        display: none;
+    }
+
+    &.usable {
+        .hint {
+            display: flex;
+        }
+    }
 }

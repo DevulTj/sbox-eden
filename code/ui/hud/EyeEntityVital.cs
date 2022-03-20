@@ -50,7 +50,6 @@ public partial class EyeEntityVital : Panel
 			SetClass( "resource", false );
 		}
 
-
 		if ( tr.Entity is ResourceNodeEntity resource )
 		{
 			CurrentEntityName = resource.ResourceAsset.ResourceName;
@@ -60,5 +59,7 @@ public partial class EyeEntityVital : Panel
 
 			SetClass( "resource", true );
 		}
+
+		SetClass( "usable", tr.Entity is IUse usable && usable.IsUsable( player ) );
 	}
 }
