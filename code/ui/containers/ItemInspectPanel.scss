@@ -52,6 +52,8 @@ iteminspectpanel {
         align-content: center;
 
         .action {
+            transition: all 0.15s ease;
+
             &:nth-child( even ) {
                 border-top: 2px solid rgba( white, 0.2 );
             }
@@ -72,11 +74,13 @@ iteminspectpanel {
             &:hover {
                 cursor: pointer;
                 background-image: linear-gradient(to left, rgba( #888888, 0.5 ), rgba( black, 0 ) );
+                padding-right: 16px;
             }
 
             &:active {
                 cursor: pointer;
                 background-image: linear-gradient(to left, rgba( #999999, 0.5 ), rgba( black, 0 ) );
+                padding-right: 8px;
             }
 
             .name {

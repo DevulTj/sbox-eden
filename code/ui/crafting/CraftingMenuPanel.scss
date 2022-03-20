@@ -41,6 +41,7 @@ craftingmenupanel {
             &:hover {
                 background-image: linear-gradient(to right, rgba( white, 0.2 ), rgba( #888888, 0 ) );
                 cursor: pointer;
+                padding-left: 8px;
             }
 
             &:active {
@@ -48,6 +49,7 @@ craftingmenupanel {
             }
 
             &.current {
+                padding-left: 8px;
                 width: 256px;
                 height: 64px;
                 background-image: linear-gradient(to right, rgba( white, 0.5 ), rgba( #888888, 0 ) );
