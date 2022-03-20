@@ -5,7 +5,6 @@ eyeentityvital {
     transform: translateX( -50% ) translateY( -100% );
     left: 50%;
     top: 45%;
-    height: 52px;
     flex-direction: column-reverse;
     flex-wrap: nowrap;
     justify-content: flex-start;
@@ -25,6 +24,7 @@ eyeentityvital {
     }
 
     .subtitle {
+        display: flex;
         width: 100%;
         text-align: center;
         font-size: 12px;
@@ -33,5 +33,11 @@ eyeentityvital {
 
     &.show {
         opacity: 1;
+    }
+
+    &.resource {
+        .subtitle {
+            display: none;
+        }
     }
 }

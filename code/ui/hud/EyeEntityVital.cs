@@ -46,14 +46,19 @@ public partial class EyeEntityVital : Panel
 			CurrentEntitySubtitle = $"x{worldItem.Quantity}";
 
 			IsShowing = true;
+
+			SetClass( "resource", false );
 		}
+
 
 		if ( tr.Entity is ResourceNodeEntity resource )
 		{
 			CurrentEntityName = resource.ResourceAsset.ResourceName;
-			// CurrentEntitySubtitle = $"{resource.ResourceAmount}/{resource.MaxResourceAmount}";
+			CurrentEntitySubtitle = "";
 
 			IsShowing = true;
+
+			SetClass( "resource", true );
 		}
 	}
 }
