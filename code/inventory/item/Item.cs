@@ -77,15 +77,15 @@ public partial class Item
 		return itemAction?.CanDo( player, slot ) ?? false;
 	}
 
-	public bool DoAction( Player player, string id, Slot slot )
+	public int DoAction( Player player, string id, Slot slot )
 	{
 		var actions = GetActions();
 		if ( actions.Count < 1 )
-			return false;
+			return 0;
 
 		var itemAction = actions.FirstOrDefault( x => x.ID == id );
 
-		return itemAction?.Execute( player, slot ) ?? false;
+		return itemAction?.Execute( player, slot ) ?? 0;
 	}
 
 	public List<ItemAction> GetActions()
@@ -98,6 +98,7 @@ public partial class Item
 
 	protected virtual void GatherActions( ref List<ItemAction> actions )
 	{
+		actions.Add( new DropSingleItemAction() );
 		actions.Add( new DropItemAction() );
 	}
 }

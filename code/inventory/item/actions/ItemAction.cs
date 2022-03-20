@@ -13,8 +13,8 @@ public partial class ItemAction
 		return true;
 	}
 
-	public virtual bool Execute( Player player, Slot slot )
+	public virtual int Execute( Player player, Slot slot )
 	{
-		return true;
+		return 0;
 	}
 }

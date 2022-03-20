@@ -6,6 +6,7 @@ namespace Eden;
 public partial class ItemAction
 {
 	public static string Drop = "drop";
+	public static string DropSingle = "dropsingle";
 	public static string Consume = "consume";
 	public static string Deploy = "deploy";
 }

@@ -91,9 +91,10 @@ public partial class ContainerNetwork
 		if ( slot is null || slot.Item is null )
 			return;
 
-		if ( slot.Item.DoAction( player, id, slot ) )
+		int count = slot.Item.DoAction( player, id, slot );
+		if ( count > 0 )
 		{
-			slot.SetQuantity( slot.Quantity - 1 );
+			slot.SetQuantity( slot.Quantity - count );
 
 			if ( slot.Quantity < 1 )
 			{

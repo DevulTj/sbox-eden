@@ -15,7 +15,7 @@ public partial class ConsumeItemAction : ItemAction
 		return true;
 	}
 
-	public override bool Execute( Player player, Slot slot )
+	public override int Execute( Player player, Slot slot )
 	{
 		var itemAsset = slot.Item.Asset as ConsumableItemAsset;
 		if ( itemAsset is null )
@@ -36,6 +36,6 @@ public partial class ConsumeItemAction : ItemAction
 			player.Health = Math.Clamp( player.Health + itemAsset.Health, 0, player.MaxHealth );
 		}
 
-		return true;
+		return 1;
 	}
 }

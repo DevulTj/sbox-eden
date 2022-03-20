@@ -5,19 +5,19 @@ using Sandbox;
 
 namespace Eden;
 
-public partial class DropItemAction : ItemAction
+public partial class DropSingleItemAction : ItemAction
 {
-	public override string ID => Drop;
-	public override string DisplayName => "Drop";
+	public override string ID => DropSingle;
+	public override string DisplayName => "Drop One";
 
 	public override bool CanDo( Player player, Slot slot )
 	{
-		return true;
+		return slot.Quantity > 1;
 	}
 
 	public override int Execute( Player player, Slot slot )
 	{
-		var entity = ItemEntity.Create( player, slot.Item, slot.Quantity );
-		return entity.IsValid() ? slot.Quantity : 0;
+		var entity = ItemEntity.Create( player, slot.Item, 1 );
+		return entity.IsValid() ? 1 : 0;
 	}
 }
