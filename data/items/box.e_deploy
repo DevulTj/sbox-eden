@@ -5,7 +5,7 @@
 		entityclassname = "eden_container_box"
 		itemname = "Box"
 		itemdescription = "It stores things"
-		category = "0"
+		category = "1"
 		stacksize = 1
 		iconpath = "config/surface.asset.png"
 		worldmodelpath = resource:"models/citizen_props/cardboardbox01.vmdl"
