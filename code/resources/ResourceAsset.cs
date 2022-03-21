@@ -15,13 +15,13 @@ public partial class ResourceAsset : Asset
 	[Property, Category( "Meta" )]
 	public string ResourceName { get; set; }
 
-	[Property, Category( "World" ), ResourceType( "vmdl" ), Sandbox.Description( "Test" )]
+	[Property, Category( "World" ), ResourceType( "vmdl" ), Sandbox.Description( "Specify more than 1 for the model to change as gathering progresses." )]
 	public string[] WorldModelPath { get; set; }
 
 	[Property, Category( "Gathering" )]
 	public ResourceType ResourceType { get; set; }
 
-	[Property, Category( "Gathering" )]
+	[Property, Category( "Gathering" ), Sandbox.Description( "Whether or not the resource can be collected with 'E'" )]
 	public bool Collectable { get; set; }
 
 	[Property, Category( "Gathering" )]

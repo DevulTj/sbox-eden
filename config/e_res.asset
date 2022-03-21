@@ -13,13 +13,13 @@
 @BaseClass = e_res : ""
 [
 	resourcename(string) { group = "Meta" } : "Resource Name" :  : ""
-	worldmodelpath(array:resource:vmdl) { group = "World" } : "World Model Path" :  : "Test"
+	worldmodelpath(array:resource:vmdl) { group = "World" } : "World Model Path" :  : "Specify more than 1 for the model to change as gathering progresses."
 	resourcetype(choices) { group = "Gathering" } : "Resource Type" : 0 : "" =
 	[
 		0 : "Wood"
 		1 : "Stone"
 	]
-	collectable(boolean) { group = "Gathering" } : "Collectable" : 0 : ""
+	collectable(boolean) { group = "Gathering" } : "Collectable" : 0 : "Whether or not the resource can be collected with 'E'"
 	requiredhitsperitem(integer) { group = "Gathering" } : "Required Hits Per Item" : 0 : ""
 	itemstogather(array:struct:Eden_ResourceItemQuantity) { group = "Gathering" } : "Items To Gather" :  : ""
 ]
