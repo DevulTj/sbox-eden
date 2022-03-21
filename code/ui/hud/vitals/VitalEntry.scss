@@ -2,15 +2,17 @@
 @import "/ui/Theme.scss";
 
 .vital {
-    width: 100%;
+    width: 20%;
     height: 40px;
     transition: all 0.2s ease;
 
     .label {
-        padding-left: 16px;
-        text-align: left;
+        right: 0;
+        position: absolute;
+        text-align: center;
         align-self: center;
-        width: 25%;
+        opacity: 0.5;
+        min-width: 40px;
     }
 
     .bar-background {
@@ -19,30 +21,35 @@
         margin-bottom: 4px;
         margin-left: 8px;
         width: 100%;
-        background-color: rgba( white, 0.1 );
+        background-color: rgba( white, 0.05 );
         backdrop-filter: blur( 50px );
     }
 
     .bar {
-        width: 50%;
         height: 100%;
-        background-color: rgba( white, 0.5 );
+        background-color: rgba( white, 0.4 );
         backdrop-filter: blur( 10px );
         border-radius: 6px;
     }
 
     .icon {
-        top: 4px;
+        position: absolute;
         height: 100%;
+        left: 4px;
         aspect-ratio: 1;
-        background-size: 100%;
+        background-size: 60%;
         background-repeat: no-repeat;
         background-position: center;
-        opacity: 0.7;
+        background-tint: black;
+        opacity: 0.5;
     }
 
     &.invisible {
         opacity: 0;
         height: 0px;
+    }
+
+    &.small {
+        width: 8%;
     }
 }

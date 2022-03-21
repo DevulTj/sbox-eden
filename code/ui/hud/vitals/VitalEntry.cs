@@ -10,7 +10,7 @@ namespace Eden;
 public partial class VitalEntry : Panel
 {
 	// @ref
-	public Panel Icon { get; set; }
+	public Image Icon { get; set; }
 	// @ref
 	public Panel Bar { get; set; }
 	// @ref

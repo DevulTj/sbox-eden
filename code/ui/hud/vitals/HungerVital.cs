@@ -13,7 +13,7 @@ public partial class HungerVital : VitalEntry
 
 	public HungerVital() : base()
 	{
-		Icon.Style.SetBackgroundImage( IconPath );
+		Icon.SetTexture( IconPath );
 	}
 
 	public override void Tick()
