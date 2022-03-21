@@ -41,6 +41,7 @@ public partial class Player
 		Hotbar.Name = "Equipment";
 
 		Hotbar.Add( Item.FromAsset( "stone_hatchet" ), true );
+		Hotbar.Add( Item.FromAsset( "stone_pickaxe" ), false );
 	}
 
 	public void HotbarSimulate()
