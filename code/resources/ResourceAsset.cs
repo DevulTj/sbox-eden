@@ -30,7 +30,7 @@ public partial class ResourceAsset : Asset
 	[Property, Category( "Gathering" )]
 	public List<ResourceItemQuantity> ItemsToGather { get; set; }
 
-	public Model WorldModel { get; set; }
+	public List<Model> WorldModels { get; set; } = new();
 	public static Model FallbackWorldModel = Model.Load( "models/resources/resource_blockout.vmdl" );
 	public bool ResourceHasMultipleModels => WorldModelPath.Length > 1;
 
@@ -43,16 +43,8 @@ public partial class ResourceAsset : Asset
 			All.Add( this );
 
 			// Cache the world models immediately
-			for ( int i = 0; i < WorldModelPath.Length; i++ )
-			{
-				if ( i == 0 )
-				{
-					WorldModel = Model.Load( WorldModelPath[i] );
-					continue;
-				}
-
-				Model.Load( WorldModelPath[i] );
-			}
+			foreach ( var modelPath in WorldModelPath )
+				WorldModels.Add( Model.Load( modelPath ) );
 
 			foreach ( var item in ItemsToGather )
 				item.AmountRemaining = item.InitialAmount;
