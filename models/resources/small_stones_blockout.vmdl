@@ -13,7 +13,7 @@
 						_class = "RenderMeshFile"
 						filename = "models\\resources\\dmx\\mesh\\small_stones_blockout.dmx"
 						import_translation = [ 0.0, 0.0, 0.0 ]
-						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 90.0, 0.0, 0.0 ]
 						import_scale = 1.0
 						align_origin_x_type = "None"
 						align_origin_y_type = "None"
@@ -39,9 +39,9 @@
 						collision_interact_as = ""
 						collision_interact_with = ""
 						collision_interact_exclude = ""
-						origin = [ -5.674406, 0.0, -0.05661 ]
+						origin = [ 0.550771, 2.458572, 5.932964 ]
 						angles = [ 0.0, 0.0, 0.0 ]
-						dimensions = [ 23.969337, 10.0, 4.36743 ]
+						dimensions = [ 8.469759, 14.917144, 20.487848 ]
 					},
 				]
 			},
