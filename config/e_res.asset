@@ -13,7 +13,7 @@
 @BaseClass = e_res : ""
 [
 	resourcename(string) { group = "Meta" } : "Resource Name" :  : ""
-	worldmodelpath(resource:vmdl) { group = "World" } : "World Model Path" :  : ""
+	worldmodelpath(array:resource:vmdl) { group = "World" } : "World Model Path" :  : "Test"
 	resourcetype(choices) { group = "Gathering" } : "Resource Type" : 0 : "" =
 	[
 		0 : "Wood"

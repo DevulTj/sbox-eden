@@ -3,7 +3,10 @@
 	data = 
 	{
 		resourcename = "Stick"
-		worldmodelpath = resource:"models/items/sticks/stick_small.vmdl"
+		worldmodelpath = resource:
+		[
+			resource:"models/items/sticks/stick.vmdl",
+		]
 		resourcetype = "0"
 		itemstogather = 
 		[
