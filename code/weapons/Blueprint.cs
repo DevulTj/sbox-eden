@@ -36,7 +36,7 @@ partial class Blueprint : Weapon
 		if ( Input.Pressed( InputButton.Attack1 ) )
 		{
 			var targetTransform = GetSnappedTransform();
-			PlaceBuilding( selectedAsset.Id, targetTransform.Position, targetTransform.Rotation );
+			BuildingSystem.PlaceBuilding( selectedAsset.Id, targetTransform.Position, targetTransform.Rotation );
 		}
 	}
 
@@ -78,28 +78,6 @@ partial class Blueprint : Weapon
 			ghostEntity?.Delete();
 	}
 
-	/// <summary>
-	/// Place a building down
-	/// </summary>
-	[ServerCmd( "eden_building_place" )]
-	public static void PlaceBuilding( int assetId, Vector3 position, Rotation rotation )
-	{
-		var asset = Asset.FromId<BuildingAsset>( assetId );
-		var player = ConsoleSystem.Caller.Pawn as Player;
-
-		if ( player == null || asset == null )
-			return;
-
-		// Server-side validation checks, make sure the player isn't doing anything funky
-		if ( !asset.CanAfford( player ) )
-			return;
-
-		var building = new BuildingEntity();
-		building.Position = position;
-		building.Rotation = rotation;
-		building.UpdateFromAsset( asset );
-	}
-
 	private static TraceResult TraceForward( Entity entity, float distance = maxBuildDistance )
 	{
 		return Trace.Ray( entity.EyePosition, entity.EyePosition + entity.EyeRotation.Forward * distance ).Ignore( entity ).Run();
@@ -127,35 +105,49 @@ partial class Blueprint : Weapon
 	}
 
 	/// <summary>
+	/// Get all nearby snap points, select most appropriate
+	/// </summary>
+	/// <returns></returns>
+	public bool GetBestSnapTransforms( out Transform nearestSnapPoint, out Transform localClosestSnapPoint )
+	{
+		var transform = new Transform( TraceForward( Owner ).EndPosition );
+		var forwardTracePosition = TraceForward( Owner ).EndPosition;
+
+		nearestSnapPoint = transform;
+		localClosestSnapPoint = transform;
+
+		// Ensure that the placement is valid
+		var nearbySnapPoints = GetNearbySnapPoints().Where( x => x.AttachedEntity == null || !x.AttachedEntity.IsValid );
+		var validSnapPoints = nearbySnapPoints.OrderBy( x => x.Transform.Position.Distance( forwardTracePosition ) );
+
+		// If we don't have anywhere to snap, bail
+		if ( !validSnapPoints.Any() )
+			return false;
+
+		// Get the best available snap point
+		nearestSnapPoint = validSnapPoints.First().Transform;
+
+		// Convert everything into local space; this prevents us from entering any funky feedback loops
+		var localOther = ghostEntity.Transform.ToLocal( nearestSnapPoint );
+		var localGhostSnapPoints = selectedAsset.GetLocalSnapPointTransforms();
+		localClosestSnapPoint = localGhostSnapPoints.OrderBy( x => x.Position.Distance( localOther.Position ) ).FirstOrDefault();
+
+		return true;
+	}
+
+	/// <summary>
 	/// Fetch a transform that snaps our ghost entity to a nearby building
 	/// </summary>
 	private Transform GetSnappedTransform()
 	{
-		var transform = new Transform( TraceForward( Owner ).EndPosition );
-
-		var forwardTracePosition = TraceForward( Owner ).EndPosition;
-		var forwardTraceDirection = Owner.EyeRotation;
-
-		// Get all nearby snap points, order them by most appropriate (closest & with similar rotation angles)
-		// TODO: Ensure that the placement is valid too
-		var nearbySnapPoints = GetNearbySnapPoints().Where( x => x.AttachedEntity == null || !x.AttachedEntity.IsValid );
-		var orderedSnapPoints = nearbySnapPoints.OrderBy( x => x.Transform.Position.Distance( forwardTracePosition ) );
-		if ( !orderedSnapPoints.Any() )
-			return transform;
-
-		// Get the best available snap point
-		var nearestSnapPoint = orderedSnapPoints.First();
-
-		// Convert everything into local space; this prevents us from entering any funky feedback loops
-		var localOther = ghostEntity.Transform.ToLocal( nearestSnapPoint.Transform );
-		var localGhostSnapPoints = selectedAsset.GetLocalSnapPointTransforms();
-		var localClosestSnapPoint = localGhostSnapPoints.OrderBy( x => x.Position.Distance( localOther.Position ) ).FirstOrDefault();
+		if ( !GetBestSnapTransforms( out var nearestSnapPoint, out var localClosestSnapPoint ) )
+			return new Transform( TraceForward( Owner ).EndPosition );
 
 		if ( Debug )
-			DebugOverlay.Sphere( nearestSnapPoint.Transform.Position, 8f, Color.Red, false );
+			DebugOverlay.Sphere( nearestSnapPoint.Position, 8f, Color.Red, false );
 
 		// Return best available snap point, offset by nearest selected building snap point
-		return nearestSnapPoint.Transform.WithPosition( nearestSnapPoint.Transform.Position - localClosestSnapPoint.Position );
+		return nearestSnapPoint.WithPosition( nearestSnapPoint.Position - localClosestSnapPoint.Position );
 	}
 
 	private void CreateBuildWheel()
