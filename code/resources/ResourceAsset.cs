@@ -15,8 +15,8 @@ public partial class ResourceAsset : Asset
 	[Property, Category( "Meta" )]
 	public string ResourceName { get; set; }
 
-	[Property, Category( "World" ), ResourceType( "vmdl" )]
-	public string WorldModelPath { get; set; }
+	[Property, Category( "World" ), ResourceType( "vmdl" ), Sandbox.Description( "Test" )]
+	public string[] WorldModelPath { get; set; }
 
 	[Property, Category( "Gathering" )]
 	public ResourceType ResourceType { get; set; }
@@ -32,6 +32,7 @@ public partial class ResourceAsset : Asset
 
 	public Model WorldModel { get; set; }
 	public static Model FallbackWorldModel = Model.Load( "models/resources/resource_blockout.vmdl" );
+	public bool ResourceHasMultipleModels => WorldModelPath.Length > 1;
 
 	protected override void PostLoad()
 	{
@@ -41,10 +42,16 @@ public partial class ResourceAsset : Asset
 		{
 			All.Add( this );
 
-			// Cache the world model immediately
-			if ( !string.IsNullOrEmpty( WorldModelPath ) )
+			// Cache the world models immediately
+			for ( int i = 0; i < WorldModelPath.Length; i++ )
 			{
-				WorldModel = Model.Load( WorldModelPath );
+				if ( i == 0 )
+				{
+					WorldModel = Model.Load( WorldModelPath[i] );
+					continue;
+				}
+
+				Model.Load( WorldModelPath[i] );
 			}
 
 			foreach ( var item in ItemsToGather )
