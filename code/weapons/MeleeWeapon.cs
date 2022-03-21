@@ -14,13 +14,13 @@ public partial class MeleeWeapon : Weapon
 	public virtual float AttackRadius => 20f;
 	public virtual float BaseDamage => 50f;
 
-	public virtual Dictionary<ResourceType, int> ResourceYield => new()
+	public virtual Dictionary<ResourceType, float> ResourceYield => new()
 	{
 		{ ResourceType.Wood, 0 },
 		{ ResourceType.Stone, 0 }
 	};
 
-	public virtual int GetResourceYield( ResourceType type ) => ResourceYield[type];
+	public virtual float GetResourceYield( ResourceType type ) => ResourceYield[type];
 
 	public override bool CanReload()
 	{

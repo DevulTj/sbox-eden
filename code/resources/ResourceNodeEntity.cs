@@ -61,7 +61,7 @@ public partial class ResourceNodeEntity : Prop, IUse
 
 		var weaponResourceYield = weapon.GetResourceYield( ResourceAsset.ResourceType );
 
-		if ( weaponResourceYield < 1 )
+		if ( weaponResourceYield <= 0 )
 		{
 			// TODO: Deal heavy damage to weapon
 			return;
@@ -71,7 +71,7 @@ public partial class ResourceNodeEntity : Prop, IUse
 			return;
 
 		var gatherableResource = AvailableItems.FirstOrDefault();
-		var quantityToTake = gatherableResource.InitialAmount / ( ResourceAsset.RequiredHitsPerItem < 1 ? 1 : ResourceAsset.RequiredHitsPerItem ) * weaponResourceYield;
+		var quantityToTake = MathX.FloorToInt( gatherableResource.InitialAmount / ( ResourceAsset.RequiredHitsPerItem < 1 ? 1 : ResourceAsset.RequiredHitsPerItem ) * weaponResourceYield );
 
 		gatherableResource.AmountRemaining -= quantityToTake;
 

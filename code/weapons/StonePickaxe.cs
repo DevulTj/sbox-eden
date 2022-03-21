@@ -14,9 +14,9 @@ partial class StonePickaxe : MeleeWeapon
 	public override string ViewModelPath => "models/tools/hatchet/hatchet_v.vmdl";
 	public override float PrimaryRate => 1.0f;
 
-	public override Dictionary<ResourceType, int> ResourceYield => new()
+	public override Dictionary<ResourceType, float> ResourceYield => new()
 	{
-		{ ResourceType.Wood, 0 },
+		{ ResourceType.Wood, 0.1f },
 		{ ResourceType.Stone, 1 }
 	};
 
