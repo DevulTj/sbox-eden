@@ -22,13 +22,13 @@
         margin-left: 8px;
         width: 100%;
         background-color: rgba( white, 0.05 );
-        backdrop-filter: blur( 50px );
+        backdrop-filter: blur( 10px );
+        box-shadow: 0px 0px 20px rgba( black, 0.3 );
     }
 
     .bar {
         height: 100%;
-        background-color: rgba( white, 0.4 );
-        backdrop-filter: blur( 10px );
+        backdrop-filter: blur( 50x );
         border-radius: 6px;
     }
 

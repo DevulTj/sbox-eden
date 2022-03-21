@@ -21,6 +21,8 @@ public partial class VitalEntry : Panel
 
 	public string FormattedValue { get; set; }
 
+	public virtual string Gradient => "linear-gradient(44deg, rgba( #e84118, 0.5 ), rgba( #c23616, 0.5 ) )";
+
 	public VitalEntry()
 	{
 		AddClass( "vital" );
@@ -43,5 +45,7 @@ public partial class VitalEntry : Panel
 		Label.Text = GetLabelText();
 
 		Bar.Style.Width = Length.Percent( BoundValue / BoundMaxValue * 100f );
+
+		Bar.Style.Set( $"background-image: {Gradient};" );
 	}
 }

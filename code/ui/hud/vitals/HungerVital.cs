@@ -10,6 +10,7 @@ namespace Eden;
 public partial class HungerVital : VitalEntry
 {
 	public string IconPath => "/ui/hud/vitals/hunger.png";
+	public override string Gradient => "linear-gradient(44deg, rgba( #fbc531, 0.5 ), rgba( #e1b12c, 0.5 ) )";
 
 	public HungerVital() : base()
 	{
