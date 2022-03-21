@@ -1,0 +1,24 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	data = 
+	{
+		weaponclassname = "eden_pickaxe_stone"
+		itemname = "Stone Pickaxe"
+		itemdescription = "A pickaxe, made out of stone."
+		category = "3"
+		stacksize = 1
+		iconpath = "ui/items/stone_pickaxe.png"
+		worldmodelpath = resource:"models/tools/hatchet/hatchet_w.vmdl"
+		craftingduration = 5
+		recipe = 
+		{
+			items = 
+			[
+				{
+					itemid = "wooden_stick"
+					amount = 5
+				},
+			]
+		}
+	}
+}
