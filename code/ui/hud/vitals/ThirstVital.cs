@@ -10,10 +10,12 @@ namespace Eden;
 public partial class ThirstVital : VitalEntry
 {
 	public string IconPath => "/ui/hud/vitals/thirst.png";
+	public override string Gradient => "linear-gradient(44deg, rgba( #00a8ff, 0.5 ), rgba( #0097e6, 0.5 ) )";
+
 
 	public ThirstVital() : base()
 	{
-		Icon.Style.SetBackgroundImage( IconPath );
+		Icon.SetTexture( IconPath );
 	}
 
 	public override void Tick()

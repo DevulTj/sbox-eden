@@ -15,6 +15,7 @@ public partial class GameEvent
 	{
 		public const string BackpackChanged = "Client.Inventory.BackpackChanged";
 		public const string HotbarChanged = "Client.Inventory.HotbarChanged";
+		public const string WorldContainerChanged = "Client.Inventory.WorldContainerChanged";
 
 		public class BackpackChangedAttribute : EventAttribute
 		{
@@ -24,6 +25,11 @@ public partial class GameEvent
 		public class HotbarChangedAttribute : EventAttribute
 		{
 			public HotbarChangedAttribute() : base( HotbarChanged ) { }
+		}
+
+		public class WorldContainerChangedAttribute : EventAttribute
+		{
+			public WorldContainerChangedAttribute() : base( WorldContainerChanged ) { }
 		}
 	}
 

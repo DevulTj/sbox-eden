@@ -2,14 +2,23 @@
 
 hudhotbarpanel {
     bottom: 16px;
-    left: 32%;
     position: absolute;
     pointer-events: none;
     width: 100%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+
 
     hotbarcontainerpanel {
         pointer-events: none;
-        height: 100%;
+        margin: 0;
+        padding: 0;
+
+        .layout {
+        }
 
         .title {
             display: none;

@@ -5,7 +5,7 @@
 		resourcename = "Tree"
 		worldmodelpath = resource:
 		[
-			resource:"models/resources/resource_tree.vmdl",
+			resource:"models/resources/trees/tree1.vmdl",
 		]
 		resourcetype = "0"
 		itemstogather = 

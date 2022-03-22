@@ -19,4 +19,26 @@ backpackpage {
         opacity: 1;
         display: flex;
     }
+
+    WorldContainerPanel {
+        position: absolute;
+        right: 0;
+        max-width: 80%;
+        height: 40%;
+    }
+
+    HotbarContainerPanel {
+        position: absolute;
+        bottom: 1%;
+    }
+
+    InventoryContainerPanel {
+        position: absolute;
+        bottom: 15%;
+    }
+
+    ItemInspectPanel {
+        position: absolute;
+        top: 5%;
+    }
 }

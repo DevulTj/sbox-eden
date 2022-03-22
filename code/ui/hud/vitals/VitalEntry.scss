@@ -2,47 +2,52 @@
 @import "/ui/Theme.scss";
 
 .vital {
-    width: 100%;
-    height: 40px;
+    width: 20%;
+    height: 32px;
     transition: all 0.2s ease;
+    margin-right: 8px;
 
     .label {
-        padding-left: 16px;
-        text-align: left;
+        right: 0;
+        position: absolute;
+        text-align: center;
         align-self: center;
-        width: 25%;
+        opacity: 0.5;
+        min-width: 40px;
     }
 
     .bar-background {
         border-radius: 6px;
-        margin-top: 4px;
-        margin-bottom: 4px;
-        margin-left: 8px;
         width: 100%;
-        background-color: rgba( white, 0.1 );
-        backdrop-filter: blur( 50px );
+        background-color: rgba( white, 0.05 );
+        backdrop-filter: blur( 10px );
+        box-shadow: 0px 0px 20px rgba( black, 0.3 );
     }
 
     .bar {
-        width: 50%;
         height: 100%;
-        background-color: rgba( white, 0.5 );
-        backdrop-filter: blur( 10px );
+        backdrop-filter: blur( 50x );
         border-radius: 6px;
     }
 
     .icon {
-        top: 4px;
+        position: absolute;
         height: 100%;
+        left: 4px;
         aspect-ratio: 1;
-        background-size: 100%;
+        background-size: 60%;
         background-repeat: no-repeat;
         background-position: center;
-        opacity: 0.7;
+        background-tint: black;
+        opacity: 0.5;
     }
 
     &.invisible {
         opacity: 0;
         height: 0px;
+    }
+
+    &.small {
+        width: 8%;
     }
 }

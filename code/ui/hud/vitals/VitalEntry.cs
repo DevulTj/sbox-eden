@@ -10,7 +10,7 @@ namespace Eden;
 public partial class VitalEntry : Panel
 {
 	// @ref
-	public Panel Icon { get; set; }
+	public Image Icon { get; set; }
 	// @ref
 	public Panel Bar { get; set; }
 	// @ref
@@ -20,6 +20,8 @@ public partial class VitalEntry : Panel
 	public float BoundMaxValue { get; set; } = 100f;
 
 	public string FormattedValue { get; set; }
+
+	public virtual string Gradient => "linear-gradient(44deg, rgba( #e84118, 0.5 ), rgba( #c23616, 0.5 ) )";
 
 	public VitalEntry()
 	{
@@ -43,5 +45,7 @@ public partial class VitalEntry : Panel
 		Label.Text = GetLabelText();
 
 		Bar.Style.Width = Length.Percent( BoundValue / BoundMaxValue * 100f );
+
+		Bar.Style.Set( $"background-image: {Gradient};" );
 	}
 }

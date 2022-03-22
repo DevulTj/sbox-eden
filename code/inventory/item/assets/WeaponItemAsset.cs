@@ -10,7 +10,6 @@ namespace Eden;
 public partial class WeaponItemAsset : ItemAsset
 {
 	public override ItemType Type => ItemType.Weapon;
-	public override Color DefaultColor => Color.Blue;
 
 	[Property]
 	public string WeaponClassName { get; set; }

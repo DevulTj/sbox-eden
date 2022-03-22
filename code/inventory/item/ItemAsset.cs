@@ -42,7 +42,7 @@ public partial class ItemAsset : Asset
 	}
 
 	public virtual ItemType Type => ItemType.Item;
-	public virtual Color DefaultColor => Color.White;
+	public virtual Color DefaultColor => new Color32( 113, 128, 147 ).ToColor();
 
 	[Property, Category( "Meta" )]
 	public string ItemName { get; set; }

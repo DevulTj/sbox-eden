@@ -10,204 +10,214 @@ namespace Eden;
 
 public partial class Container : BaseNetworkable
 {
-    public override string ToString() => $"[{Size}]( {string.Join( ", ", Items )} )";
+	public override string ToString() => $"[{Size}]( {string.Join( ", ", Items )} )";
 
-    [Net]
-    public Player Owner { get; set; }
+	[Net]
+	public Player Owner { get; set; }
 
-    [Net]
-    public int Size { get; protected set; } = 12;
+	/// <summary>
+	/// Used for world containers
+	/// </summary>
+	[Net]
+	public Entity Parent { get; set; }
 
-    [Net]
-    public string Name { get; set; } = "";
+	[Net]
+	public int Size { get; protected set; } = 12;
 
-    [Net]
-    public IList<Slot> Items { get; protected set; }
+	[Net]
+	public string Name { get; set; } = "";
 
-    /// <summary>
-    /// Used to interact with the Container over the network
-    /// </summary>
-    [Net]
-    public Guid ID { get; set; }
+	[Net]
+	public IList<Slot> Items { get; protected set; }
 
-    public Container()
-    {
-        if ( Host.IsServer )
-            ContainerNetwork.Register( this );
-    }
+	/// <summary>
+	/// Used to interact with the Container over the network
+	/// </summary>
+	[Net]
+	public Guid ID { get; set; }
 
-    public Container( Player owner ) : this()
-    {
-        Owner = owner;
-    }
+	public Container()
+	{
+		if ( Host.IsServer )
+			ContainerNetwork.Register( this );
+	}
 
-    ~Container()
-    {
-        if ( Host.IsServer )
-            ContainerNetwork.Dispose( this );
-    }
+	public Container( Player owner ) : this()
+	{
+		Owner = owner;
+	}
 
-    public void SetSize( int size )
-    {
-        Items.Clear();
+	~Container()
+	{
+		if ( Host.IsServer )
+			ContainerNetwork.Dispose( this );
+	}
 
-        Size = size;
+	public void SetSize( int size )
+	{
+		Items.Clear();
 
-        for ( int i = 0; i < size; i++ )
-        {
-            var slot = new Slot();
-            Items.Add( slot );
-        }
-    }
+		Size = size;
 
-    public int FindEmptySlot()
-    {
-        for ( int i = 0; i < Items.Count; i++ )
-        {
-            var slot = Items[i];
-            if ( slot.Item is null )
-                return i;
-        }
+		for ( int i = 0; i < size; i++ )
+		{
+			var slot = new Slot();
+			Items.Add( slot );
+		}
+	}
 
-        return -1;
-    }
+	public int FindEmptySlot()
+	{
+		for ( int i = 0; i < Items.Count; i++ )
+		{
+			var slot = Items[i];
+			if ( slot.Item is null )
+				return i;
+		}
 
-    public int Add( Item item, int quantity = 1 )
-    {
-        if ( item is null ) return -1;
+		return -1;
+	}
 
-        int quantityLeft = quantity;
-        int maxStack = item.MaxStack;
+	public int Add( Item item, int quantity = 1 )
+	{
+		if ( item is null ) return -1;
 
-        // Try and fill items that exist
-        int lastSlot = -1;
-        for ( int i = 0; i < Items.Count; i++ )
-        {
-            var slot = Items[i];
+		int quantityLeft = quantity;
+		int maxStack = item.MaxStack;
 
-            if ( slot.Item is not null && slot.Quantity <= maxStack )
-            {
-                bool sameType = slot.Item.IsSame( item );
-                if ( !sameType ) continue;
+		// Try and fill items that exist
+		int lastSlot = -1;
+		for ( int i = 0; i < Items.Count; i++ )
+		{
+			var slot = Items[i];
 
-                var availableSpace = maxStack - slot.Quantity;
-                var amountToAdd = Math.Min( availableSpace, quantity );
+			if ( slot.Item is not null && slot.Quantity <= maxStack )
+			{
+				bool sameType = slot.Item.IsSame( item );
+				if ( !sameType ) continue;
 
-                slot.SetQuantity( slot.Quantity + amountToAdd );
+				var availableSpace = maxStack - slot.Quantity;
+				var amountToAdd = Math.Min( availableSpace, quantity );
 
-                quantityLeft -= amountToAdd;
-                lastSlot = i;
-            }
-        }
+				slot.SetQuantity( slot.Quantity + amountToAdd );
 
-        // Now let's go through empty slots
-        while ( quantityLeft > 0 )
-        {
-            var newQuantity = quantityLeft.Clamp( 1, maxStack );
-            var slot = FindEmptySlot();
+				quantityLeft -= amountToAdd;
+				lastSlot = i;
+			}
+		}
 
-            if ( slot != -1 )
-            {
-                Items[slot].SetItem( item );
-                Items[slot].SetQuantity( newQuantity );
+		// Now let's go through empty slots
+		while ( quantityLeft > 0 )
+		{
+			var newQuantity = quantityLeft.Clamp( 1, maxStack );
+			var slot = FindEmptySlot();
 
-                quantityLeft -= newQuantity;
+			if ( slot != -1 )
+			{
+				Items[slot].SetItem( item );
+				Items[slot].SetQuantity( newQuantity );
 
-                OnItemAdded( item, slot );
+				quantityLeft -= newQuantity;
 
-                lastSlot = slot;
-            }
-            else if ( Owner is not null )
-            {
-                ItemEntity.Create( Owner, item, quantityLeft );
-                return lastSlot;
-            }
+				OnItemAdded( item, slot );
 
-        }
+				lastSlot = slot;
+			}
+			else if ( Owner is not null )
+			{
+				ItemEntity.Create( Owner, item, quantityLeft );
+				return lastSlot;
+			}
 
-        return lastSlot;
-    }
+		}
 
-    public void Remove( int slot )
-    {
-        Items[slot].RemoveItem();
-        Items[slot].SetQuantity( 1 );
+		return lastSlot;
+	}
 
-        OnItemRemoved( slot );
-    }
+	public void Remove( int slot )
+	{
+		Items[slot].RemoveItem();
+		Items[slot].SetQuantity( 1 );
 
-    public void Move( int slotAIndex, int slotBIndex, Container destination = null )
-    {
-        Slot slotA = Items[slotAIndex];
-        Slot slotB = destination is not null ? destination.Items[slotBIndex] : Items[slotBIndex];
+		OnItemRemoved( slot );
+	}
 
-        Item slotAItem = slotA.Item;
-        if ( slotAItem is null ) return;
+	public void Move( int slotAIndex, int slotBIndex, Container destination = null )
+	{
+		Slot slotA = Items[slotAIndex];
+		Slot slotB = destination is not null ? destination.Items[slotBIndex] : Items[slotBIndex];
 
-        Item slotBItem = slotB.Item;
+		Item slotAItem = slotA.Item;
+		if ( slotAItem is null ) return;
 
-        bool sameType = slotAItem.IsSame( slotBItem );
-        if ( sameType )
-        {
-            // Combine items together
-            // How many items can we move from A to B?
-            int availableSpaceOnB = slotBItem.MaxStack - slotB.Quantity;
-            // Clamp it to our available items
-            int amountToAdd = Math.Min( availableSpaceOnB, slotA.Quantity );
-            // Update destination's slots
-            slotB.SetQuantity( slotB.Quantity + amountToAdd );
+		Item slotBItem = slotB.Item;
 
-            int newQuantityForA = slotA.Quantity - amountToAdd;
-            if ( newQuantityForA < 1 )
-                Remove( slotAIndex );
-            else
-                slotA.SetQuantity( newQuantityForA );
+		bool sameType = slotAItem.IsSame( slotBItem );
+		if ( sameType )
+		{
+			// Combine items together
+			// How many items can we move from A to B?
+			int availableSpaceOnB = slotBItem.MaxStack - slotB.Quantity;
+			// Clamp it to our available items
+			int amountToAdd = Math.Min( availableSpaceOnB, slotA.Quantity );
+			// Update destination's slots
+			slotB.SetQuantity( slotB.Quantity + amountToAdd );
 
-            OnItemMoved( slotAIndex, slotBIndex, destination );
-        }
-        else
-        {
-            int quantityOfA = slotA.Quantity;
+			int newQuantityForA = slotA.Quantity - amountToAdd;
+			if ( newQuantityForA < 1 )
+				Remove( slotAIndex );
+			else
+				slotA.SetQuantity( newQuantityForA );
 
-            // Set new A
-            slotA.SetItem( slotBItem );
-            slotA.SetQuantity( slotB.Quantity );
-            // Set new B
-            slotB.SetItem( slotAItem );
-            slotB.SetQuantity( quantityOfA );
+			OnItemMoved( slotAIndex, slotBIndex, destination );
+		}
+		else
+		{
+			int quantityOfA = slotA.Quantity;
 
-            OnItemMoved( slotAIndex, slotBIndex, destination );
-        }
-    }
+			// Set new A
+			slotA.SetItem( slotBItem );
+			slotA.SetQuantity( slotB.Quantity );
+			// Set new B
+			slotB.SetItem( slotAItem );
+			slotB.SetQuantity( quantityOfA );
 
-    public Slot GetSlot( int slotA )
-    {
-        if ( slotA >= Items.Count )
-            return null;
+			OnItemMoved( slotAIndex, slotBIndex, destination );
+		}
+	}
 
-        return Items[slotA];
-    }
+	public Slot GetSlot( int slotA )
+	{
+		if ( slotA >= Items.Count )
+			return null;
 
-    public virtual bool HasAccess( Player player )
-    {
-        if ( Owner.IsValid() )
-            return Owner == player;
+		return Items[slotA];
+	}
 
-        return true;
-    }
+	public virtual bool HasAccess( Player player )
+	{
+		if ( Owner.IsValid() )
+			return Owner == player;
 
-    protected virtual void OnItemMoved( int slotA, int slotB, Container destination = null )
-    {
-        //
-    }
+		// Must be close to the object
+		if ( Parent.IsValid() )
+			return player.Position.Distance( Parent.Position ) < 128f;
 
-    protected virtual void OnItemRemoved( int slotA )
-    {
-        //
-    }
+		return true;
+	}
 
-    protected virtual void OnItemAdded( Item item, int slot )
-    {
-        //
-    }
+	protected virtual void OnItemMoved( int slotA, int slotB, Container destination = null )
+	{
+		//
+	}
+
+	protected virtual void OnItemRemoved( int slotA )
+	{
+		//
+	}
+
+	protected virtual void OnItemAdded( Item item, int slot )
+	{
+		//
+	}
 }

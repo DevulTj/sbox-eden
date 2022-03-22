@@ -10,6 +10,8 @@ namespace Eden;
 [UseTemplate]
 public partial class MainMenuPanel : Panel
 {
+	public static MainMenuPanel Instance { get; protected set; }
+
 	public bool IsOpen { get; protected set; } = false;
 
 	public List<MainMenuPage> Pages { get; set; } = new();
@@ -32,6 +34,12 @@ public partial class MainMenuPanel : Panel
 
 	public MainMenuPanel()
 	{
+		Instance = this;
+	}
+
+	public void SetOpen( bool state = true )
+	{
+		IsOpen = state;
 	}
 
 	protected void Setup()
@@ -93,7 +101,10 @@ public partial class MainMenuPanel : Panel
 	public void BuildInput( InputBuilder input )
 	{
 		if ( input.Pressed( InputButton.Score ) )
+		{
 			IsOpen = !IsOpen;
+			Event.Run( IsOpen ? GameEvent.Client.MainMenuOpened : GameEvent.Client.MainMenuClosed );
+		}
 
 		if ( !IsOpen ) return;
 

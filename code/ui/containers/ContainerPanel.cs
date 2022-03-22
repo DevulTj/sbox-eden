@@ -32,6 +32,16 @@ public partial class ContainerPanel : Panel
 
 	public void SetContainer( Container container )
 	{
+		if ( container is null )
+		{
+			Container = null;
+			Title = "";
+			ItemLayout.DeleteChildren( true );
+			Slots.Clear();
+
+			return;
+		}
+
 		Container = container;
 		Title = container.Name;
 
