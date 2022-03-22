@@ -22,7 +22,7 @@ public partial class ResourceAsset : Asset
 	public ResourceType ResourceType { get; set; }
 
 	[Property, Category( "Gathering" ), Sandbox.Description( "Whether or not the resource can be collected with 'E'" )]
-	public bool Collectable { get; set; }
+	public bool IsCollectable { get; set; }
 
 	[Property, Category( "Gathering" )]
 	public int RequiredHitsPerItem { get; set; }

@@ -19,7 +19,7 @@
 		0 : "Wood"
 		1 : "Stone"
 	]
-	collectable(boolean) { group = "Gathering" } : "Collectable" : 0 : "Whether or not the resource can be collected with 'E'"
+	iscollectable(boolean) { group = "Gathering" } : "Is Collectable" : 0 : "Whether or not the resource can be collected with 'E'"
 	requiredhitsperitem(integer) { group = "Gathering" } : "Required Hits Per Item" : 0 : ""
 	itemstogather(array:struct:Eden_ResourceItemQuantity) { group = "Gathering" } : "Items To Gather" :  : ""
 ]

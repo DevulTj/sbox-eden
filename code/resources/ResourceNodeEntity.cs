@@ -67,7 +67,7 @@ public partial class ResourceNodeEntity : Prop, IUse
 			return;
 		}
 
-		if ( ResourceAsset.Collectable )
+		if ( ResourceAsset.IsCollectable )
 			return;
 
 		var gatherableResource = AvailableItems.FirstOrDefault();
@@ -154,6 +154,6 @@ public partial class ResourceNodeEntity : Prop, IUse
 
 	public bool IsUsable( Entity user )
 	{
-		return ResourceAsset.Collectable;
+		return ResourceAsset.IsCollectable;
 	}
 }

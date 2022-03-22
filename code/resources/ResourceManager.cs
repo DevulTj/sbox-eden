@@ -191,7 +191,7 @@ public partial class ResourceManager
 		entity.Position = point;
 
 		// TODO: Handle this better, this will only work for entities that you want to lay down flat on the terrain.
-		if ( entity.ResourceAsset.Collectable )
+		if ( entity.ResourceAsset.IsCollectable )
 			entity.Rotation = Rotation.LookAt( normal );
 
 		entity.OnDestroyed += OnResourceDestroyed;

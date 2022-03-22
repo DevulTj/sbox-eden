@@ -16,6 +16,6 @@
 			},
 		]
 		requiredhitsperitem = 0
-		collectable = true
+		iscollectable = true
 	}
 }

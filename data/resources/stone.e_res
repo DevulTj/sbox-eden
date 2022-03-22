@@ -8,7 +8,6 @@
 			resource:"models/resources/small_stones_blockout.vmdl",
 		]
 		resourcetype = "1"
-		collectable = true
 		requiredhitsperitem = 0
 		itemstogather = 
 		[
@@ -17,5 +16,6 @@
 				initialamount = 1
 			},
 		]
+		iscollectable = true
 	}
 }
