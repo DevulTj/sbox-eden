@@ -10,7 +10,6 @@ namespace Eden;
 public partial class DeployableItemAsset : ItemAsset
 {
 	public override ItemType Type => ItemType.Deployable;
-	public override Color DefaultColor => Color.Red;
 
 	[Property]
 	public string EntityClassName { get; set; }

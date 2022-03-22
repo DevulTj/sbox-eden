@@ -11,7 +11,6 @@ namespace Eden;
 public partial class ConsumableItemAsset : ItemAsset
 {
 	public override ItemType Type => ItemType.Consumable;
-	public override Color DefaultColor => Color.Green;
 
 	[Property, Category( "Consumable" ), Range( 0, 500 )]
 	public int Hunger { get; set; } = 0;
