@@ -19,7 +19,7 @@
 							},
 							{
 								from = "trunk.vmat"
-								to = "materials/mi_trunks_01.vmat"
+								to = "models/resources/trees/materials/bark.vmat"
 							},
 							{
 								from = "leaves_solid.vmat"
