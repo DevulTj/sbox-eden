@@ -3,7 +3,7 @@
 	data = 
 	{
 		resourcename = "Tree"
-		worldmodelpath = resource:"models/resources/resource_tree.vmdl"
+		worldmodelpath = resource:"models/resources/trees/tree1.vmdl"
 		resourcetype = "0"
 		itemstogather = 
 		[
