@@ -98,8 +98,16 @@ public partial class CraftingMenuPanel : Panel
 
 	public ItemCategory CurrentCategory { get; set; }
 
+	public CraftingItemButton CurrentItem { get; set; }
+
 	public CraftingMenuPanel()
 	{
+	}
+
+	public void SetItem( ItemAsset item, CraftingItemButton button )
+	{
+		Inspector.SetItem( item );
+		CurrentItem = button;
 	}
 
 	public void SetCategory( ItemCategory category )
@@ -114,10 +122,11 @@ public partial class CraftingMenuPanel : Panel
 
 			var itemButton = new CraftingItemButton( item );
 			itemButton.Parent = ItemsLayout;
-			itemButton.AddEventListener( "onclick", () => Inspector.SetItem( item ) );
+			itemButton.AddEventListener( "onclick", () => SetItem( item, itemButton ) );
+			itemButton.BindClass( "current", () => CurrentItem == itemButton );
 
 			if ( Inspector.ItemAsset is null )
-				Inspector.SetItem( item );
+				SetItem( item, itemButton );
 		}
 	}
 

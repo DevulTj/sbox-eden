@@ -5,7 +5,6 @@ craftingmenupanel {
     height: 100%;
     bottom: 40px;
     transition: opacity 0.2s ease;
-    background-image: linear-gradient(to right, rgba( black, 0.5 ), rgba( black, 0 ) );
     padding-left: 10%;
     padding-top: 3.6%;
     padding-right: 10%;
@@ -118,6 +117,12 @@ craftingmenupanel {
                 bottom: 0;
                 text-outline: 1px black;
                 text-align: center;
+            }
+
+            &.current {
+                transform: scale( 1.05 );
+                background-image: linear-gradient(to right, rgba( white, 0.5 ), rgba( #888888, 0.3 ) );
+                padding-left: 0px;
             }
 
             .amount {
