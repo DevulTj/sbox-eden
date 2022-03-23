@@ -59,6 +59,7 @@ public partial class CraftingItemButton : Button
 		//
 		Add.Image( item.IconPath, "icon" );
 		AmountLabel = Add.Label( "0", "amount" );
+		Add.Label( item.ItemName, "name" );
 	}
 
 	public override void Tick()
