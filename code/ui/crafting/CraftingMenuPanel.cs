@@ -6,6 +6,7 @@ using Sandbox.UI;
 using Sandbox.UI.Construct;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Eden;
 
@@ -127,6 +128,13 @@ public partial class CraftingMenuPanel : Panel
 		}
 	}
 
+	protected async Task RunCategoryDelayHack()
+	{
+		await GameTask.DelaySeconds( 0.1f );
+
+		SetCategory( ItemCategory.Tools );
+	}
+
 	protected override void PostTemplateApplied()
 	{
 		base.PostTemplateApplied();
@@ -144,6 +152,6 @@ public partial class CraftingMenuPanel : Panel
 			button.SetCount( ItemAsset.FromCategory( category ).Count );
 		}
 
-		SetCategory( ItemCategory.Tools );
+		_ = RunCategoryDelayHack();
 	}
 }
