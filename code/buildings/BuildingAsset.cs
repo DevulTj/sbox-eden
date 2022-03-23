@@ -29,10 +29,10 @@ public class BuildingAsset : Asset
 		return true;
 	}
 
-	public bool CheckValidPlacement( Vector3 position, Rotation rotation )
+	public bool CheckValidPlacement( Vector3 position )
 	{
-		// TODO
-		return true;
+		var bounds = BuildingModel.PhysicsBounds;
+		return !Trace.Ray( position, position ).Size( bounds ).Run().Hit;
 	}
 
 	public Model BuildingModel { get; set; }
