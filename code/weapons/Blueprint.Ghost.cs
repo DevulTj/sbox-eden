@@ -51,7 +51,8 @@ partial class Blueprint : Weapon
 				return;
 
 			var snappedTransform = Blueprint.GetSnappedTransform();
-			SceneObject.Transform = snappedTransform;
+			SceneObject.Position = snappedTransform.Position;
+			SceneObject.Rotation = snappedTransform.Rotation;
 		}
 	}
 }
