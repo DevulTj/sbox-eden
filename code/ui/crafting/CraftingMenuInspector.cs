@@ -20,9 +20,9 @@ public partial class CraftingMenuRecipeItem : Panel
 	public void SetItem( CraftingEntry entry, bool canAfford, int weHave )
 	{
 		var asset = entry.ItemAsset;
-		var our = Add.Label( $"({weHave})", "recipe-our" );
-		var amount = Add.Label( $"{entry.Amount}", "recipe-amount" );
 		var name = Add.Label( $"{asset.ItemName}", "recipe-name" );
+		var amount = Add.Label( $"{entry.Amount}", "recipe-amount" );
+		var our = Add.Label( $"({weHave})", "recipe-our" );
 
 		SetClass( "can-afford", canAfford );
 	}
@@ -77,6 +77,7 @@ public partial class CraftingMenuInspector : Panel
 			recipeItem.SetItem( item, canAfford, weHave );
 
 			CraftButton.SetClass( "cant-afford", !canAfford );
+			CraftButton.Text = canAfford ? "Craft item" : "Not enough items";
 		}
 	}
 

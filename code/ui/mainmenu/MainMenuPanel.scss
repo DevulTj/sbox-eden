@@ -20,7 +20,7 @@ mainmenupanel {
         pointer-events: all;
     }
 
-    .header-bg {
+    > .header-bg {
         position: absolute;
         opacity: 0.9;
         width: 100%;
@@ -30,7 +30,7 @@ mainmenupanel {
         border-bottom: 2px solid rgba( white, 0.5 );
     }
 
-    .header {
+    > .header {
         opacity: 0.9;
         width: 100%;
         height: 10%;
@@ -112,13 +112,13 @@ mainmenupanel {
         }
     }
 
-    .main {
+    > .main {
         width: 100%;
         height: 85%;
         background-color: rgba( #1E212D, 0.9 );
     }
 
-    .footer {
+    > .footer {
         opacity: 0.9;
         width: 100%;
         height: 5%;

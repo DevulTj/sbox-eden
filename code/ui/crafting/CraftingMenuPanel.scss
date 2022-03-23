@@ -5,41 +5,60 @@ craftingmenupanel {
     height: 100%;
     bottom: 40px;
     transition: opacity 0.2s ease;
-    padding-left: 10%;
+    padding-left: 15%;
     padding-top: 3.6%;
-    padding-right: 10%;
-    padding-bottom: 5%;
+    padding-right: 15%;
+    padding-bottom: 5;
+
+
+    > .main {
+        flex-direction: column;
+    }
+
+    .category-title {
+        position: absolute;
+        margin-left: 23%;
+        top: 40px;
+        font-size: 32px;
+        font-weight: 600;
+    }
 
     .categories {
-        height: 100%;
-        width: 256px;
-        flex-direction: column;
+        height: 50px;
+        width: 100%;
+        flex-direction: row;
         flex-wrap: nowrap;
         justify-content: flex-start;
         align-items: flex-start;
         align-content: flex-start;
-        padding: 16px;
-        padding-top: 8px;
 
         .category {
-            border-radius: 4px;
-            margin-top: 8px;
+            border-radius: 0px;
             height: 50px;
-            width: 240px;
+            width: 250px;
             transition: all 0.1s ease;
             background-color: rgba( white, 0.02 );
+
+            &:first-child {
+                border-radius: 8px 0px 0px 8px;
+            }
+
+            &:last-child {
+                border-radius: 0px 8pxx 8px 0px;
+            }
 
             .name {
                 height: 100%;
                 align-items: center;
                 text-stroke: 1px black;
                 font-weight: 600;
+                font-size: 16px;
             }
 
             &:hover {
                 background-image: linear-gradient(to right, rgba( white, 0.5 ), rgba( #888888, 0.3 ) );
                 cursor: pointer;
-                padding-left: 8px;
+                padding-left: 2px;
             }
 
             &:active {
@@ -47,7 +66,6 @@ craftingmenupanel {
             }
 
             &.current {
-                transform: scale( 1.15 );
                 background-image: linear-gradient(to right, rgba( white, 0.5 ), rgba( #888888, 0.3 ) );
                 padding-left: 0px;
             }
@@ -64,21 +82,37 @@ craftingmenupanel {
                 height: 100%;
                 right: 8px;
                 align-items: center;
-                text-stroke: 1px black;
+                font-size: 12px;
+                font-weight: 900;
             }
         }
     }
 
+    .queue-container {
+        min-height: 64px;
+        margin-bottom: 32px;
+        background-color: rgba( white, 0.02 );
+        border-radius: 4px;
+
+        .queue-title {
+            padding-left: 5%;
+            font-weight: 900;
+            font-size: 40px;
+            height: 100%;
+            align-items: center;
+            opacity: 0.02;
+            text-transform: uppercase;
+        }
+    }
+
     .items {
-        left: 48px;
-        width: 60%;
         height: 100%;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: flex-start;
         align-items: baseline;
         align-content: flex-start;
-        padding: 16px;
+        padding-top: 32px;
 
         .item {
             width: 140px;
