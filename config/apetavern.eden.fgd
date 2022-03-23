@@ -84,6 +84,16 @@ metadata
 ]
 
 //
+// Eden.StonePickaxe
+//
+@PointClass base(BaseProperties_apetavern_eden) = eden_pickaxe_stone : ""
+[
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+
+	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
+]
+
+//
 // Eden.Box
 //
 @PointClass base(BaseProperties_apetavern_eden) tags( Physics ) model() = eden_container_box : ""

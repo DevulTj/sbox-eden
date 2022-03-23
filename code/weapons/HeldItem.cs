@@ -11,122 +11,122 @@ namespace Eden;
 [Library( "eden_held_item", Title = "Held Item", Spawnable = false )]
 partial class HeldItem : Weapon
 {
-    // 
+	// 
 
-    protected Item _item { get; set; }
-    public Item Item
-    {
-        get => _item; set
-        {
-            _item = value;
+	protected Item _item { get; set; }
+	public Item Item
+	{
+		get => _item; set
+		{
+			_item = value;
 
-            if ( Item.Asset.WorldModel is not null )
-                Model = Item.Asset.WorldModel;
-        }
-    }
+			if ( Item.Asset.WorldModel is not null )
+				Model = Item.Asset.WorldModel;
+		}
+	}
 
-    [Net]
-    public int Quantity { get; set; } = 1;
+	[Net]
+	public int Quantity { get; set; } = 1;
 
-    public int HotbarSlotIndex { get; set; } = -1;
+	public int HotbarSlotIndex { get; set; } = -1;
 
-    public override float PrimaryRate => 1.0f;
+	public override float PrimaryRate => 1.0f;
 
-    public override bool CanReload()
-    {
-        return false;
-    }
+	public override bool CanReload()
+	{
+		return false;
+	}
 
-    public override void Spawn()
-    {
-        base.Spawn();
+	public override void Spawn()
+	{
+		base.Spawn();
 
-        Model = ItemAsset.FallbackWorldModel;
-    }
+		Model = ItemAsset.FallbackWorldModel;
+	}
 
-    public override void CreateHudElements()
-    {
-        Crosshair.SetCrosshair( new HandsCrosshair() );
-    }
+	public override void CreateHudElements()
+	{
+		Crosshair.SetCrosshair( new HandsCrosshair() );
+	}
 
-    // @TODO: hack central, find a better way for this
-    public async Task DelayedDelete( Player player, int slotIndex )
-    {
-        await GameTask.DelaySeconds( 0.2f );
+	// @TODO: hack central, find a better way for this
+	public async Task DelayedDelete( Player player, int slotIndex )
+	{
+		await GameTask.DelaySeconds( 0.2f );
 
-        player.Hotbar.Remove( slotIndex );
-        ContainerNetwork.UpdatePlayer( To.Single( player.Client ), player.Hotbar.ID.ToString() );
-    }
+		player.Hotbar.Remove( slotIndex );
+		ContainerNetwork.UpdatePlayer( To.Single( player.Client ), player.Hotbar.ID.ToString() );
+	}
 
-    protected void Throw()
-    {
-        ViewModelEntity?.SetAnimParameter( "fire", true );
-        ( Owner as AnimEntity )?.SetAnimParameter( "b_attack", true );
+	protected void Throw()
+	{
+		ViewModelEntity?.SetAnimParameter( "fire", true );
+		( Owner as AnimEntity )?.SetAnimParameter( "b_attack", true );
 
-        if ( IsServer )
-        {
-            var entity = ItemEntity.Create( Item, Quantity );
-            entity.Position = Position + Owner.EyeRotation.Forward * 10f;
-            entity.ApplyAbsoluteImpulse( Owner.EyeRotation.Forward * 1000f + Vector3.Up * 100f );
+		if ( IsServer )
+		{
+			var entity = ItemEntity.Create( Item, Quantity );
+			entity.Position = Position + Owner.EyeRotation.Forward * 10f;
+			entity.ApplyAbsoluteImpulse( Owner.EyeRotation.Forward * 1000f + Vector3.Up * 100f );
 
-            _ = DelayedDelete( Owner as Player, HotbarSlotIndex );
+			_ = DelayedDelete( Owner as Player, HotbarSlotIndex );
 
 
-            // @TODO: rethink, this is shit
+			// @TODO: rethink, this is shit
 
-        }
-    }
+		}
+	}
 
-    public override void AttackPrimary()
-    {
-        Throw();
-    }
+	public override void AttackPrimary()
+	{
+		Throw();
+	}
 
-    protected override void OnPlayerUse()
-    {
-    }
+	protected override void OnPlayerUse()
+	{
+	}
 
-    public override void OnCarryStart( Entity carrier )
-    {
-        base.OnCarryStart( carrier );
+	public override void OnCarryStart( Entity carrier )
+	{
+		base.OnCarryStart( carrier );
 
-        SetParent( carrier, null );
-    }
+		SetParent( carrier, null );
+	}
 
-    public override void OnCarryDrop( Entity dropper )
-    {
-    }
+	public override void OnCarryDrop( Entity dropper )
+	{
+	}
 
-    public override void SimulateAnimator( PawnAnimator anim )
-    {
-        anim.SetAnimParameter( "holdtype", HoldType.Item.ToInt() );
-        anim.SetAnimParameter( "holdtype_handedness", HoldHandedness.RightHand.ToInt() );
-        anim.SetAnimParameter( "holdtype_pose_hand", 0.07f );
-        anim.SetAnimParameter( "holdtype_attack", 1f );
-    }
+	public override void SimulateAnimator( PawnAnimator anim )
+	{
+		anim.SetAnimParameter( "holdtype", HoldType.Item.ToInt() );
+		anim.SetAnimParameter( "holdtype_handedness", HoldHandedness.RightHand.ToInt() );
+		anim.SetAnimParameter( "holdtype_pose_hand", 0.07f );
+		anim.SetAnimParameter( "holdtype_attack", 1f );
+	}
 
-    public override void CreateViewModel()
-    {
-        ViewModelData = new()
-        {
-            SwingInfluence = 0.03f,
-            Offset = new Vector3( 1f, -1f, -4f ),
-        };
+	public override void CreateViewModel()
+	{
+		ViewModelData = new()
+		{
+			SwingInfluence = 0.03f,
+			Offset = new Vector3( 1f, -1f, -4f ),
+		};
 
-        base.CreateViewModel();
-    }
+		base.CreateViewModel();
+	}
 
-    public override void Simulate( Client owner )
-    {
-        base.Simulate( owner );
+	public override void Simulate( Client owner )
+	{
+		base.Simulate( owner );
 
-        var player = Owner as Player;
-        if ( !player.IsValid() )
-            return;
+		var player = Owner as Player;
+		if ( !player.IsValid() )
+			return;
 
-        var boneId = player.GetBoneIndex( "hand_R" );
-        var bone = player.GetBoneTransform( boneId, true );
+		var boneId = player.GetBoneIndex( "hand_R" );
+		var bone = player.GetBoneTransform( boneId, true );
 
-        Position = bone.Position;
-    }
+		Position = bone.Position;
+	}
 }

@@ -2,20 +2,20 @@
 {
 	data = 
 	{
-		resourcename = "Stick"
-		worldmodelpath = resource:
+		resourcename = "Stone"
+		worldmodelpath = 
 		[
-			resource:"models/items/sticks/stick.vmdl",
+			resource:"models/resources/small_stones_blockout.vmdl",
 		]
-		resourcetype = "0"
+		resourcetype = "1"
+		requiredhitsperitem = 0
 		itemstogather = 
 		[
 			{
-				itemassetname = "wooden_stick"
-				initialamount = 2
+				itemassetname = "stone"
+				initialamount = 1
 			},
 		]
-		requiredhitsperitem = 0
 		iscollectable = true
 	}
 }

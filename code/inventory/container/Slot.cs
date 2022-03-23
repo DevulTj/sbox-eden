@@ -7,70 +7,70 @@ namespace Eden;
 
 public partial class Slot : BaseNetworkable, INetworkSerializer
 {
-    public override string ToString() => Item is null ? "Empty" : Item.ToString();
+	public override string ToString() => Item is null ? "Empty" : Item.ToString();
 
-    // @net
-    public Item Item { get; protected set; } = null;
-    // @net
-    public int Quantity { get; protected set; } = 1;
+	// @net
+	public Item Item { get; protected set; } = null;
+	// @net
+	public int Quantity { get; protected set; } = 1;
 
-    public void SetItem( ItemAsset asset )
-    {
-        Item = asset.Type.Create();
-        Item.Asset = asset;
+	public void SetItem( ItemAsset asset )
+	{
+		Item = asset.Type.Create();
+		Item.Asset = asset;
 
-        WriteNetworkData();
-    }
+		WriteNetworkData();
+	}
 
-    public void SetItem( Item item )
-    {
-        Item = item;
+	public void SetItem( Item item )
+	{
+		Item = item;
 
-        WriteNetworkData();
-    }
+		WriteNetworkData();
+	}
 
-    public void RemoveItem()
-    {
-        Item = null;
+	public void RemoveItem()
+	{
+		Item = null;
 
-        WriteNetworkData();
-    }
+		WriteNetworkData();
+	}
 
-    public void SetQuantity( int quantity )
-    {
-        Quantity = quantity;
+	public void SetQuantity( int quantity )
+	{
+		Quantity = quantity;
 
-        WriteNetworkData();
-    }
+		WriteNetworkData();
+	}
 
-    void INetworkSerializer.Read( ref NetRead read )
-    {
-        var hasItem = read.Read<bool>();
-        if ( !hasItem )
-        {
-            Item = null;
-            return;
-        }
+	void INetworkSerializer.Read( ref NetRead read )
+	{
+		var hasItem = read.Read<bool>();
+		if ( !hasItem )
+		{
+			Item = null;
+			return;
+		}
 
-        Quantity = read.Read<int>();
+		Quantity = read.Read<int>();
 
-        var type = read.Read<ItemType>();
-        var newItem = type.Create();
-        newItem.Read( read );
+		var type = read.Read<ItemType>();
+		var newItem = type.Create();
+		newItem.Read( read );
 
-        Item = newItem;
-    }
+		Item = newItem;
+	}
 
-    void INetworkSerializer.Write( NetWrite write )
-    {
-        write.Write( Item is not null );
+	void INetworkSerializer.Write( NetWrite write )
+	{
+		write.Write( Item is not null );
 
-        if ( Item is not null )
-        {
-            write.Write( Quantity );
-            write.Write( Item.Type );
-            Item.Write( write );
+		if ( Item is not null )
+		{
+			write.Write( Quantity );
+			write.Write( Item.Type );
+			Item.Write( write );
 
-        }
-    }
+		}
+	}
 }

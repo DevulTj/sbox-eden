@@ -8,16 +8,16 @@ using System.Linq;
 
 namespace Eden;
 
-[Library( "eden_hatchet_stone", Title = "Stone Hatchet", Spawnable = false )]
-partial class StoneHatchet : MeleeWeapon
+[Library( "eden_pickaxe_stone", Title = "Stone Pickaxe", Spawnable = false )]
+partial class StonePickaxe : MeleeWeapon
 {
 	public override string ViewModelPath => "models/tools/hatchet/hatchet_v.vmdl";
 	public override float PrimaryRate => 1.0f;
 
 	public override Dictionary<ResourceType, float> ResourceYield => new()
 	{
-		{ ResourceType.Wood, 1 },
-		{ ResourceType.Stone, 0 }
+		{ ResourceType.Wood, 0.1f },
+		{ ResourceType.Stone, 1 }
 	};
 
 	public override void Spawn()
