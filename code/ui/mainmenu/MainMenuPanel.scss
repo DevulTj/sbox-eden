@@ -6,16 +6,18 @@ mainmenupanel {
     left: 0;
     bottom: 0;
     right: 0;
-    transition: opacity 0.2s ease;
+    transition: all 0.2s ease;
     // Go to the front
     z-index: 100;
     // Default is invisible
     opacity: 0;
+    transform: scale( 1.05 );
     backdrop-filter: blur( 50px );
     background-color: rgba( black, 0.5 );
     flex-direction: column;
 
     &.open {
+        transform: scale( 1 );
         opacity: 1;
         pointer-events: all;
     }
