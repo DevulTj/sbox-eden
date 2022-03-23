@@ -29,6 +29,8 @@ public partial class Game : Sandbox.Game
 			ResourceManager = new();
 			DayNightSystem = new();
 		}
+
+		CacheAssets();
 	}
 
 	public override void PostLevelLoaded()

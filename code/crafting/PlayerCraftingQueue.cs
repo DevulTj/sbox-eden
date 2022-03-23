@@ -48,7 +48,7 @@ public partial class PlayerCraftingQueue : CraftingQueue
 		t.AddContainer( Player.Hotbar, Player.Backpack );
 
 		foreach ( var item in asset.Recipe.Items )
-			t.AddRequirement( new ContainerTransactionItem() { ItemAsset = ItemAsset.FromName( item.ItemId ), Quantity = item.Amount } );
+			t.AddRequirement( new ContainerTransactionItem() { ItemAsset = item.ItemAsset, Quantity = item.Amount } );
 
 		return t;
 	}

@@ -10,6 +10,10 @@ public class CraftingEntry
 {
 	[Property]
 	public string ItemId { get; set; }
+
+	// Cached
+	public ItemAsset ItemAsset { get; set; }
+
 	[Property]
 	public int Amount { get; set; } = 0;
 }
@@ -21,4 +25,9 @@ public class CraftingRecipe
 
 	[Property]
 	public int Output { get; set; } = 1;
+
+	public void Cache()
+	{
+		Items.ForEach( x => x.ItemAsset = ItemAsset.FromName( x.ItemId ) );
+	}
 }
