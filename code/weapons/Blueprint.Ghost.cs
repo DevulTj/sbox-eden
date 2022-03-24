@@ -32,13 +32,22 @@ partial class Blueprint : Weapon
 			var tracePosition = TraceForward( Owner ).EndPosition;
 			Position = tracePosition;
 			Rotation = Rotation.Identity;
-			RenderColor = Color.White.WithAlpha( 0.2f );
+			RenderColor = Color.Cyan.WithAlpha( 0.2f );
 
 			var glow = Components.GetOrCreate<Glow>();
 			glow.Active = true;
 			glow.Color = Color.Cyan;
 			glow.RangeMax = 1024;
 			glow.RangeMin = 0;
+
+			if ( SceneObject == null || Blueprint == null )
+				return;
+
+			if ( !Blueprint.selectedAsset.CheckValidPlacement( SceneObject.Position, SceneObject.Rotation ) )
+			{
+				RenderColor = Color.Red.WithAlpha( 0.2f );
+				glow.Color = Color.Red;
+			}
 		}
 
 		/// <summary>
