@@ -2,6 +2,7 @@
 // without permission of its author (insert_email_here)
 
 using Sandbox;
+using System;
 
 namespace Eden;
 
@@ -42,6 +43,14 @@ public partial class Slot : BaseNetworkable, INetworkSerializer
 
 		WriteNetworkData();
 	}
+
+	public void SetDurability( int durability )
+	{
+		Item.Durability = Math.Clamp( durability, 0, Item.MaxDurability );
+		WriteNetworkData();
+	}
+
+	public void AddDurability( int amount ) => SetDurability( Item.Durability + amount );
 
 	void INetworkSerializer.Read( ref NetRead read )
 	{
