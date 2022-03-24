@@ -23,6 +23,9 @@ public partial class HotbarContainer : Container
 	[Net]
 	public int ActiveSlotIndex { get; set; } = -1;
 
+	// Do not network this, it'll break shit
+	public Slot ActiveSlot { get; set; }
+
 	public void SetActiveSlot( int index )
 	{
 		if ( index >= Items.Count )
@@ -35,6 +38,8 @@ public partial class HotbarContainer : Container
 		Slot slot = null;
 		if ( index != -1 )
 			slot = Items[index];
+
+		ActiveSlot = slot;
 
 		if ( slot is null )
 		{

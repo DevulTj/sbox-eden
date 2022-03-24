@@ -47,6 +47,9 @@ public partial class Slot : BaseNetworkable, INetworkSerializer
 	public void SetDurability( int durability )
 	{
 		Item.Durability = Math.Clamp( durability, 0, Item.MaxDurability );
+
+		Log.Info( "setting durability to: " + Item.Durability );
+
 		WriteNetworkData();
 	}
 

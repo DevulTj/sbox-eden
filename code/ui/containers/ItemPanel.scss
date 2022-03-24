@@ -23,6 +23,35 @@ itempanel {
         transform: scale( 0.8 );
     }
 
+    .durability {
+        opacity: 0;
+        position: absolute;
+        bottom: -1;
+        left: -1;
+        width: 96px;
+        height: 8px;
+        background-color: rgba( white, 0.2 );
+        border-radius: 0px 0px 8px 8px;
+
+        > .bar {
+            width: 100%;
+            height: 100%;
+            background-color: rgba( #3282B8, 1 );
+            border-radius: 0px 0px 8px 8px;
+        }
+    }
+
+    &.showdurability {
+
+        .durability {
+            opacity: 1;
+
+            > .bar {
+            }
+        }
+    }
+
+
     .quantity {
         left: 8px;
         top: 4px;
