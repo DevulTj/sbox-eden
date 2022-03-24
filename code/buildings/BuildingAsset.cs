@@ -32,16 +32,10 @@ public class BuildingAsset : Asset
 	public bool CheckValidPlacement( Vector3 position, Rotation rotation )
 	{
 		var bounds = BuildingModel.PhysicsBounds;
+		bounds *= 0.9f;
 
-		DebugOverlay.Box(
-			bounds.Mins + ( position ),// * rotation ),
-			bounds.Maxs + ( position ),// * rotation ),
-			Color.Red,
-			0,
-			false
-		);
-
-		var tr = Trace.Box( bounds, position, position + ( Vector3.Forward * rotation ) ).Run();
+		var forward = rotation * Vector3.Forward;
+		var tr = Trace.Box( bounds, position - forward, position + forward ).Run();
 
 		DebugOverlay.Line( tr.StartPosition, tr.EndPosition );
 		DebugOverlay.Sphere( tr.EndPosition, 4f, Color.Red, false );
