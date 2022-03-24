@@ -29,10 +29,24 @@ public class BuildingAsset : Asset
 		return true;
 	}
 
-	public bool CheckValidPlacement( Vector3 position )
+	public bool CheckValidPlacement( Vector3 position, Rotation rotation )
 	{
 		var bounds = BuildingModel.PhysicsBounds;
-		return !Trace.Ray( position, position ).Size( bounds ).Run().Hit;
+
+		DebugOverlay.Box(
+			bounds.Mins + ( position ),// * rotation ),
+			bounds.Maxs + ( position ),// * rotation ),
+			Color.Red,
+			0,
+			false
+		);
+
+		var tr = Trace.Box( bounds, position, position + ( Vector3.Forward * rotation ) ).Run();
+
+		DebugOverlay.Line( tr.StartPosition, tr.EndPosition );
+		DebugOverlay.Sphere( tr.EndPosition, 4f, Color.Red, false );
+
+		return !tr.Hit;
 	}
 
 	public Model BuildingModel { get; set; }
