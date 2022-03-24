@@ -132,6 +132,9 @@ partial class Blueprint : Weapon
 		var localGhostSnapPoints = selectedAsset.GetLocalSnapPointTransforms();
 		localClosestSnapPoint = localGhostSnapPoints.OrderBy( x => x.Position.Distance( localOther.Position ) ).FirstOrDefault();
 
+
+		Log.Trace( nearestSnapPoint.Position.Angle( localClosestSnapPoint.Position ) );
+
 		return true;
 	}
 
@@ -140,14 +143,16 @@ partial class Blueprint : Weapon
 	/// </summary>
 	private Transform GetSnappedTransform()
 	{
+		var transform = new Transform().WithRotation( Rotation.FromYaw( Owner.EyeRotation.Yaw() ) );
 		if ( !GetBestSnapTransforms( out var nearestSnapPoint, out var localClosestSnapPoint ) )
-			return new Transform( TraceForward( Owner ).EndPosition );
+			return transform.WithPosition( TraceForward( Owner ).EndPosition );
 
 		if ( Debug )
 			DebugOverlay.Sphere( nearestSnapPoint.Position, 8f, Color.Red, false );
 
 		// Return best available snap point, offset by nearest selected building snap point
-		return nearestSnapPoint.WithPosition( nearestSnapPoint.Position - localClosestSnapPoint.Position );
+		var offset = nearestSnapPoint.Position - localClosestSnapPoint.Position;
+		return nearestSnapPoint.WithPosition( offset );
 	}
 
 	private void CreateBuildWheel()
