@@ -40,18 +40,23 @@ public partial class Item
 	public virtual Color DefaultColor => Asset?.DefaultColor ?? new Color( 100, 100, 100 );
 	public virtual bool CanStack => MaxStack > 1;
 	public virtual int MaxStack => Asset?.StackSize ?? 1;
+	public virtual int MaxDurability => 100;
 
 	// @net
 	public ItemAsset Asset { get; set; }
+	// @net
+	public int Durability { get; set; } = 100;
 
 	public virtual void Write( NetWrite write )
 	{
 		write.Write( Asset );
+		write.Write( Durability );
 	}
 
 	public virtual void Read( NetRead read )
 	{
 		Asset = read.ReadClass<ItemAsset>();
+		Durability = read.Read<int>();
 	}
 
 	/// <summary>
