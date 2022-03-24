@@ -13,5 +13,13 @@
   ],
   "HasCode": true,
   "CodePath": "/code/",
-  "RootNamespace": "Eden"
+  "RootNamespace": "Eden",
+  "Metadata": {
+    "MapList": [
+      "apetavern.eden_island"
+    ],
+    "MapSelect": 3,
+    "MinPlayers": 1,
+    "MaxPlayers": 32
+  }
 }
