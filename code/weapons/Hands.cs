@@ -63,6 +63,12 @@ partial class Hands : MeleeWeapon
 		base.CreateViewModel();
 	}
 
+	public override void UpdateDurability( int amount )
+	{
+		// Hands don't have durability, so damage the owner instead.
+		Owner.TakeDamage( new DamageInfo() { Attacker = this, Damage = -amount * 0.5f } );
+	}
+
 	[ClientRpc]
 	protected void RpcOnMeleeMiss( bool leftHand )
 	{
