@@ -36,6 +36,11 @@ public class MetricsWebSocketClient
 		return !ws.IsConnected;
 	}
 
+	public bool IsConnected()
+	{
+		return ws.IsConnected;
+	}
+
 	public async Task Send( OutgoingMetricMessage message )
 	{
 		Log.Info( "Sending message" );

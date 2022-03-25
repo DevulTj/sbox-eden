@@ -18,7 +18,7 @@ public partial class Game : Sandbox.Game
 {
 	public ClimateAudioManager ClimateAudioManager { get; protected set; }
 	public DayNight.DayNightSystem DayNightSystem { get; protected set; }
-	public MetricsWebSocketClient MetricsWebSocketClient { get; protected set; }
+	public MetricsHandler MetricsHandler { get; protected set; }
 
 	public Game()
 	{
@@ -29,16 +29,7 @@ public partial class Game : Sandbox.Game
 
 			ResourceManager = new();
 			DayNightSystem = new();
-
-			var metricsConfig = ConfigReader.GetMetricsConfig();
-			if ( metricsConfig == null )
-			{
-				Log.Warning( "Metrics Config is null. Metrics will not be recorded." );
-			}
-			else
-			{
-				InitializeWebSocketServer( metricsConfig );
-			}
+			MetricsHandler = new();
 		}
 
 		CacheAssets();
@@ -84,18 +75,5 @@ public partial class Game : Sandbox.Game
 			ResourceManager.RemoveEntity( cl.Pawn );
 
 		base.ClientDisconnect( cl, reason );
-	}
-
-	private async void InitializeWebSocketServer( MetricsConfig config )
-	{
-		MetricsWebSocketClient = new MetricsWebSocketClient( config );
-		await MetricsWebSocketClient.Connect();
-
-		// Sample message send.
-		OutgoingMetricMessage message = new();
-		message.PlayerId = "1234";
-		message.MetricType = "SomeGayAssMetric";
-
-		await MetricsWebSocketClient.Send( message );
 	}
 }
