@@ -61,17 +61,22 @@ public partial class ResourceNodeEntity : Prop, IUse
 
 		var weaponResourceYield = weapon.GetResourceYield( ResourceAsset.ResourceType );
 
-		if ( weaponResourceYield <= 0 )
+		// Durability modifier
 		{
-			// TODO: Deal heavy damage to weapon
-			return;
+			var item = player.Hotbar.Items[player.Hotbar.ActiveSlotIndex];
+
+			var basePenalty = ResourceAsset.BaseDurabilityPenalty;
+			var badYieldPenalty = 1 - weaponResourceYield;
+			var collectableMultiplier = ResourceAsset.IsCollectable ? 20 : 10;
+
+			item.AddDurability( basePenalty - (int)( badYieldPenalty * collectableMultiplier ) );
 		}
 
 		if ( ResourceAsset.IsCollectable )
 			return;
 
 		var gatherableResource = AvailableItems.FirstOrDefault();
-		var quantityToTake = MathX.FloorToInt( gatherableResource.InitialAmount / ( ResourceAsset.RequiredHitsPerItem < 1 ? 1 : ResourceAsset.RequiredHitsPerItem ) * weaponResourceYield );
+		var quantityToTake = MathX.CeilToInt( gatherableResource.InitialAmount / ( ResourceAsset.RequiredHitsPerItem < 1 ? 1 : ResourceAsset.RequiredHitsPerItem ) * weaponResourceYield );
 
 		gatherableResource.AmountRemaining -= quantityToTake;
 
@@ -88,6 +93,9 @@ public partial class ResourceNodeEntity : Prop, IUse
 
 	protected virtual void OnGather( Player player, string itemAssetName, int quantity )
 	{
+		if ( quantity < 1 )
+			return;
+
 		GiveItem( player, itemAssetName, quantity );
 
 		var slot = player.Hotbar.ActiveSlot;
