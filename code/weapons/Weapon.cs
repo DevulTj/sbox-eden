@@ -138,6 +138,14 @@ public partial class Weapon : BaseWeapon, IUse
 		return true;
 	}
 
+	public virtual void UpdateDurability( int amount )
+	{
+		var player = Owner as Player;
+
+		var item = player.Hotbar.Items[player.Hotbar.ActiveSlotIndex];
+		item.AddDurability( amount );
+	}
+
 	public void Remove()
 	{
 		Delete();

@@ -63,13 +63,11 @@ public partial class ResourceNodeEntity : Prop, IUse
 
 		// Durability modifier
 		{
-			var item = player.Hotbar.Items[player.Hotbar.ActiveSlotIndex];
-
 			var basePenalty = ResourceAsset.BaseDurabilityPenalty;
 			var badYieldPenalty = 1 - weaponResourceYield;
 			var collectableMultiplier = ResourceAsset.IsCollectable ? 20 : 10;
 
-			item.AddDurability( basePenalty - (int)( badYieldPenalty * collectableMultiplier ) );
+			weapon.UpdateDurability( basePenalty - (int)( badYieldPenalty * collectableMultiplier ) );
 		}
 
 		if ( ResourceAsset.IsCollectable )
