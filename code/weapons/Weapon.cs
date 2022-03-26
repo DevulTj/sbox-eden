@@ -142,7 +142,7 @@ public partial class Weapon : BaseWeapon, IUse
 	{
 		var player = Owner as Player;
 
-		var item = player.Hotbar.Items[player.Hotbar.ActiveSlotIndex];
+		var item = player.Hotbar.ActiveSlot;
 		item.AddDurability( amount );
 	}
 
