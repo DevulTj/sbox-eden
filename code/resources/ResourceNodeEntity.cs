@@ -93,9 +93,6 @@ public partial class ResourceNodeEntity : Prop, IUse
 
 		GiveItem( player, itemAssetName, quantity );
 
-		var slot = player.Hotbar.ActiveSlot;
-		slot.AddDurability( -1 );
-
 		if ( !ResourceAsset.ResourceHasMultipleModels )
 			return;
 
