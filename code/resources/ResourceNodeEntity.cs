@@ -61,14 +61,11 @@ public partial class ResourceNodeEntity : Prop, IUse
 
 		var weaponResourceYield = weapon.GetResourceYield( ResourceAsset.ResourceType );
 
-		// Durability modifier
-		{
-			var basePenalty = ResourceAsset.BaseDurabilityPenalty;
-			var badYieldPenalty = 1 - weaponResourceYield;
-			var collectableMultiplier = ResourceAsset.IsCollectable ? 20 : 10;
+		var basePenalty = ResourceAsset.BaseDurabilityPenalty;
+		var badYieldPenalty = 1 - weaponResourceYield;
+		var collectableMultiplier = ResourceAsset.IsCollectable ? 20 : 10;
 
-			weapon.UpdateDurability( basePenalty - (int)( badYieldPenalty * collectableMultiplier ) );
-		}
+		weapon.UpdateDurability( basePenalty - (int)( badYieldPenalty * collectableMultiplier ) );
 
 		if ( ResourceAsset.IsCollectable )
 			return;

@@ -23,7 +23,6 @@ public partial class HotbarContainer : Container
 	[Net]
 	public int ActiveSlotIndex { get; set; } = -1;
 
-	// Do not network this, it'll break shit
 	public Slot ActiveSlot => Items[ActiveSlotIndex];
 
 	public void SetActiveSlot( int index )
@@ -104,8 +103,6 @@ public partial class HotbarContainer : Container
 
 		if ( makeActive )
 			SetActiveSlot( slot );
-
-		Log.Info( $"ACTIVE SLOT {ActiveSlot}" );
 
 		return slot;
 	}
