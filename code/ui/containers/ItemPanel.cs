@@ -31,6 +31,7 @@ public partial class ItemPanel : Panel
 		base.PostTemplateApplied();
 
 		BindClass( "showdurability", () => GetDurabilityPercent() < 1f );
+		BindClass( "broken", () => GetDurabilityPercent() <= 0f );
 	}
 
 	protected float GetDurabilityPercent()

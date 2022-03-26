@@ -51,6 +51,18 @@ itempanel {
         }
     }
 
+    &.broken {
+        background-color: red;
+        opacity: 0.8;
+
+        > .icon {
+            opacity: 0.25;
+        }
+
+        > .durability {
+            opacity: 0.5;
+        }
+    }
 
     .quantity {
         left: 8px;
