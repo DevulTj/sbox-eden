@@ -132,10 +132,7 @@ public partial class Weapon : BaseWeapon, IUse
 
 	public virtual bool IsUsable( Entity user )
 	{
-		var player = user as Player;
-		if ( Owner != null ) return false;
-
-		return true;
+		return Owner == null;
 	}
 
 	public virtual void UpdateDurability( int amount )
