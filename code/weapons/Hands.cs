@@ -65,8 +65,10 @@ partial class Hands : MeleeWeapon
 
 	public override void UpdateDurability( int amount )
 	{
-		// Hands don't have durability, so damage the owner instead.
-		Owner.TakeDamage( new DamageInfo() { Attacker = this, Damage = -amount * 0.5f } );
+		// Half the amount of damage as we're hurting a player instead of updating durability.
+		var damageAmount = -amount * 0.5f;
+
+		Owner.TakeDamage( new DamageInfo() { Attacker = this, Damage = damageAmount } );
 	}
 
 	[ClientRpc]
