@@ -147,11 +147,16 @@ public partial class Weapon : BaseWeapon, IUse
 
 	public bool IsBroken()
 	{
-		return ( Owner as Player )?.Hotbar?.ActiveSlot?.Item?.Durability <= 0;
+		// TODO: Find a better way to handle this.
+		var player = Owner as Player;
+		var slot = player.Hotbar.ActiveSlot;
+
+		return slot.Item.Durability <= 0;
 	}
 
 	public virtual void UpdateDurability( int amount )
 	{
+		// TODO: Find a better way to handle this.
 		var player = Owner as Player;
 
 		var slot = player.Hotbar.ActiveSlot;
