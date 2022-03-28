@@ -28,6 +28,9 @@ public partial class ResourceAsset : Asset
 	public int RequiredHitsPerItem { get; set; }
 
 	[Property, Category( "Gathering" )]
+	public int BaseDurabilityPenalty { get; set; } = -1;
+
+	[Property, Category( "Gathering" )]
 	public List<ResourceItemQuantity> ItemsToGather { get; set; }
 
 	public List<Model> WorldModels { get; set; } = new();

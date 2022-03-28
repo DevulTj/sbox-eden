@@ -47,6 +47,16 @@ public partial class Weapon : BaseWeapon, IUse
 		TimeSinceDeployed = 0;
 	}
 
+	public override bool CanPrimaryAttack()
+	{
+		return base.CanPrimaryAttack() && !IsBroken();
+	}
+
+	public override bool CanSecondaryAttack()
+	{
+		return base.CanSecondaryAttack() && !IsBroken();
+	}
+
 	public override void Reload()
 	{
 		if ( IsReloading )
@@ -132,10 +142,25 @@ public partial class Weapon : BaseWeapon, IUse
 
 	public virtual bool IsUsable( Entity user )
 	{
-		var player = user as Player;
-		if ( Owner != null ) return false;
+		return Owner == null;
+	}
 
-		return true;
+	public bool IsBroken()
+	{
+		// TODO: Find a better way to handle this.
+		var player = Owner as Player;
+		var slot = player.Hotbar.ActiveSlot;
+
+		return slot.Item.Durability <= 0;
+	}
+
+	public virtual void UpdateDurability( int amount )
+	{
+		// TODO: Find a better way to handle this.
+		var player = Owner as Player;
+
+		var slot = player.Hotbar.ActiveSlot;
+		slot.AddDurability( amount );
 	}
 
 	public void Remove()

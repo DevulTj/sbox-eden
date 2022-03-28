@@ -23,6 +23,8 @@ public partial class HotbarContainer : Container
 	[Net]
 	public int ActiveSlotIndex { get; set; } = -1;
 
+	public Slot ActiveSlot => Items[ActiveSlotIndex];
+
 	public void SetActiveSlot( int index )
 	{
 		if ( index >= Items.Count )
