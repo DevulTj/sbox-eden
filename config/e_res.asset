@@ -22,6 +22,8 @@
 	iscollectable(boolean) { group = "Gathering" } : "Is Collectable" : 0 : "Whether or not the resource can be collected with 'E'"
 	requiredhitsperitem(integer) { group = "Gathering" } : "Required Hits Per Item" : 0 : ""
 	basedurabilitypenalty(integer) { group = "Gathering" } : "Base Durability Penalty" : -1 : ""
+	modelchangesound(string) { group = "Effects" editor = "AssetBrowse(sound)" } : "Model Change Sound" :  : ""
+	modelchangeparticle(resource:vpcf) { group = "Effects" } : "Model Change Particle" :  : ""
 	itemstogather(array:struct:Eden_ResourceItemQuantity) { group = "Gathering" } : "Items To Gather" :  : ""
 ]
 

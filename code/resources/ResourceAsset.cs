@@ -30,6 +30,12 @@ public partial class ResourceAsset : Asset
 	[Property, Category( "Gathering" )]
 	public int BaseDurabilityPenalty { get; set; } = -1;
 
+	[Property, Category( "Effects" ), ResourceType( "sound" )]
+	public string ModelChangeSound { get; set; }
+
+	[Property, Category( "Effects" ), ResourceType( "vpcf" )]
+	public string ModelChangeParticle { get; set; }
+
 	[Property, Category( "Gathering" )]
 	public List<ResourceItemQuantity> ItemsToGather { get; set; }
 

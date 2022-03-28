@@ -110,6 +110,25 @@ public partial class ResourceNodeEntity : Prop, IUse
 			return;
 
 		UpdateModel( ResourceAsset.WorldModels[CurrentModelIndex] );
+
+		PlayModelChangeEffects();
+	}
+
+	[ClientRpc]
+	protected void PlayModelChangeEffects()
+	{
+		Log.Info( $"PlayModelChangeEffects {ResourceAsset}" );
+
+		if ( !string.IsNullOrEmpty( ResourceAsset.ModelChangeSound ) )
+			PlaySound( ResourceAsset.ModelChangeSound );
+
+		Log.Info( $"Trying to play sound {ResourceAsset.ModelChangeSound}" );
+
+		if ( !string.IsNullOrEmpty( ResourceAsset.ModelChangeParticle ) )
+			Particles.Create( ResourceAsset.ModelChangeParticle, this );
+
+		Log.Info( $"Trying to use particle {ResourceAsset.ModelChangeParticle}" );
+
 	}
 
 	private void GiveItem( Player player, string itemAssetName, int quantity )

@@ -10,7 +10,6 @@
 			resource:"models/resources/resource_rock_3.vmdl",
 		]
 		resourcetype = "1"
-		collectable = false
 		requiredhitsperitem = 10
 		itemstogather = 
 		[
@@ -19,5 +18,9 @@
 				initialamount = 100
 			},
 		]
+		iscollectable = false
+		basedurabilitypenalty = -1
+		modelchangesound = "eden.stone.impact"
+		modelchangeparticle = resource:"particles/explosion_smoke.vpcf"
 	}
 }
