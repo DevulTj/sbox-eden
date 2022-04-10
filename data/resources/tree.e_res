@@ -5,7 +5,7 @@
 		resourcename = "Tree"
 		worldmodelpath = resource:
 		[
-			resource:"models/resources/trees/tree1.vmdl",
+			resource:"models/resources/trees/tree_palm_1.vmdl",
 		]
 		resourcetype = "0"
 		itemstogather = 
@@ -20,6 +20,9 @@
 			},
 		]
 		requiredhitsperitem = 5
-		collectable = false
+		iscollectable = false
+		basedurabilitypenalty = -1
+		modelchangesound = ""
+		modelchangeparticle = resource:""
 	}
 }
