@@ -10,6 +10,9 @@ public partial class ItemPanel : Panel
 {
 	// @ref
 	public Image IconPanel { get; set; }
+	// @ref
+	public Panel DurabilityBar { get; set; }
+
 	// @text
 	public int Quantity => Slot?.Quantity ?? 0;
 
@@ -21,6 +24,29 @@ public partial class ItemPanel : Panel
 
 	public ItemPanel()
 	{
+	}
+
+	protected override void PostTemplateApplied()
+	{
+		base.PostTemplateApplied();
+
+		BindClass( "showdurability", () => GetDurabilityPercent() < 1f );
+		BindClass( "broken", () => GetDurabilityPercent() <= 0f );
+	}
+
+	protected float GetDurabilityPercent()
+	{
+		if ( Slot.Item is null )
+			return 1f;
+
+		float durability = Slot.Item.Durability;
+		float maxDurability = Slot.Item.MaxDurability;
+		return durability / maxDurability;
+	}
+
+	protected Length? GetDurability()
+	{
+		return Length.Fraction( GetDurabilityPercent() );
 	}
 
 	public void SetPanel( ContainerPanel panel )
@@ -86,5 +112,16 @@ public partial class ItemPanel : Panel
 
 		RemoveClass( "hovered-item" );
 		IsHovered = false;
+	}
+
+	public override void Tick()
+	{
+		base.Tick();
+
+		if ( GetDurabilityPercent() < 1f && DurabilityBar is not null )
+		{
+			DurabilityBar.Style.Width = GetDurability();
+			DurabilityBar.Style.BorderBottomRightRadius = Length.Pixels( 0 );
+		}
 	}
 }

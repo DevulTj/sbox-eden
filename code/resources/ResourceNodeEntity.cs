@@ -61,17 +61,17 @@ public partial class ResourceNodeEntity : Prop, IUse
 
 		var weaponResourceYield = weapon.GetResourceYield( ResourceAsset.ResourceType );
 
-		if ( weaponResourceYield <= 0 )
-		{
-			// TODO: Deal heavy damage to weapon
-			return;
-		}
+		var basePenalty = ResourceAsset.BaseDurabilityPenalty;
+		var badYieldPenalty = 1 - weaponResourceYield;
+		var collectableMultiplier = ResourceAsset.IsCollectable ? 20 : 10;
+
+		weapon.UpdateDurability( basePenalty - (int)( badYieldPenalty * collectableMultiplier ) );
 
 		if ( ResourceAsset.IsCollectable )
 			return;
 
 		var gatherableResource = AvailableItems.FirstOrDefault();
-		var quantityToTake = MathX.FloorToInt( gatherableResource.InitialAmount / ( ResourceAsset.RequiredHitsPerItem < 1 ? 1 : ResourceAsset.RequiredHitsPerItem ) * weaponResourceYield );
+		var quantityToTake = MathX.CeilToInt( gatherableResource.InitialAmount / ( ResourceAsset.RequiredHitsPerItem < 1 ? 1 : ResourceAsset.RequiredHitsPerItem ) * weaponResourceYield );
 
 		gatherableResource.AmountRemaining -= quantityToTake;
 
@@ -88,6 +88,9 @@ public partial class ResourceNodeEntity : Prop, IUse
 
 	protected virtual void OnGather( Player player, string itemAssetName, int quantity )
 	{
+		if ( quantity < 1 )
+			return;
+
 		GiveItem( player, itemAssetName, quantity );
 
 		if ( !ResourceAsset.ResourceHasMultipleModels )
@@ -107,6 +110,25 @@ public partial class ResourceNodeEntity : Prop, IUse
 			return;
 
 		UpdateModel( ResourceAsset.WorldModels[CurrentModelIndex] );
+
+		PlayModelChangeEffects();
+	}
+
+	[ClientRpc]
+	protected void PlayModelChangeEffects()
+	{
+		Log.Info( $"PlayModelChangeEffects {ResourceAsset}" );
+
+		if ( !string.IsNullOrEmpty( ResourceAsset.ModelChangeSound ) )
+			PlaySound( ResourceAsset.ModelChangeSound );
+
+		Log.Info( $"Trying to play sound {ResourceAsset.ModelChangeSound}" );
+
+		if ( !string.IsNullOrEmpty( ResourceAsset.ModelChangeParticle ) )
+			Particles.Create( ResourceAsset.ModelChangeParticle, this );
+
+		Log.Info( $"Trying to use particle {ResourceAsset.ModelChangeParticle}" );
+
 	}
 
 	private void GiveItem( Player player, string itemAssetName, int quantity )

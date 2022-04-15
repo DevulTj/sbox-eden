@@ -6,6 +6,7 @@ using Sandbox.UI;
 using Sandbox.UI.Construct;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Eden;
 
@@ -59,6 +60,7 @@ public partial class CraftingItemButton : Button
 		//
 		Add.Image( item.IconPath, "icon" );
 		AmountLabel = Add.Label( "0", "amount" );
+		Add.Label( item.ItemName, "name" );
 	}
 
 	public override void Tick()
@@ -87,18 +89,23 @@ public partial class CraftingItemButton : Button
 public partial class CraftingMenuPanel : Panel
 {
 	public List<CraftingCategoryButton> CategoryButtons { get; set; } = new();
-
 	// @ref
 	public Panel CategoryLayout { get; set; }
 	// @ref
 	public Panel ItemsLayout { get; set; }
 	// @ref
 	public CraftingMenuInspector Inspector { get; set; }
-
+	// @ref
+	public Panel QueueLayout { get; set; }
 	public ItemCategory CurrentCategory { get; set; }
 
 	public CraftingMenuPanel()
 	{
+	}
+
+	public void SetItem( ItemAsset item, CraftingItemButton button )
+	{
+		Inspector.SetItem( item );
 	}
 
 	public void SetCategory( ItemCategory category )
@@ -113,11 +120,19 @@ public partial class CraftingMenuPanel : Panel
 
 			var itemButton = new CraftingItemButton( item );
 			itemButton.Parent = ItemsLayout;
-			itemButton.AddEventListener( "onclick", () => Inspector.SetItem( item ) );
+			itemButton.AddEventListener( "onclick", () => SetItem( item, itemButton ) );
+			itemButton.BindClass( "current", () => Inspector.ItemAsset == item );
 
 			if ( Inspector.ItemAsset is null )
-				Inspector.SetItem( item );
+				SetItem( item, itemButton );
 		}
+	}
+
+	protected async Task RunCategoryDelayHack()
+	{
+		await GameTask.DelaySeconds( 0.1f );
+
+		SetCategory( ItemCategory.Tools );
 	}
 
 	protected override void PostTemplateApplied()
@@ -137,6 +152,6 @@ public partial class CraftingMenuPanel : Panel
 			button.SetCount( ItemAsset.FromCategory( category ).Count );
 		}
 
-		SetCategory( ItemCategory.Tools );
+		_ = RunCategoryDelayHack();
 	}
 }

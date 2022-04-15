@@ -194,6 +194,8 @@ public partial class ResourceManager
 		if ( entity.ResourceAsset.IsCollectable )
 			entity.Rotation = Rotation.LookAt( normal );
 
+		entity.Rotation = entity.Rotation.Angles().WithYaw( Rand.Int( 0, 360 ) ).ToRotation();
+
 		entity.OnDestroyed += OnResourceDestroyed;
 
 		Resources.Add( entity );

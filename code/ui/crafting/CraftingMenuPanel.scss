@@ -1,58 +1,73 @@
 @import "/ui/Theme.scss";
 
 craftingmenupanel {
-    width: 70%;
+    width: 100%;
     height: 100%;
+    bottom: 40px;
     transition: opacity 0.2s ease;
-    margin-bottom: 80px;
-    border: 2px solid rgba( white, 0.5 );
-    border-radius: 8px;
-    background-image: linear-gradient(to right, rgba( black, 0.5 ), rgba( black, 0 ) );
+    padding-left: 15%;
+    padding-top: 3.6%;
+    padding-right: 15%;
+    padding-bottom: 5;
 
+
+    > .main {
+        flex-direction: column;
+    }
+
+    .category-title {
+        position: absolute;
+        margin-left: 23%;
+        top: 40px;
+        font-size: 32px;
+        font-weight: 600;
+    }
 
     .categories {
-        height: 100%;
-        width: 256px;
-        flex-direction: column;
+        height: 50px;
+        width: 100%;
+        flex-direction: row;
         flex-wrap: nowrap;
         justify-content: flex-start;
         align-items: flex-start;
         align-content: flex-start;
-        padding: 16px;
-        padding-top: 8px;
 
         .category {
-            margin-top: 8px;
+            border-radius: 0px;
             height: 50px;
-            width: 240px;
-            border: 2px solid rgba( white, 0.5 );
+            width: 250px;
             transition: all 0.1s ease;
-            background-image: linear-gradient(to right, rgba( black, 0.8 ), rgba( black, 0 ) );
-            border-radius: 8px;
+            background-color: rgba( white, 0.02 );
+
+            &:first-child {
+                border-radius: 8px 0px 0px 8px;
+            }
+
+            &:last-child {
+                border-radius: 0px 8pxx 8px 0px;
+            }
 
             .name {
                 height: 100%;
                 align-items: center;
-            }
-
-            &:first-child {
+                text-stroke: 1px black;
+                font-weight: 600;
+                font-size: 16px;
             }
 
             &:hover {
-                background-image: linear-gradient(to right, rgba( white, 0.2 ), rgba( #888888, 0 ) );
+                background-image: linear-gradient(to right, rgba( white, 0.5 ), rgba( #888888, 0.3 ) );
                 cursor: pointer;
-                padding-left: 8px;
+                padding-left: 2px;
             }
 
             &:active {
-                background-image: linear-gradient(to right, rgba( white, 0.5 ), rgba( #888888, 0 ) );
+                background-image: linear-gradient(to right, rgba( white, 0.5 ), rgba( #888888, 0.3 ) );
             }
 
             &.current {
-                padding-left: 8px;
-                width: 256px;
-                height: 64px;
-                background-image: linear-gradient(to right, rgba( white, 0.5 ), rgba( #888888, 0 ) );
+                background-image: linear-gradient(to right, rgba( white, 0.5 ), rgba( #888888, 0.3 ) );
+                padding-left: 0px;
             }
 
             .icon {
@@ -64,35 +79,58 @@ craftingmenupanel {
 
             .amount {
                 position: absolute;
-                bottom: 4px;
+                height: 100%;
                 right: 8px;
+                align-items: center;
+                font-size: 12px;
+                font-weight: 900;
             }
         }
     }
 
+    .queue-container {
+        min-height: 64px;
+        margin-bottom: 32px;
+        background-color: rgba( white, 0.02 );
+        border-radius: 4px;
+
+        .queue-title {
+            padding-left: 5%;
+            font-weight: 900;
+            font-size: 40px;
+            height: 100%;
+            align-items: center;
+            opacity: 0.02;
+            text-transform: uppercase;
+        }
+    }
+
     .items {
-        left: 48px;
-        width: 60%;
         height: 100%;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: flex-start;
         align-items: baseline;
         align-content: flex-start;
-        padding: 16px;
+        padding-top: 32px;
 
         .item {
-            background-image: linear-gradient(to right, rgba( black, 0.6 ), rgba( #888888, 0 ) );
-            border: 2px solid rgba( white, 0.4 );
-            border-radius: 8px;
+            width: 140px;
+            height: 170px;
+            border-radius: 4px;
+            transition: transform 0.1s ease;
+            background-color: rgba( white, 0.02 );
+            backdrop-filter: blur( 2px );
+            box-shadow: 0px 0px 5px rgba( black, 0.2 );
+            border: 1px solid rgba( black, 0.1 );
 
             &:hover {
-                background-image: linear-gradient(to right, rgba( #888888, 0.5 ), rgba( #888888, 0 ) );
+                background-image: linear-gradient(23deg, rgba( #888888, 0.5 ), rgba( #888888, 0.3 ) );
                 cursor: pointer;
             }
 
             &:active {
-                background-image: linear-gradient(to right, rgba( white, 0.5 ), rgba( #888888, 0 ) );
+                background-image: linear-gradient(23deg, rgba( #888888, 0.6 ), rgba( #888888, 0.3 ) );
             }
 
             transition: opacity 0.2s ease;
@@ -102,15 +140,30 @@ craftingmenupanel {
             }
 
             .icon {
-                width: 96px;
-                height: 96px;
+                width: 140px;
+                height: 140px;
                 transform: scale( 0.7 );
+            }
+
+            .name {
+                position: absolute;
+                width: 140px;
+                bottom: 0;
+                text-outline: 1px black;
+                text-align: center;
+            }
+
+            &.current {
+                transform: scale( 1.05 );
+                background-image: linear-gradient(to right, rgba( white, 0.5 ), rgba( #888888, 0.3 ) );
+                padding-left: 0px;
             }
 
             .amount {
                 position: absolute;
-                bottom: 4px;
+                top: 4px;
                 right: 8px;
+                text-outline: 1px black;
 
                 &.show {
                     opacity: 1;
